@@ -61,4 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget returnTabContent(int index, List<Widget> widgets) {
     return widgets[index];
   }
+
+  dynamic returnRelatingTabData(int index, List data) {
+    return data[index];
+  }
 }
