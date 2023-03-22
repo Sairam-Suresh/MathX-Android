@@ -27,39 +27,31 @@ class _ToolsPageState extends State<ToolsPage> {
         crossAxisCount: 2,
         children: <Widget>[
           ToolTile(
-            color: Theme.of(context).primaryColor,
+            color: Colors.red,
             text: "HCF and LCM",
           ),
           ToolTile(
-            color: Theme.of(context).primaryColor,
             text: "Algebra",
           ),
           ToolTile(
-            color: Theme.of(context).primaryColor,
             text: "Instruments",
           ),
           ToolTile(
-            color: Theme.of(context).primaryColor,
             text: "hello",
           ),
           ToolTile(
-            color: Theme.of(context).primaryColor,
             text: "hello",
           ),
           ToolTile(
-            color: Theme.of(context).primaryColor,
             text: "helllo",
           ),
           ToolTile(
-            color: Theme.of(context).primaryColor,
             text: "hello",
           ),
           ToolTile(
-            color: Theme.of(context).primaryColor,
             text: "hello",
           ),
           ToolTile(
-            color: Theme.of(context).primaryColor,
             text: "hello",
           ),
         ],
@@ -69,16 +61,17 @@ class _ToolsPageState extends State<ToolsPage> {
 }
 
 class ToolTile extends StatelessWidget {
-  ToolTile({super.key, required this.color, required this.text});
+  ToolTile({super.key, this.color, required this.text});
 
-  final Color color;
   final String text;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)), color: color),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          color: color ?? Theme.of(context).primaryColor),
       padding: const EdgeInsets.all(8),
       child: Center(
           child: FittedBox(
