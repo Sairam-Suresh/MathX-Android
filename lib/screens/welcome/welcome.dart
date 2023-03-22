@@ -26,21 +26,32 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               const Spacer(flex: 3),
               Flexible(
                 fit: FlexFit.tight,
-                flex: 1,
+                flex: 3,
                 child: Column(
                   children: [
                     Center(
                         child: Animate(
-                      effects: [FadeEffect(duration: Duration(seconds: 2))],
-                      child: Text("MathX",
+                      effects: const [
+                        FadeEffect(duration: Duration(milliseconds: 500))
+                      ],
+                      child: const Text("MathX",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 30,
                               fontWeight: FontWeight.bold)),
                     )),
-                    Text("By AppCatalyst Inc",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.center),
+                    Center(
+                      child: Animate(
+                        effects: const [
+                          FadeEffect(
+                              duration: Duration(milliseconds: 500),
+                              delay: Duration(milliseconds: 500))
+                        ],
+                        child: const Text("By AppCatalyst Inc",
+                            style: TextStyle(color: Colors.white),
+                            textAlign: TextAlign.center),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -51,28 +62,60 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     alignment: Alignment.center,
                     child: Column(
                       children: [
-                        Spacer(flex: 2),
-                        Text(
-                            "Disclaimer: Please only use this app at the appropriate times and when necessary.",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                            textAlign: TextAlign.center),
-                        Spacer(flex: 5),
+                        const Spacer(flex: 2),
+                        Animate(
+                          effects: const [
+                            MoveEffect(
+                              delay: Duration(milliseconds: 1000),
+                              curve: Curves.easeIn,
+                              duration: Duration(milliseconds: 1000),
+                            ),
+                            FadeEffect(
+                              begin: 0.0,
+                              duration: const Duration(milliseconds: 1000),
+                            )
+                          ],
+                          child: const Text(
+                              "Disclaimer: Please only use this app at the appropriate times and when necessary.",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                              textAlign: TextAlign.center),
+                        ),
+                        const Spacer(flex: 5),
                       ],
                     ),
                   )),
               Flexible(
                   fit: FlexFit.tight,
                   flex: 1,
-                  child: Container(
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                    child: FilledButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Colors.purpleAccent),
+                  child: Animate(
+                    effects: const [
+                      MoveEffect(
+                          delay: Duration(milliseconds: 2000),
+                          duration: Duration(milliseconds: 1000),
+                          curve: Curves.easeInToLinear),
+                      FadeEffect(
+                        begin: 0.0,
+                        duration: Duration(milliseconds: 1000),
+                      )
+                    ],
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: FilledButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.purpleAccent),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: const [
+                            Text("Get Started"),
+                            Icon(Icons.chevron_right_rounded)
+                          ],
+                        ),
+                        onPressed: () {},
                       ),
-                      child: Text("Get Started"),
-                      onPressed: () {},
                     ),
                   )),
               const Spacer(flex: 2),
