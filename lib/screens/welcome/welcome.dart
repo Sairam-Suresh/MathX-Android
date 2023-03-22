@@ -38,7 +38,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       child: const Text("MathX",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 30,
+                              fontSize: 60,
                               fontWeight: FontWeight.bold)),
                     )),
                     Center(
