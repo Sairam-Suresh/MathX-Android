@@ -14,46 +14,46 @@ class _ToolsPageState extends State<ToolsPage> {
       appBar: AppBar(title: Text("Tools")),
       body: GridView.count(
         primary: false,
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(10),
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         crossAxisCount: 2,
         children: <Widget>[
           ToolTile(
-            color: Colors.red,
-            child: Text("hello"),
+            color: Theme.of(context).primaryColor,
+            text: "hello",
           ),
           ToolTile(
-            color: Colors.red,
-            child: Text("hello"),
+            color: Theme.of(context).primaryColor,
+            text: "hello",
           ),
           ToolTile(
-            color: Colors.red,
-            child: Text("hello"),
+            color: Theme.of(context).primaryColor,
+            text: "hello",
           ),
           ToolTile(
-            color: Colors.red,
-            child: Text("hello"),
+            color: Theme.of(context).primaryColor,
+            text: "hello",
           ),
           ToolTile(
-            color: Colors.red,
-            child: Text("hello"),
+            color: Theme.of(context).primaryColor,
+            text: "hello",
           ),
           ToolTile(
-            color: Colors.red,
-            child: Text("hello"),
+            color: Theme.of(context).primaryColor,
+            text: "hello",
           ),
           ToolTile(
-            color: Colors.red,
-            child: Text("hello"),
+            color: Theme.of(context).primaryColor,
+            text: "hello",
           ),
           ToolTile(
-            color: Colors.red,
-            child: Text("hello"),
+            color: Theme.of(context).primaryColor,
+            text: "hello",
           ),
           ToolTile(
-            color: Colors.red,
-            child: Text("hello"),
+            color: Theme.of(context).primaryColor,
+            text: "hello",
           ),
         ],
       ),
@@ -62,10 +62,10 @@ class _ToolsPageState extends State<ToolsPage> {
 }
 
 class ToolTile extends StatelessWidget {
-  ToolTile({super.key, required this.color, required this.child});
+  ToolTile({super.key, required this.color, required this.text});
 
   final Color color;
-  final Widget child;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,11 @@ class ToolTile extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)), color: color),
       padding: const EdgeInsets.all(8),
-      child: child,
+      child: Center(
+          child: Text(
+        text,
+        style: TextStyle(color: Colors.white, fontSize: 30),
+      )),
     );
   }
 }
