@@ -117,7 +117,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ),
                         onPressed: () {
                           // TODO: Make the other tab view the permanent view once this view has been dismissed
-                          Navigator.pushReplacement(
+                          // WARN: During the merge into main make sure that this gets changed to "pushReplacement" during the merge conflict
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const TabRootController(
