@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'screens/tabs/tabRootController.dart';
+import 'package:mathx_android/screens/welcome/welcome.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const TabRootController(title: 'Flutter Demo Home Page'),
+      home: const WelcomeScreen(),
     );
   }
 }
