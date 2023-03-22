@@ -71,7 +71,14 @@ class ToolTile extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: color ?? Theme.of(context).primaryColor),
+          color: color ?? Theme.of(context).primaryColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              blurStyle: BlurStyle.outer,
+              blurRadius: 3,
+            )
+          ]),
       padding: const EdgeInsets.all(8),
       child: Center(
           child: FittedBox(
