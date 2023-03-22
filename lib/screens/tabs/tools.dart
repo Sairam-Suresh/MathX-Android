@@ -22,8 +22,8 @@ class _ToolsPageState extends State<ToolsPage> {
       body: GridView.count(
         primary: false,
         padding: const EdgeInsets.all(10),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        crossAxisSpacing: 14,
+        mainAxisSpacing: 14,
         crossAxisCount: 2,
         children: <Widget>[
           ToolTile(
@@ -72,14 +72,14 @@ class ToolTile extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           color: color ?? Theme.of(context).primaryColor,
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.grey,
               blurStyle: BlurStyle.outer,
               blurRadius: 3,
             )
           ]),
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(13),
       child: Center(
           child: FittedBox(
         fit: BoxFit.fitWidth,
