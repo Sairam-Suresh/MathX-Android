@@ -7,6 +7,13 @@ class ToolsPage extends StatefulWidget {
   State<ToolsPage> createState() => _ToolsPageState();
 }
 
+// this class acts as a data class which will help to contain a color, text, and a widget.
+class ToolsData {
+  late final Color color;
+  late final String toolName;
+  late final Widget widget;
+}
+
 class _ToolsPageState extends State<ToolsPage> {
   @override
   Widget build(BuildContext context) {
@@ -21,7 +28,15 @@ class _ToolsPageState extends State<ToolsPage> {
         children: <Widget>[
           ToolTile(
             color: Theme.of(context).primaryColor,
-            text: "hello",
+            text: "HCF and LCM",
+          ),
+          ToolTile(
+            color: Theme.of(context).primaryColor,
+            text: "Algebra",
+          ),
+          ToolTile(
+            color: Theme.of(context).primaryColor,
+            text: "Instruments",
           ),
           ToolTile(
             color: Theme.of(context).primaryColor,
@@ -33,15 +48,7 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
           ToolTile(
             color: Theme.of(context).primaryColor,
-            text: "hello",
-          ),
-          ToolTile(
-            color: Theme.of(context).primaryColor,
-            text: "hello",
-          ),
-          ToolTile(
-            color: Theme.of(context).primaryColor,
-            text: "hello",
+            text: "helllo",
           ),
           ToolTile(
             color: Theme.of(context).primaryColor,
@@ -74,9 +81,13 @@ class ToolTile extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10)), color: color),
       padding: const EdgeInsets.all(8),
       child: Center(
-          child: Text(
-        text,
-        style: TextStyle(color: Colors.white, fontSize: 30),
+          child: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white, fontSize: 30),
+        ),
       )),
     );
   }
