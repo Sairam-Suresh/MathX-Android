@@ -123,22 +123,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.2"
-  scroll_app_bar:
-    dependency: "direct main"
-    description:
-      name: scroll_app_bar
-      sha256: d9c84deffe25bb76ac46accc540bea1162d565f1c5401a387ecf9a3351cd9e8f
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
-  scroll_bars_common:
-    dependency: transitive
-    description:
-      name: scroll_bars_common
-      sha256: "9a46b430ca602b4fb6c15c6f021d85fd00e561b0b698f11cb13c9e032ee9d93e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
