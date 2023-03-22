@@ -11,10 +11,8 @@ class _CheatSheetPageState extends State<CheatSheetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("hello world"),
-        centerTitle: false,
-      ),
+      appBar:
+          AppBar(title: Text("hello world"), automaticallyImplyLeading: false),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: Icon(Icons.add),

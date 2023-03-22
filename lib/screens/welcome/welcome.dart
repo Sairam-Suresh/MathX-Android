@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:mathx_android/screens/tabs/tabRootController.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -114,7 +115,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             Icon(Icons.chevron_right_rounded)
                           ],
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          // TODO: Make the other tab view the permanent view once this view has been dismissed
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TabRootController(
+                                    title: "hello world")),
+                          );
+                        },
                       ),
                     ),
                   )),

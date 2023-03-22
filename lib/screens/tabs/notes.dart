@@ -10,6 +10,9 @@ class NotesPage extends StatefulWidget {
 class _NotesPageState extends State<NotesPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(title: Text("Notes"), automaticallyImplyLeading: false),
+      body: Placeholder(),
+    );
   }
 }

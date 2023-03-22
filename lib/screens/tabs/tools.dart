@@ -18,7 +18,7 @@ class _ToolsPageState extends State<ToolsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Tools")),
+      appBar: AppBar(title: Text("Tools"), automaticallyImplyLeading: false),
       body: GridView.count(
         primary: false,
         padding: const EdgeInsets.all(10),
