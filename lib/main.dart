@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
-import 'package:mathx_android/screens/tabs/tabRootController.dart';
+import 'package:mathx_android/screens/tools/ScientificCalculator.dart';
 import 'package:mathx_android/screens/welcome/welcome.dart';
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: kDebugMode
-            ? const TabRootController(title: "hello")
+            ? const ScientificCalculatorView()
             : const WelcomeScreen());
   }
 }
