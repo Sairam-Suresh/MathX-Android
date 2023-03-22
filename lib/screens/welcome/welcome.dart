@@ -17,12 +17,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 colors: [Colors.purpleAccent, Colors.white],
                 stops: [0.0, 1.0],
                 center: Alignment.topCenter,
-                radius: 1.5)),
+                radius: 2)),
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Center(
             child: Column(children: [
-              const Spacer(flex: 1),
+              const Spacer(flex: 3),
               Flexible(
                 fit: FlexFit.tight,
                 flex: 1,
@@ -35,20 +35,40 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold))),
                     Text("By AppCatalyst Inc",
-                        style: TextStyle(color: Colors.white)),
+                        style: TextStyle(color: Colors.white),
+                        textAlign: TextAlign.center),
                   ],
                 ),
               ),
-              const Flexible(
+              Flexible(
                   fit: FlexFit.tight,
-                  flex: 4,
+                  flex: 10,
                   child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Text(
-                        "Disclaimer: Please only use this app at the appropriate times and when necessary.",
-                        style: TextStyle(
-                          color: Colors.white,
-                        )),
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        Spacer(flex: 2),
+                        Text(
+                            "Disclaimer: Please only use this app at the appropriate times and when necessary.",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            textAlign: TextAlign.center),
+                        Spacer(flex: 5),
+                      ],
+                    ),
+                  )),
+              Flexible(
+                  fit: FlexFit.tight,
+                  flex: 1,
+                  child: Container(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    child: FilledButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.purpleAccent)),
+                      child: Text("hello world"),
+                      onPressed: () {},
+                    ),
                   ))
             ]),
           ),
