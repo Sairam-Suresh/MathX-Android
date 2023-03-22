@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -27,13 +28,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: Column(
-                  children: const [
+                  children: [
                     Center(
-                        child: Text("MathX",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold))),
+                        child: Animate(
+                      effects: [FadeEffect(duration: Duration(seconds: 2))],
+                      child: Text("MathX",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold)),
+                    )),
                     Text("By AppCatalyst Inc",
                         style: TextStyle(color: Colors.white),
                         textAlign: TextAlign.center),
@@ -42,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
               Flexible(
                   fit: FlexFit.tight,
-                  flex: 10,
+                  flex: 8,
                   child: Align(
                     alignment: Alignment.center,
                     child: Column(
@@ -64,12 +68,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         BoxDecoration(borderRadius: BorderRadius.circular(10)),
                     child: FilledButton(
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.purpleAccent)),
-                      child: Text("hello world"),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.purpleAccent),
+                      ),
+                      child: Text("Get Started"),
                       onPressed: () {},
                     ),
-                  ))
+                  )),
+              const Spacer(flex: 2),
             ]),
           ),
         ),
