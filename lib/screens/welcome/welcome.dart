@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:mathx_android/screens/tabs/tabRootController.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -16,7 +15,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       body: Container(
         decoration: const BoxDecoration(
             gradient: RadialGradient(
-                colors: [Colors.purpleAccent, Colors.white],
+                colors: [Color.fromARGB(255, 169, 100, 255), Colors.white],
                 stops: [0.0, 1.0],
                 center: Alignment.topCenter,
                 radius: 2)),
@@ -27,7 +26,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               const Spacer(flex: 3),
               Flexible(
                 fit: FlexFit.tight,
-                flex: 3,
+                flex: 4,
                 child: Column(
                   children: [
                     Center(
@@ -58,7 +57,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
               Flexible(
                   fit: FlexFit.tight,
-                  flex: 8,
+                  flex: 6,
                   child: Align(
                     alignment: Alignment.center,
                     child: Column(
@@ -106,7 +105,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       child: FilledButton(
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.purpleAccent),
+                              Color.fromARGB(255, 169, 100, 255)),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -118,12 +117,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         onPressed: () {
                           // TODO: Make the other tab view the permanent view once this view has been dismissed
                           // WARN: During the merge into main make sure that this gets changed to "pushReplacement" during the merge conflict
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const TabRootController(
-                                    title: "hello world")),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   // MaterialPageRoute(
+                          //   //     builder: (context) => const TabRootController(
+                          //   //         title: "hello world")),
+                          // );
                         },
                       ),
                     ),
