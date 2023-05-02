@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mathx_android/constants.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/HCFLCM.dart';
 import 'package:mathx_android/widgets/toolcard.dart';
 
 class ToolsPage extends StatelessWidget {
   ToolsPage({Key? key}) : super(key: key);
 
   List<Widget> listOfTools = [
-    ToolCard(name: "HCF & LCM"),
+    ToolCard(
+      name: "HCF & LCM",
+      child: HCFLCMPage(),
+    )
   ];
 
   @override
@@ -18,7 +22,7 @@ class ToolsPage extends StatelessWidget {
             crossAxisCount: 2,
           ),
           padding: EdgeInsets.all(PADDING_BETWEEN_SQUARES),
-          children: [ToolCard(name: "HCF & LCM")],
+          children: listOfTools,
         ));
   }
 }
