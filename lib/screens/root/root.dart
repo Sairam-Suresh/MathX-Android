@@ -11,11 +11,7 @@ class root extends StatefulWidget {
 }
 
 class _rootState extends State<root> {
-  List<Widget> tabs = [
-    const NotesPage(),
-    const CheatsheetPage(),
-    const ToolsPage()
-  ];
+  List<Widget> tabs = [const NotesPage(), const CheatsheetPage(), ToolsPage()];
 
   int selectedTab = 0;
 
