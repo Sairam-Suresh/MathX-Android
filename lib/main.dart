@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
-import 'package:mathx_android/screens/tabs/tabRootController.dart';
+import 'package:mathx_android/screens/root/root.dart';
 import 'package:mathx_android/screens/welcome/welcome.dart';
 
 void main() {
@@ -18,8 +18,6 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           useMaterial3: true,
         ),
-        home: kDebugMode
-            ? const TabRootController(title: "hello")
-            : const WelcomeScreen());
+        home: kDebugMode ? root() : const WelcomeScreen());
   }
 }
