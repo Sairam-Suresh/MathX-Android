@@ -10,6 +10,7 @@ class NotesPage extends StatefulWidget {
 }
 
 class _NotesPageState extends State<NotesPage> {
+  // TODO: Make this push to persistence
   List<Note> listOfNotes = [
     Note(
         name: "Note 1",

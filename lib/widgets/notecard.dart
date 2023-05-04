@@ -4,6 +4,8 @@ import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/HCFLCM.dart';
 import 'package:styled_widget/styled_widget.dart';
 
+// TODO: Make notecard redirect to editor view with required data
+
 class NoteCard extends StatelessWidget {
   NoteCard({Key? key, required this.note}) : super(key: key);
 
