@@ -5,9 +5,11 @@ import 'package:mathx_android/screens/root/tabs/Tools/tools/HCFLCM.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 class NoteCard extends StatelessWidget {
-  NoteCard({Key? key, required this.name}) : super(key: key);
+  NoteCard({Key? key, required this.name, required this.time})
+      : super(key: key);
 
   late String name;
+  late DateTime time;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,15 @@ class NoteCard extends StatelessWidget {
                   textAlign: TextAlign.left,
                   wrapWords: true,
                   overflow: TextOverflow.fade,
-                )
+                ),
+                AutoSizeText(
+                  "${time.day}/${time.month}/${time.year}",
+                  maxLines: 2,
+                  minFontSize: 15,
+                  textAlign: TextAlign.right,
+                  wrapWords: true,
+                  overflow: TextOverflow.fade,
+                ),
               ]).gestures(onTap: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
               // TODO: Make this push to a dedicated page which edits the data
