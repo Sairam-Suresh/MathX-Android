@@ -12,25 +12,41 @@ class NoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(PADDING_BETWEEN_SQUARES),
-        child: Center(
-                child: AutoSizeText(
-          name,
-          maxLines: 2,
-          minFontSize: 25,
-          textAlign: TextAlign.center,
-          wrapWords: true,
-          overflow: TextOverflow.fade,
-        ))
-            .card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          elevation: 1,
-        )
-            .gestures(onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return const HCFLCMPage();
-          }));
-        }));
+      padding: EdgeInsets.all(PADDING_BETWEEN_SQUARES / 2),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        elevation: 1,
+        child: Padding(
+          padding: EdgeInsets.all(PADDING_BETWEEN_SQUARES),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AutoSizeText(
+                  name,
+                  maxLines: 2,
+                  minFontSize: 25,
+                  textAlign: TextAlign.left,
+                  wrapWords: true,
+                  overflow: TextOverflow.fade,
+                ),
+                AutoSizeText(
+                  name,
+                  maxLines: 2,
+                  minFontSize: 15,
+                  textAlign: TextAlign.left,
+                  wrapWords: true,
+                  overflow: TextOverflow.fade,
+                )
+              ]).gestures(onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              // TODO: Make this push to a dedicated page which edits the data
+              return const HCFLCMPage();
+            }));
+          }),
+        ),
+      ),
+    );
   }
 }

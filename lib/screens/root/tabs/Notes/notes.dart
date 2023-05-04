@@ -16,7 +16,7 @@ class NotesPage extends StatelessWidget {
           crossAxisCount: 2,
         ),
         padding: EdgeInsets.all(PADDING_BETWEEN_SQUARES),
-        children: [NoteCard(name: "Note 1")],
+        children: [NoteCard(name: "Note 1"), NoteCard(name: "Note 1")],
       ),
     );
   }
