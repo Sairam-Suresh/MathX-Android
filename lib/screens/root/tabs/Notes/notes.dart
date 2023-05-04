@@ -29,10 +29,7 @@ class _NotesPageState extends State<NotesPage> {
   Widget build(BuildContext context) {
     noteCards = [];
     for (Note note in listOfNotes) {
-      noteCards.add(NoteCard(
-        name: note.name,
-        time: note.date,
-      ));
+      noteCards.add(NoteCard(note: note));
     }
 
     // Function to help refresh Notes List in case it was updated in the add notes sheet

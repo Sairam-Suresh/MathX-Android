@@ -5,11 +5,9 @@ import 'package:mathx_android/screens/root/tabs/Tools/tools/HCFLCM.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 class NoteCard extends StatelessWidget {
-  NoteCard({Key? key, required this.name, required this.time})
-      : super(key: key);
+  NoteCard({Key? key, required this.note}) : super(key: key);
 
-  late String name;
-  late DateTime time;
+  late Note note;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +24,7 @@ class NoteCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 AutoSizeText(
-                  name,
+                  note.name,
                   maxLines: 2,
                   minFontSize: 25,
                   textAlign: TextAlign.left,
@@ -34,7 +32,7 @@ class NoteCard extends StatelessWidget {
                   overflow: TextOverflow.fade,
                 ),
                 AutoSizeText(
-                  name,
+                  note.description,
                   maxLines: 2,
                   minFontSize: 15,
                   textAlign: TextAlign.left,
@@ -42,7 +40,7 @@ class NoteCard extends StatelessWidget {
                   overflow: TextOverflow.fade,
                 ),
                 AutoSizeText(
-                  "${time.day}/${time.month}/${time.year}",
+                  "${note.date.day}/${note.date.month}/${note.date.year}",
                   maxLines: 2,
                   minFontSize: 15,
                   textAlign: TextAlign.right,
