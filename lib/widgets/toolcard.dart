@@ -13,7 +13,7 @@ class ToolCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(PADDING_BETWEEN_SQUARES),
+        padding: EdgeInsets.all(PADDING_BETWEEN_SQUARES / 2),
         child: Center(
                 child: AutoSizeText(
           name,
