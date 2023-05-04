@@ -35,6 +35,11 @@ class _NotesPageState extends State<NotesPage> {
       ));
     }
 
+    // Function to help refresh Notes List in case it was updated in the add notes sheet
+    void outerSetState(dynamic value) {
+      setState(() {});
+    }
+
     String name = "";
     String desc = "";
     DateTime? time;
@@ -117,7 +122,7 @@ class _NotesPageState extends State<NotesPage> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text("Select Date"),
+                                  const Text("Select Date"),
                                   Icon(
                                       time != null ? Icons.check : Icons.close),
                                 ],
@@ -136,6 +141,12 @@ class _NotesPageState extends State<NotesPage> {
                                     content: "",
                                   ));
                                 });
+                                name = "";
+                                desc = "";
+                                time = null;
+
+                                setState(() {});
+                                outerSetState(null);
                                 Navigator.pop(context);
                               },
                               child: const Text("Save"),
