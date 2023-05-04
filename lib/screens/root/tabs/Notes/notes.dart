@@ -11,6 +11,10 @@ class NotesPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Notes"),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
       body: GridView(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
