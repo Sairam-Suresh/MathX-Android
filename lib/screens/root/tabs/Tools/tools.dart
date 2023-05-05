@@ -19,8 +19,7 @@ class ToolsPage extends StatelessWidget {
         appBar: AppBar(title: const Text("Tools")),
         body: GridView(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
+              crossAxisCount: 2, childAspectRatio: 1),
           padding: EdgeInsets.all(PADDING_BETWEEN_SQUARES),
           children: listOfTools,
         ));
