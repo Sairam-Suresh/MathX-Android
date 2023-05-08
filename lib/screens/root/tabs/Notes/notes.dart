@@ -56,7 +56,7 @@ class _NotesPageState extends State<NotesPage> {
                   return StatefulBuilder(
                       builder: (BuildContext context, StateSetter setState) {
                     return Padding(
-                      padding: const EdgeInsets.all(15),
+                      padding: EdgeInsets.all(PADDING_FOR_MODAL_BOTTOM_SHEET),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
