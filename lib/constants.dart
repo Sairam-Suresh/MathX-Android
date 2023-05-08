@@ -1,6 +1,8 @@
 // Tools View
 
-double PADDING_BETWEEN_SQUARES = 10;
+const double PADDING_BETWEEN_SQUARES = 10;
+
+const double PADDING_FOR_MODAL_BOTTOM_SHEET = 15;
 
 class Note {
   Note(
