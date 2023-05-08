@@ -8,10 +8,60 @@ class ToolsPage extends StatelessWidget {
 
   List<Widget> listOfTools = [
     ToolCard(
-      name: "HCF & LCM",
+      name: "Calculator",
+      category: ToolCategory.Calculators,
+      child: Container(),
+    ),
+    ToolCard(
+      name: "Average Calculator",
       category: ToolCategory.Calculators,
       child: const HCFLCMPage(),
-    )
+    ),
+    ToolCard(
+      name: "HCF & LCM Calculator",
+      category: ToolCategory.Calculators,
+      child: Container(),
+    ),
+    ToolCard(
+      name: "Pythagoras Theorem Calculator",
+      category: ToolCategory.Calculators,
+      child: Container(),
+    ),
+    ToolCard(
+      name: "Quadratic Calculator",
+      category: ToolCategory.Calculators,
+      child: Container(),
+    ),
+    ToolCard(
+      name: "Set Calculator",
+      category: ToolCategory.Calculators,
+      child: Container(),
+    ),
+    ToolCard(
+      name: "Shapes Calculator",
+      category: ToolCategory.Calculators,
+      child: Container(),
+    ),
+    ToolCard(
+      name: "Trigonometry Calculator",
+      category: ToolCategory.Calculators,
+      child: Container(),
+    ),
+    ToolCard(
+      name: "Grapher (Desmos)",
+      category: ToolCategory.Graphers,
+      child: Container(),
+    ),
+    ToolCard(
+      name: "Randomise",
+      category: ToolCategory.Randomise,
+      child: Container(),
+    ),
+    ToolCard(
+      name: "Unit Converter",
+      category: ToolCategory.Unit_Converter,
+      child: Container(),
+    ),
   ];
 
   @override

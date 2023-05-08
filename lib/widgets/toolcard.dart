@@ -27,7 +27,7 @@ class ToolCard extends StatelessWidget {
         break;
       case ToolCategory.Graphers:
         categoryIcon = Icons.graphic_eq;
-        categoryName = "Graphers";
+        categoryName = 'Grapher';
         break;
       case ToolCategory.Randomise:
         categoryIcon = Icons.shuffle;
@@ -58,15 +58,20 @@ class ToolCard extends StatelessWidget {
                       ],
                     )
                   : Container()),
-          Center(
-              child: AutoSizeText(
-            name,
-            maxLines: 2,
-            minFontSize: 25,
-            textAlign: TextAlign.center,
-            wrapWords: true,
-            overflow: TextOverflow.fade,
-          ))
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Center(
+                child: AutoSizeText(
+              name,
+              maxLines: 3,
+              maxFontSize: 40,
+              minFontSize: 25,
+              overflow: TextOverflow.visible,
+              textAlign: TextAlign.center,
+              wrapWords: true,
+              // overflow: TextOverflow.fade,
+            )),
+          )
         ])
             .card(
           shape:
