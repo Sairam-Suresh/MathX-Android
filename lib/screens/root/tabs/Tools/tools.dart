@@ -186,9 +186,9 @@ class _ToolsPageState extends State<ToolsPage> {
                                   ),
                                   Row(
                                     children: [
-                                      Spacer(),
+                                      const Spacer(),
                                       Padding(
-                                        padding: EdgeInsets.only(top: 10),
+                                        padding: const EdgeInsets.only(top: 10),
                                         child: FilledButton(
                                             onPressed: () {
                                               setState(() {
@@ -202,20 +202,20 @@ class _ToolsPageState extends State<ToolsPage> {
                                               outerSetState("among");
                                               Navigator.pop(context);
                                             },
-                                            child: Text("Clear filters")),
+                                            child: const Text("Clear filters")),
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                       Padding(
-                                        padding: EdgeInsets.only(top: 10),
+                                        padding: const EdgeInsets.only(top: 10),
                                         child: FilledButton(
                                             onPressed: () {
                                               setState(() {});
                                               outerSetState("among1");
                                               Navigator.pop(context);
                                             },
-                                            child: Text("Apply filters")),
+                                            child: const Text("Apply filters")),
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                     ],
                                   )
                                 ],
