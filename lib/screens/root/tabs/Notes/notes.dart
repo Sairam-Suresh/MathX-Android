@@ -130,23 +130,26 @@ class _NotesPageState extends State<NotesPage> {
                           const Spacer(flex: 6),
                           Center(
                             child: FilledButton(
-                              onPressed: () {
-                                setState(() {
-                                  listOfNotes.add(Note(
-                                    name: name,
-                                    description: desc,
-                                    date: time!,
-                                    content: "",
-                                  ));
-                                });
-                                name = "";
-                                desc = "";
-                                time = null;
+                              onPressed:
+                                  name == "" || desc == "" || time == null
+                                      ? null
+                                      : () {
+                                          setState(() {
+                                            listOfNotes.add(Note(
+                                              name: name,
+                                              description: desc,
+                                              date: time!,
+                                              content: "",
+                                            ));
+                                          });
+                                          name = "";
+                                          desc = "";
+                                          time = null;
 
-                                setState(() {});
-                                outerSetState(null);
-                                Navigator.pop(context);
-                              },
+                                          setState(() {});
+                                          outerSetState(null);
+                                          Navigator.pop(context);
+                                        },
                               child: const Text("Save"),
                             ),
                           ),
