@@ -65,7 +65,7 @@ class ToolCard extends StatelessWidget {
               name,
               maxLines: 3,
               maxFontSize: 40,
-              minFontSize: 25,
+              minFontSize: 18,
               overflow: TextOverflow.visible,
               textAlign: TextAlign.center,
               wrapWords: true,

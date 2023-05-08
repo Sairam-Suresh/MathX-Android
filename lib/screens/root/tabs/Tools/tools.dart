@@ -20,12 +20,12 @@ class _ToolsPageState extends State<ToolsPage> {
     ToolCard(
       name: "Average Calculator",
       category: ToolCategory.Calculators,
-      child: const HCFLCMPage(),
+      child: Container(),
     ),
     ToolCard(
       name: "HCF & LCM Calculator",
       category: ToolCategory.Calculators,
-      child: Container(),
+      child: HCFLCMPage(),
     ),
     ToolCard(
       name: "Pythagoras Theorem Calculator",
