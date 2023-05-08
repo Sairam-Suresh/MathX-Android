@@ -18,14 +18,14 @@ class _rootState extends State<root> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.note), label: "Notes"),
-          BottomNavigationBarItem(icon: Icon(Icons.book), label: "Cheatsheet"),
-          BottomNavigationBarItem(icon: Icon(Icons.pan_tool), label: "Tools")
+      bottomNavigationBar: NavigationBar(
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.note), label: "Notes"),
+          NavigationDestination(icon: Icon(Icons.book), label: "Cheatsheet"),
+          NavigationDestination(icon: Icon(Icons.pan_tool), label: "Tools")
         ],
-        currentIndex: selectedTab,
-        onTap: (index) {
+        selectedIndex: selectedTab,
+        onDestinationSelected: (index) {
           setState(() {
             selectedTab = index;
           });
