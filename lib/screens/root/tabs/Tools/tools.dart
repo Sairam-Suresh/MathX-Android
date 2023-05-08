@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/HCFLCM.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/grapher.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/UnitConverter.dart';
 import 'package:mathx_android/widgets/toolcard.dart';
 
 class ToolsPage extends StatelessWidget {
@@ -10,6 +12,14 @@ class ToolsPage extends StatelessWidget {
     ToolCard(
       name: "HCF & LCM",
       child: HCFLCMPage(),
+    ),
+    ToolCard(
+      name: "Desmos Grapher",
+      child: const GrapherPage(),
+    ),
+    ToolCard(
+      name: "Unit Converter",
+      child: const UnitConverterPage(),
     )
   ];
 
