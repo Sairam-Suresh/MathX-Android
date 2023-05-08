@@ -1,4 +1,5 @@
 // Tools View
+
 double PADDING_BETWEEN_SQUARES = 10;
 
 class Note {
@@ -11,4 +12,11 @@ class Note {
   late String description;
   late DateTime date;
   late String content;
+}
+
+enum ToolCategory {
+  Calculators,
+  Graphers,
+  Randomise,
+  Unit_Converter;
 }

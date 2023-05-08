@@ -9,7 +9,8 @@ class ToolsPage extends StatelessWidget {
   List<Widget> listOfTools = [
     ToolCard(
       name: "HCF & LCM",
-      child: HCFLCMPage(),
+      category: ToolCategory.Calculators,
+      child: const HCFLCMPage(),
     )
   ];
 
