@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/HCFLCM.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/UnitConverter.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/grapher.dart';
 import 'package:mathx_android/widgets/toolcard.dart';
 
 class ToolsPage extends StatefulWidget {
@@ -55,7 +57,7 @@ class _ToolsPageState extends State<ToolsPage> {
     ToolCard(
       name: "Grapher (Desmos)",
       category: ToolCategory.Graphers,
-      child: Container(),
+      child: const GrapherPage(),
     ),
     ToolCard(
       name: "Randomise",
@@ -65,7 +67,7 @@ class _ToolsPageState extends State<ToolsPage> {
     ToolCard(
       name: "Unit Converter",
       category: ToolCategory.Unit_Converter,
-      child: Container(),
+      child: const UnitConverterPage(),
     ),
   ];
 
