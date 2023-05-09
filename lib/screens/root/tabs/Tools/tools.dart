@@ -55,6 +55,11 @@ class _ToolsPageState extends State<ToolsPage> {
       child: Container(),
     ),
     ToolCard(
+      name: "Binary Calculator",
+      category: ToolCategory.Calculators,
+      child: Container(),
+    ),
+    ToolCard(
       name: "Grapher (Desmos)",
       category: ToolCategory.Graphers,
       child: const GrapherPage(),
