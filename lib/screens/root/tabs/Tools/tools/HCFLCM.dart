@@ -34,6 +34,7 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                 setState(() {
                   textFields.add('');
                 });
+                print(textFields.length);
               }
             },
           ),
@@ -55,7 +56,9 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                         name: 'text_$index',
                         onChanged: (value) {
                           _formKey.currentState?.save();
-                          if (_formKey.currentState?.validate() == true) {}
+                          if (_formKey.currentState?.validate() == true) {
+                            setState(() {});
+                          }
                         },
                         decoration: InputDecoration(
                           labelText: 'Text ${index + 1}',
@@ -80,16 +83,18 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () {
-                  _formKey.currentState?.save();
-                  if (_formKey.currentState?.validate() == true) {
-                    // Retrieve all form field values
-                    Map<String, dynamic> formValues =
-                        _formKey.currentState?.value ?? {};
-                    // Process the form data as needed
-                    print(formValues);
-                  }
-                },
+                onPressed: textFields.length >= 2
+                    ? () {
+                        _formKey.currentState?.save();
+                        if (_formKey.currentState?.validate() == true) {
+                          // Retrieve all form field values
+                          Map<String, dynamic> formValues =
+                              _formKey.currentState?.value ?? {};
+                          // Process the form data as needed
+                          print(formValues);
+                        }
+                      }
+                    : null,
                 child: const Text('Get Results'),
               ),
               const SizedBox(height: 16.0),
