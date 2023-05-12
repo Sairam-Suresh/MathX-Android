@@ -27,7 +27,7 @@ class _ToolsPageState extends State<ToolsPage> {
     ToolCard(
       name: "HCF & LCM Calculator",
       category: ToolCategory.Calculators,
-      child: HCFLCMPage(),
+      child: const HCFLCMPage(),
     ),
     ToolCard(
       name: "Pythagoras Theorem Calculator",
