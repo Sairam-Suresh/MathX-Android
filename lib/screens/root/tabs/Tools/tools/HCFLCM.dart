@@ -23,14 +23,22 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("HCF & LCM")
-          //     , actions: [
-          //   IconButton(
-          //     icon: Icon(Icons.add),
-          //     onPressed: addTextField,
-          //   )
-          // ]
+      appBar: AppBar(title: const Text("HCF & LCM"), actions: [
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              _formKey.currentState?.save();
+              if (_formKey.currentState?.validate() == true) {
+                setState(() {
+                  textFields.add('');
+                });
+              }
+            },
           ),
+        ),
+      ]),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: FormBuilder(
@@ -52,7 +60,7 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                         decoration: InputDecoration(
                           labelText: 'Text ${index + 1}',
                           suffixIcon: IconButton(
-                            icon: Icon(Icons.delete),
+                            icon: const Icon(Icons.delete),
                             onPressed: () {
                               setState(() {
                                 textFields.removeAt(index);
@@ -70,19 +78,7 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                   },
                 ),
               ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  _formKey.currentState?.save();
-                  if (_formKey.currentState?.validate() == true) {
-                    setState(() {
-                      textFields.add('');
-                    });
-                  }
-                },
-                child: Text('Add TextField'),
-              ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
                   _formKey.currentState?.save();
@@ -94,8 +90,9 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                     print(formValues);
                   }
                 },
-                child: Text('Submit'),
+                child: const Text('Get Results'),
               ),
+              const SizedBox(height: 16.0),
             ],
           ),
         ),
