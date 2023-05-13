@@ -22,3 +22,7 @@ enum ToolCategory {
   Randomise,
   Unit_Converter;
 }
+
+enum HCFLCM { HCF, LCM }
+
+enum HCFOptions { primeNumberOnly }
