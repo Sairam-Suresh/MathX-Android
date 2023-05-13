@@ -27,7 +27,7 @@ int calculateLCM(int a, int b) {
   return lcm;
 }
 
-int calculateLCMOfMultiple(List<int> numbers) {
+int calculateLCMForMultiple(List<int> numbers) {
   int lcm = numbers[0];
 
   for (int i = 1; i < numbers.length; i++) {
@@ -35,4 +35,14 @@ int calculateLCMOfMultiple(List<int> numbers) {
   }
 
   return lcm;
+}
+
+int calculateHCFForMultiple(List<int> numbers) {
+  int hcf = numbers[0];
+
+  for (int i = 1; i < numbers.length; i++) {
+    hcf = calculateHCF(hcf, numbers[i]);
+  }
+
+  return hcf;
 }

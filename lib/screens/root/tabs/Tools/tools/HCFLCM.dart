@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mathx_android/constants.dart';
+import 'package:mathx_android/logic/tools/HCFLCMCalculator.dart';
 
 class TextFieldData {
   final String text;
@@ -19,9 +22,10 @@ class HCFLCMPage extends StatefulWidget {
 }
 
 class _HCFLCMPageState extends State<HCFLCMPage> {
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+  GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   List<String> textFields = [];
   Map<String, dynamic> formValues = {};
+  List<int> values = [];
   HCFLCM selectedMode = HCFLCM.HCF;
 
   @override
@@ -34,11 +38,51 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                 onClosing: () {},
                 builder: (BuildContext context) {
                   return SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.3,
+                      // height: MediaQuery.of(context).size.height * 0.3,
                       width: MediaQuery.of(context).size.width,
-                      child: Text("hello"));
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 15, left: 15, right: 15, bottom: 30),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                selectedMode == HCFLCM.HCF
+                                    ? "Highest Common Factor"
+                                    : "Lowest Common Multiple",
+                                style: const TextStyle(fontSize: 25),
+                              ),
+                              Text(
+                                (_formKey.currentState?.isValid ?? false) &&
+                                        values.isNotEmpty &&
+                                        textFields.length >= 2
+                                    ? selectedMode == HCFLCM.HCF
+                                        ? calculateHCFForMultiple(values)
+                                            .toString()
+                                        : calculateLCMForMultiple(values)
+                                            .toString()
+                                    : "--",
+                                style: const TextStyle(fontSize: 40),
+                                textAlign: TextAlign.center,
+                              )
+                            ],
+                          )));
                 }),
         appBar: AppBar(title: const Text("HCF & LCM"), actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              setState(() {
+                _formKey.currentState?.reset();
+                _formKey.currentState?.save();
+
+                values.clear();
+                textFields.clear();
+                formValues.clear();
+                values.clear();
+              });
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
@@ -46,8 +90,11 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
               if (_formKey.currentState?.validate() == true) {
                 setState(() {
                   textFields.add('');
+                  formValues = _formKey.currentState?.value ?? {};
+                  values =
+                      formValues.values.map((e) => int.parse(e))?.toList() ??
+                          [];
                 });
-                print(textFields.length);
               }
             },
           ),
@@ -66,10 +113,23 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                 right: 16.0),
             child: FormBuilder(
               key: _formKey,
+              onChanged: () {
+                if (_formKey.currentState?.validate() == true) {
+                  formValues =
+                      json.decode(json.encode(_formKey.currentState?.value)) ??
+                          {};
+                  values = formValues.values.map((e) => int.parse(e)).toList();
+
+                  // print("-------------------------------");
+                  // print(_formKey.currentState?.value);
+                  // print("-------------------------------");
+                  setState(() {});
+                }
+              },
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.only(bottom: 10),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.height,
                       child: SegmentedButton(
@@ -94,23 +154,23 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: FormBuilderTextField(
                             name: 'text_$index',
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               _formKey.currentState?.save();
-                              if (_formKey.currentState?.validate() == true) {
-                                setState(() {});
-                              }
+                              formValues = json.decode(json
+                                      .encode(_formKey.currentState?.value)) ??
+                                  {};
+                              values = formValues.values
+                                  .map((e) => int.parse(e))
+                                  .toList();
+
+                              print(formValues);
+                              print(values);
+                              setState(() {});
                             },
                             decoration: InputDecoration(
-                              labelText: 'Text ${index + 1}',
-                              suffixIcon: IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () {
-                                  setState(() {
-                                    textFields.removeAt(index);
-                                  });
-                                },
-                              ),
-                            ),
+                                labelText: 'Number ${index + 1}'),
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(),
                               FormBuilderValidators.numeric(
@@ -121,36 +181,6 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                       },
                     ),
                   ),
-                  // const SizedBox(height: 16.0),
-                  // ElevatedButton(
-                  //   onPressed: textFields.length >= 2
-                  //       ? () {
-                  //           _formKey.currentState?.save();
-                  //           if (_formKey.currentState?.validate() == true) {
-                  //             // Retrieve all form field values
-                  //             formValues = _formKey.currentState?.value ?? {};
-                  //             // Process the form data as needed
-                  //
-                  //             showModalBottomSheet(
-                  //                 context: context,
-                  //                 builder: (context) {
-                  //                   return BottomSheet(
-                  //                     builder: (context) {
-                  //                       return const Expanded(
-                  //                         child: Padding(
-                  //                             padding: EdgeInsets.all(
-                  //                                 PADDING_FOR_MODAL_BOTTOM_SHEET),
-                  //                             child: Text("hi")),
-                  //                       );
-                  //                     },
-                  //                     onClosing: () {},
-                  //                   );
-                  //                 });
-                  //           }
-                  //         }
-                  //       : null,
-                  //   child: const Text('Get Results'),
-                  // )
                 ],
               ),
             ),
