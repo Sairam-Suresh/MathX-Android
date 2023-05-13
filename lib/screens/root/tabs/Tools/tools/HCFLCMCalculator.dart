@@ -3,7 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mathx_android/constants.dart';
-import 'package:mathx_android/logic/tools/HCFLCMCalculator.dart';
+import 'package:mathx_android/logic/tools/HCFLCMLogic.dart';
 
 class HCFLCMPage extends StatefulWidget {
   const HCFLCMPage({Key? key}) : super(key: key);
@@ -34,6 +34,8 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Need to make HCF have an option to have only prime numbers
+
     return KeyboardVisibilityBuilder(builder: (context, keyboardVisible) {
       return Scaffold(
         bottomSheet: keyboardVisible

@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mathx_android/constants.dart';
-import 'package:mathx_android/screens/root/tabs/Tools/tools/HCFLCM.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/HCFLCMCalculator.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // TODO: Make notecard redirect to editor view with required data
