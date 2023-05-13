@@ -4,6 +4,7 @@ import 'package:mathx_android/screens/root/tabs/Tools/tools/HCFLCMCalculator.dar
 import 'package:mathx_android/screens/root/tabs/Tools/tools/UnitConverter.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/average_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/grapher.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/pythagoras_theorem_calculator.dart';
 import 'package:mathx_android/widgets/toolcard.dart';
 
 class ToolsPage extends StatefulWidget {
@@ -33,7 +34,7 @@ class _ToolsPageState extends State<ToolsPage> {
     ToolCard(
       name: "Pythagoras Theorem Calculator",
       category: ToolCategory.Calculators,
-      child: Container(),
+      child: PythagorasTheoremCalculatorPage(),
     ),
     ToolCard(
       name: "Quadratic Calculator",
