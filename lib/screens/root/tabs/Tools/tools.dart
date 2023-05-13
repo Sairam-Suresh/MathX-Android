@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mathx_android/constants.dart';
-import 'package:mathx_android/screens/root/tabs/Tools/tools/HCFLCM.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/HCFLCMCalculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/UnitConverter.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/average_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/grapher.dart';
 import 'package:mathx_android/widgets/toolcard.dart';
 
@@ -22,7 +23,7 @@ class _ToolsPageState extends State<ToolsPage> {
     ToolCard(
       name: "Average Calculator",
       category: ToolCategory.Calculators,
-      child: Container(),
+      child: AverageCalculatorPage(),
     ),
     ToolCard(
       name: "HCF & LCM Calculator",
