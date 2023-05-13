@@ -26,3 +26,5 @@ enum ToolCategory {
 enum HCFLCM { HCF, LCM }
 
 enum HCFOptions { primeNumberOnly }
+
+enum Averages { mean, median, mode, standardDeviation }

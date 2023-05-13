@@ -23,7 +23,7 @@ class _ToolsPageState extends State<ToolsPage> {
     ToolCard(
       name: "Average Calculator",
       category: ToolCategory.Calculators,
-      child: AverageCalculatorPage(),
+      child: const AverageCalculatorPage(),
     ),
     ToolCard(
       name: "HCF & LCM Calculator",
