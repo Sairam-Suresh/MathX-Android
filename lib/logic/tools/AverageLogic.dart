@@ -23,9 +23,9 @@ Map<num, int> calculateMode(List<num> numbers) {
   if (numbers.isEmpty) return {};
 
   Map<num, int> frequencyMap = {};
-  numbers.forEach((num) {
+  for (var num in numbers) {
     frequencyMap[num] = (frequencyMap[num] ?? 0) + 1;
-  });
+  }
 
   int maxFrequency = frequencyMap.values.reduce(max);
   Map<num, int> modeMap = {};
