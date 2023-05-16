@@ -43,7 +43,44 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                                 list.map((e) => int.tryParse(e) ?? 0).toList())
                             .toString()
                     : "--",
-              )
+                style: const TextStyle(fontSize: 30),
+              ),
+              list.length < 2
+                  ? const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: Center(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.warning_amber),
+                            SizedBox(width: 10),
+                            AutoSizeText(
+                                "Please ensure that there are at least 2 numbers",
+                                maxLines: 2,
+                                textAlign: TextAlign.justify),
+                          ],
+                        ),
+                      ),
+                    )
+                  : !(formKey.currentState?.isValid ?? false)
+                      ? Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.warning_amber),
+                              SizedBox(width: 10),
+                              AutoSizeText(
+                                  "Please ensure all numbers are filled and valid.",
+                                  maxLines: 2,
+                                  textAlign: TextAlign.justify),
+                            ],
+                          ),
+                        )
+                      : Container(),
             ],
           );
         });
