@@ -121,8 +121,9 @@ class _NotesPageState extends State<NotesPage> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   const Text("Select Date"),
-                                  Icon(
-                                      time != null ? Icons.check : Icons.close),
+                                  Icon(time != null
+                                      ? Icons.check
+                                      : Icons.calendar_month),
                                 ],
                               ),
                             ),
