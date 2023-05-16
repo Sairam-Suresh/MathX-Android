@@ -3,35 +3,36 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-class Tooltemplate extends StatefulWidget {
-  Tooltemplate(
+class ToolTemplate extends StatefulWidget {
+  ToolTemplate(
       {Key? key,
       required this.appbar,
       this.segmentedButtonMultiSelect,
       required this.options,
-      required this.bottomSheetContent})
+      required this.bottomSheetContent,
+      this.limitEntries,
+      this.validatorComposer})
       : super(key: key);
 
-  late AppBar appBar;
+  // Generic Arguments
   late bool? segmentedButtonMultiSelect;
-  late Map<String, dynamic> options;
-
+  late Map<String, dynamic>? options;
   late Function(List<String> list, Set<dynamic>? selectedValues,
       GlobalKey<FormBuilderState> formKey) bottomSheetContent;
+  late AppBar appbar;
 
-  var appbar = AppBar(
-    title: const Text("HCF & LCM Calculator"),
-  );
+  late List? limitEntries;
+  late dynamic validatorComposer;
 
   @override
-  _TooltemplateState createState() => _TooltemplateState();
+  _ToolTemplateState createState() => _ToolTemplateState();
 }
 
-class _TooltemplateState extends State<Tooltemplate> {
+class _ToolTemplateState extends State<ToolTemplate> {
   final _formKey = GlobalKey<FormBuilderState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  List<String> textFieldValues = [""];
+  List<String> textFieldValues = [];
 
   var generatedAppBar = AppBar(
     title: const Text(""),
@@ -55,7 +56,15 @@ class _TooltemplateState extends State<Tooltemplate> {
 
   @override
   void initState() {
-    selectedValues = {widget.options.entries.first.value};
+    selectedValues =
+        widget.options != null ? {widget.options!.entries.first.value} : {};
+
+    if (widget.limitEntries != null) {
+      for (String _ in widget.limitEntries!) {
+        textFieldValues.add("");
+      }
+    }
+    setState(() {});
     super.initState();
   }
 
@@ -68,16 +77,18 @@ class _TooltemplateState extends State<Tooltemplate> {
   Widget build(BuildContext context) {
     generatedAppBar = AppBar(
       title: widget.appbar.title,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.undo),
-          onPressed: deleteTextField,
-        ),
-        IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: addTextField,
-        ),
-      ],
+      actions: widget.limitEntries == null
+          ? [
+              IconButton(
+                icon: const Icon(Icons.undo),
+                onPressed: deleteTextField,
+              ),
+              IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: addTextField,
+              ),
+            ]
+          : null,
     );
 
     return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
@@ -88,6 +99,7 @@ class _TooltemplateState extends State<Tooltemplate> {
                 width: MediaQuery.of(context).size.width,
                 child: BottomSheet(
                     onClosing: () {},
+                    enableDrag: false,
                     builder: (BuildContext context) {
                       return SizedBox(
                           width: MediaQuery.of(context).size.width,
@@ -110,7 +122,7 @@ class _TooltemplateState extends State<Tooltemplate> {
                       child: SizedBox(
                         width: MediaQuery.of(context).size.height,
                         child: SegmentedButton(
-                          segments: widget.options.entries
+                          segments: widget.options!.entries
                               .map((e) => ButtonSegment(
                                   value: e.value, label: Text(e.key)))
                               .toList(),
@@ -138,20 +150,28 @@ class _TooltemplateState extends State<Tooltemplate> {
                     children: [
                       Expanded(
                         child: ListView.builder(
-                          itemCount: textFieldValues.length,
+                          itemCount: widget.limitEntries == null
+                              ? textFieldValues.length
+                              : widget.limitEntries!.length,
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 10),
                               child: FormBuilderTextField(
-                                name: 'number_${index + 1}',
+                                name: widget.limitEntries == null
+                                    ? 'number_${index + 1}'
+                                    : widget.limitEntries![index],
                                 autovalidateMode: AutovalidateMode.always,
-                                validator: FormBuilderValidators.compose([
-                                  FormBuilderValidators.numeric(),
-                                  FormBuilderValidators.required()
-                                ]),
+                                validator: widget.validatorComposer != null
+                                    ? widget.validatorComposer!
+                                    : FormBuilderValidators.compose([
+                                        FormBuilderValidators.numeric(),
+                                        FormBuilderValidators.required()
+                                      ]),
                                 decoration: InputDecoration(
-                                  labelText: 'Number ${index + 1}',
+                                  labelText: widget.limitEntries == null
+                                      ? 'Number ${index + 1}'
+                                      : widget.limitEntries![index],
                                 ),
                                 onChanged: (value) {
                                   setState(() {

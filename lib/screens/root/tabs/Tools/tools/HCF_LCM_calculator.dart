@@ -65,7 +65,7 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                       ),
                     )
                   : !(formKey.currentState?.isValid ?? false)
-                      ? Center(
+                      ? const Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,

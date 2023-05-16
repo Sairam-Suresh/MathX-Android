@@ -43,33 +43,41 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
           });
 
           return Column(mainAxisSize: MainAxisSize.min, children: [
-            Text(
+            const Text(
               "Average",
               style: TextStyle(fontSize: 25),
             ),
             selectedValues!.contains(Averages.mean)
                 ? ListTile(
-                    title: Text("Mean"),
+                    title: const Text("Mean"),
                     trailing: (formKey.currentState?.isValid ?? false)
-                        ? Text(calculateMean(
-                                list.map((e) => num.tryParse(e) ?? 0).toList())
-                            .toString())
-                        : Text("--"),
+                        ? Text(
+                            calculateMean(list
+                                    .map((e) => num.tryParse(e) ?? 0)
+                                    .toList())
+                                .toString(),
+                            style: TextStyle(fontSize: 20),
+                          )
+                        : const Text("--"),
                   )
                 : Container(),
             selectedValues.contains(Averages.median)
                 ? ListTile(
-                    title: Text("Median"),
+                    title: const Text("Median"),
                     trailing: (formKey.currentState?.isValid ?? false)
-                        ? Text(calculateMedian(
-                                list.map((e) => num.tryParse(e) ?? 0).toList())
-                            .toString())
-                        : Text("--"),
+                        ? Text(
+                            calculateMedian(list
+                                    .map((e) => num.tryParse(e) ?? 0)
+                                    .toList())
+                                .toString(),
+                            style: TextStyle(fontSize: 20),
+                          )
+                        : const Text("--"),
                   )
                 : Container(),
             selectedValues.contains(Averages.mode)
                 ? ListTile(
-                    title: Text("Mode"),
+                    title: const Text("Mode"),
                     trailing: (formKey.currentState?.isValid ?? false)
                         ? SizedBox(
                             width: MediaQuery.of(context).size.width * 0.6,
@@ -77,22 +85,42 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                               modeText,
                               maxLines: 3,
                               minFontSize: 10,
-                              maxFontSize: 20,
+                              maxFontSize: 30,
                               textAlign: TextAlign.end,
                             ))
-                        : Text("--"),
+                        : const Text("--"),
                   )
                 : Container(),
             selectedValues.contains(Averages.standardDeviation)
                 ? ListTile(
-                    title: Text("Standard Deviation"),
+                    title: const Text("Standard Deviation"),
                     trailing: (formKey.currentState?.isValid ?? false)
-                        ? Text(calculateStandardDeviation(
-                                list.map((e) => num.parse(e)).toList())
-                            .toString())
+                        ? Text(
+                            calculateStandardDeviation(
+                                    list.map((e) => num.parse(e)).toList())
+                                .toString(),
+                            style: TextStyle(fontSize: 20),
+                          )
                         : const Text("--"),
                   )
                 : Container(),
+            !(formKey.currentState?.isValid ?? false)
+                ? const Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.warning_amber),
+                        SizedBox(width: 10),
+                        AutoSizeText(
+                            "Please ensure all numbers are filled and valid.",
+                            maxLines: 2,
+                            textAlign: TextAlign.justify),
+                      ],
+                    ),
+                  )
+                : Container()
           ]);
         });
   }
