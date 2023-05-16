@@ -39,10 +39,12 @@ dependencies:
   styled_widget: ^0.4.1
   auto_size_text: ^3.0.0
   webview_flutter: ^4.2.0
-  flutter_form_builder: ^8.0.0
-  form_builder_validators: ^8.6.1
+  flutter_form_builder: any
+  form_builder_validators: any
   flutter_keyboard_visibility: ^5.4.1
   equations: ^4.1.0
+  flutter_custom_clippers: ^2.1.0
+  flutter_shapes: ^0.3.0
 
 dev_dependencies:
   flutter_test:
