@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:mathx_android/logic/tools/QuadraticSolverLogic.dart';
 import 'package:mathx_android/widgets/tooltemplate.dart';
 
 class QuadraticCalculator extends StatefulWidget {
@@ -10,6 +11,8 @@ class QuadraticCalculator extends StatefulWidget {
 }
 
 class _QuadraticCalculatorState extends State<QuadraticCalculator> {
+  QuadraticEquation equation = QuadraticEquation(0, 0, 0);
+
   @override
   Widget build(BuildContext context) {
     return ToolTemplate(
@@ -17,6 +20,63 @@ class _QuadraticCalculatorState extends State<QuadraticCalculator> {
         options: null,
         limitEntries: const ["a", "b", "c"],
         bottomSheetContent: (List<String> list, Set<dynamic>? selectedValues,
-            GlobalKey<FormBuilderState> formKey) {});
+            GlobalKey<FormBuilderState> formKey) {
+          if (formKey.currentState?.isValid ?? false) {
+            equation = QuadraticEquation(double.parse(list[0]),
+                double.parse(list[1]), double.parse(list[2]));
+          }
+
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: const Text("Y-Intercept"),
+                trailing: Text((formKey.currentState?.isValid ?? false)
+                    ? "(0 ,${equation.getYIntercept()})"
+                    : "--"),
+              ),
+              equation.getNumberOfRoots() >= 1
+                  ? ListTile(
+                      title: const Text("X-Intercept 1"),
+                      trailing: Text((formKey.currentState?.isValid ?? false)
+                          ? "(0 ,${equation.getXIntercepts()[0]})"
+                          : "--"),
+                    )
+                  : Container(),
+              equation.getNumberOfRoots() == 2
+                  ? ListTile(
+                      title: const Text("X-Intercept 2"),
+                      trailing: Text((formKey.currentState?.isValid ?? false)
+                          ? "(0 ,${equation.getXIntercepts()[1]})"
+                          : "--"),
+                    )
+                  : Container(),
+              ListTile(
+                title: const Text("Line of Symmetry"),
+                trailing: Text((formKey.currentState?.isValid ?? false)
+                    ? "x = ${equation.getLineOfSymmetry()}"
+                    : "--"),
+              ),
+              ListTile(
+                title: const Text("Turning Point"),
+                trailing: Text((formKey.currentState?.isValid ?? false)
+                    ? "(${equation.getTurningPointX()} , ${equation.getTurningPointY()})"
+                    : "--"),
+              ),
+              ListTile(
+                title: const Text("Discriminant"),
+                trailing: Text((formKey.currentState?.isValid ?? false)
+                    ? "${equation.calculateDiscriminant()}"
+                    : "--"),
+              ),
+              ListTile(
+                title: const Text("Number of Roots"),
+                trailing: Text((formKey.currentState?.isValid ?? false)
+                    ? "${equation.getNumberOfRoots()}"
+                    : "--"),
+              ),
+            ],
+          );
+        });
   }
 }
