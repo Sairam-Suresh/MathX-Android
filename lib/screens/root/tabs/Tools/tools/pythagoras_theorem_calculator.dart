@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:mathx_android/logic/tools/AverageLogic.dart';
-import 'package:mathx_android/widgets/sizereporter.dart';
+import 'package:mathx_android/logic/tools/PythagorasTheoremLogic.dart';
+import 'package:mathx_android/widgets/tooltemplate.dart';
 
 class PythagorasTheoremCalculatorPage extends StatefulWidget {
   const PythagorasTheoremCalculatorPage({Key? key}) : super(key: key);
@@ -15,99 +14,107 @@ class PythagorasTheoremCalculatorPage extends StatefulWidget {
 
 class _PythagorasTheoremCalculatorPageState
     extends State<PythagorasTheoremCalculatorPage> {
-  final _formKey = GlobalKey<FormBuilderState>();
-  String modeText = "";
-  List<String> textFieldValues = ["0", "0", "0"];
-  Size bottomSheetSize = Size(0, 0);
+  bool only2FieldsFilled = false;
+  int _noOfFieldsFilled = 0;
 
   @override
   Widget build(BuildContext context) {
-    // calculateMode(textFieldValues
-    //     .map((e) => num.parse(e))
-    //     .toList())
-    //     .join(", ")
+    return ToolTemplate(
+        appbar: AppBar(title: const Text("Pythagoras Theorem")),
+        validatorComposer: FormBuilderValidators.compose([
+          FormBuilderValidators.numeric(
+              errorText: "Please enter a valid number.")
+        ]),
+        options: null,
+        limitEntries: const [
+          "Side A (Normal)",
+          "Side B (Normal)",
+          "Side C (Hypotenuse)"
+        ],
+        bottomSheetContent: (List<String> list, Set<dynamic>? selectedValues,
+            GlobalKey<FormBuilderState> formKey) {
+          _noOfFieldsFilled = 0;
 
-    modeText = "";
+          for (String i in list) {
+            _noOfFieldsFilled += (i == "") ? 0 : 1;
+          }
 
-    calculateMode(textFieldValues.map((e) => num.tryParse(e) ?? 0).toList())
-        .forEach((key, value) {
-      setState(() {
-        modeText += " $key($value)";
-      });
-    });
+          if (_noOfFieldsFilled == 2) {
+            only2FieldsFilled = true;
+          } else {
+            only2FieldsFilled = false;
+          }
 
-    return KeyboardVisibilityBuilder(builder: (context, keyboardVisible) {
-      return Scaffold(
-        bottomSheet: keyboardVisible
-            ? null
-            : SizeReporter(
-                onSizeChanged: (size) {
-                  bottomSheetSize = size;
-                },
-                child: BottomSheet(
-                    onClosing: () {},
-                    builder: (BuildContext context) {
-                      return SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.35,
-                          width: MediaQuery.of(context).size.width,
-                          child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 15, left: 15, right: 15, bottom: 20),
-                              child: Text("hello")));
-                    }),
-              ),
-        appBar: AppBar(title: const Text("Average Calculator")),
-        body: KeyboardVisibilityBuilder(
-            builder: (BuildContext context, bool keyboardVisible) {
-          return Padding(
-            padding: EdgeInsets.only(
-                top: 16.0, bottom: 16.0, left: 16.0, right: 16.0),
-            child: Column(
-              children: [
-                FormBuilder(
-                  key: _formKey,
-                  clearValueOnUnregister: true,
-                  onChanged: () {
-                    print(textFieldValues);
-                  },
-                  child: Expanded(
-                    child: ListView.builder(
-                      itemCount: textFieldValues.length,
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: FormBuilderTextField(
-                            name: 'number_${index + 1}',
-                            autovalidateMode: AutovalidateMode.always,
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.numeric(),
-                            ]),
-                            decoration: InputDecoration(
-                              labelText: 'Number ${index + 1}',
-                            ),
-                            onChanged: (value) {
-                              setState(() {
-                                textFieldValues[index] = value ?? "";
-                              });
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                !keyboardVisible
-                    ? SizedBox(
-                        height: MediaQuery.of(context).size.height -
-                            bottomSheetSize.height * 0.8,
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: const Text("Side A"),
+                trailing: (formKey.currentState?.isValid ?? false) &&
+                        only2FieldsFilled
+                    ? Text(
+                        list.first != ""
+                            ? list.first
+                            : calculateSide(
+                                    num.parse(list[2]), num.parse(list[1]))
+                                .toString(),
+                        style: const TextStyle(fontSize: 20),
                       )
-                    : Container()
-              ],
-            ),
+                    : const Text("--"),
+              ),
+              ListTile(
+                title: const Text("Side B"),
+                trailing: (formKey.currentState?.isValid ?? false) &&
+                        only2FieldsFilled
+                    ? Text(
+                        list[1] != ""
+                            ? list[1]
+                            : calculateSide(
+                                    num.parse(list[2]), num.parse(list[0]))
+                                .toString(),
+                        style: const TextStyle(fontSize: 20),
+                      )
+                    : const Text("--"),
+              ),
+              ListTile(
+                title: const Text("Side C"),
+                trailing: (formKey.currentState?.isValid ?? false) &&
+                        only2FieldsFilled
+                    ? Text(
+                        list.last != ""
+                            ? list.last
+                            : calculateHypotenuse(
+                                    num.parse(list[0]), num.parse(list[1]))
+                                .toString(),
+                        style: const TextStyle(fontSize: 20),
+                      )
+                    : const Text("--"),
+              ),
+              _noOfFieldsFilled > 2
+                  ? const Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.warning_amber),
+                          SizedBox(width: 10),
+                          Text("Please only enter 2 values"),
+                        ],
+                      ),
+                    )
+                  : _noOfFieldsFilled < 2
+                      ? const Center(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.warning_amber),
+                              SizedBox(width: 10),
+                              Text("Please enter at least 2 values"),
+                            ],
+                          ),
+                        )
+                      : Container()
+            ],
           );
-        }),
-      );
-    });
+        });
   }
 }
