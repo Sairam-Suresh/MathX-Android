@@ -22,7 +22,7 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
     //     .toList())
     //     .join(", ")
 
-    return Tooltemplate(
+    return ToolTemplate(
         appbar: AppBar(title: const Text("Average Calculator")),
         options: {
           "Mean": Averages.mean,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mathx_android/constants.dart';
-import 'package:mathx_android/screens/root/tabs/Tools/tools/HCFLCMCalculator.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/HCF_LCM_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/UnitConverter.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/average_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/grapher.dart';
