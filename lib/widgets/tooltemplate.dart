@@ -63,6 +63,8 @@ class _ToolTemplateState extends State<ToolTemplate> {
       for (String _ in widget.limitEntries!) {
         textFieldValues.add("");
       }
+    } else {
+      textFieldValues = ["", ""];
     }
     setState(() {});
     super.initState();
@@ -105,7 +107,7 @@ class _ToolTemplateState extends State<ToolTemplate> {
                           width: MediaQuery.of(context).size.width,
                           child: Padding(
                               padding: const EdgeInsets.only(
-                                  top: 15, left: 15, right: 15, bottom: 30),
+                                  top: 30, left: 30, right: 30, bottom: 30),
                               child: widget.bottomSheetContent(
                                   textFieldValues, selectedValues, _formKey)));
                     }),

@@ -13,6 +13,8 @@ class HCFLCMPage extends StatefulWidget {
 }
 
 class _HCFLCMPageState extends State<HCFLCMPage> {
+  bool firstRender = true;
+
   @override
   Widget build(BuildContext context) {
     // TODO: Need to make HCF have an option to have only prime numbers
@@ -23,6 +25,11 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
         options: const {"HCF": HCFLCM.HCF, "LCM": HCFLCM.LCM},
         bottomSheetContent: (List<String> list, Set<dynamic>? selectedValues,
             GlobalKey<FormBuilderState> formKey) {
+          if (firstRender) {
+            formKey.currentState?.validate();
+            firstRender = false;
+          }
+
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -46,22 +53,21 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                 style: const TextStyle(fontSize: 30),
               ),
               list.length < 2
-                  ? const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      child: Center(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Icons.warning_amber),
-                            SizedBox(width: 10),
-                            AutoSizeText(
-                                "Please ensure that there are at least 2 numbers",
-                                maxLines: 2,
-                                textAlign: TextAlign.justify),
-                          ],
-                        ),
+                  ? const Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.warning_amber),
+                          SizedBox(width: 5),
+                          AutoSizeText(
+                            "Please ensure that there are at least 2 numbers",
+                            maxLines: 1,
+                            textAlign: TextAlign.justify,
+                            minFontSize: 10,
+                          ),
+                        ],
                       ),
                     )
                   : !(formKey.currentState?.isValid ?? false)
