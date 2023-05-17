@@ -23,7 +23,7 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
         appbar: AppBar(title: const Text("HCF/LCM Calculator")),
         segmentedButtonMultiSelect: false,
         options: const {"HCF": HCFLCM.HCF, "LCM": HCFLCM.LCM},
-        bottomSheetContent: (List<String> list, Set<dynamic>? selectedValues,
+        resultContent: (List<String> list, Set<dynamic>? selectedValues,
             GlobalKey<FormBuilderState> formKey) {
           if (firstRender) {
             formKey.currentState?.validate();

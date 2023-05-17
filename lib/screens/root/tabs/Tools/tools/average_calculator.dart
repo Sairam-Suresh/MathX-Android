@@ -31,7 +31,7 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
           "Std Dev": Averages.standardDeviation,
         },
         segmentedButtonMultiSelect: true,
-        bottomSheetContent: (List<String> list, Set<dynamic>? selectedValues,
+        resultContent: (List<String> list, Set<dynamic>? selectedValues,
             GlobalKey<FormBuilderState> formKey) {
           modeText = "";
 

@@ -3,14 +3,15 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mathx_android/logic/tools/QuadraticSolverLogic.dart';
 import 'package:mathx_android/widgets/tooltemplate.dart';
 
-class QuadraticCalculator extends StatefulWidget {
-  const QuadraticCalculator({Key? key}) : super(key: key);
+class QuadraticCalculatorPage extends StatefulWidget {
+  const QuadraticCalculatorPage({Key? key}) : super(key: key);
 
   @override
-  State<QuadraticCalculator> createState() => _QuadraticCalculatorState();
+  State<QuadraticCalculatorPage> createState() =>
+      _QuadraticCalculatorPageState();
 }
 
-class _QuadraticCalculatorState extends State<QuadraticCalculator> {
+class _QuadraticCalculatorPageState extends State<QuadraticCalculatorPage> {
   QuadraticEquation equation = QuadraticEquation(0, 0, 0);
 
   @override
@@ -19,7 +20,7 @@ class _QuadraticCalculatorState extends State<QuadraticCalculator> {
         appbar: AppBar(title: const Text("Quadratic Calculator")),
         options: null,
         limitEntries: const ["a", "b", "c"],
-        bottomSheetContent: (List<String> list, Set<dynamic>? selectedValues,
+        resultContent: (List<String> list, Set<dynamic>? selectedValues,
             GlobalKey<FormBuilderState> formKey) {
           if (formKey.currentState?.isValid ?? false) {
             equation = QuadraticEquation(double.tryParse(list[0]) ?? 0,

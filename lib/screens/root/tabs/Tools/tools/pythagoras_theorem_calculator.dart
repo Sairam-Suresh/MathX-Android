@@ -31,7 +31,7 @@ class _PythagorasTheoremCalculatorPageState
           "Side B (Normal)",
           "Side C (Hypotenuse)"
         ],
-        bottomSheetContent: (List<String> list, Set<dynamic>? selectedValues,
+        resultContent: (List<String> list, Set<dynamic>? selectedValues,
             GlobalKey<FormBuilderState> formKey) {
           _noOfFieldsFilled = 0;
 
