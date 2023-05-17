@@ -6,6 +6,8 @@ import 'package:mathx_android/screens/root/tabs/Tools/tools/average_calculator.d
 import 'package:mathx_android/screens/root/tabs/Tools/tools/grapher.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/pythagoras_theorem_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/quadratic_calculator.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/randomiser.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/shapes_calculator.dart';
 import 'package:mathx_android/widgets/toolcard.dart';
 
 class ToolsPage extends StatefulWidget {
@@ -40,7 +42,7 @@ class _ToolsPageState extends State<ToolsPage> {
     ToolCard(
       name: "Quadratic Calculator",
       category: ToolCategory.Calculators,
-      child: const QuadraticCalculator(),
+      child: const QuadraticCalculatorPage(),
     ),
     ToolCard(
       name: "Set Calculator",
@@ -50,7 +52,7 @@ class _ToolsPageState extends State<ToolsPage> {
     ToolCard(
       name: "Shapes Calculator",
       category: ToolCategory.Calculators,
-      child: Container(),
+      child: const ShapesCalculatorPage(),
     ),
     ToolCard(
       name: "Trigonometry Calculator",
@@ -70,7 +72,7 @@ class _ToolsPageState extends State<ToolsPage> {
     ToolCard(
       name: "Randomise",
       category: ToolCategory.Randomise,
-      child: Container(),
+      child: const RandomiserPage(),
     ),
     ToolCard(
       name: "Unit Converter",
