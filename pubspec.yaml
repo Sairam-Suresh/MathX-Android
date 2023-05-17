@@ -45,6 +45,7 @@ dependencies:
   equations: ^4.1.0
   flutter_custom_clippers: ^2.1.0
   flutter_shapes: ^0.3.0
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:

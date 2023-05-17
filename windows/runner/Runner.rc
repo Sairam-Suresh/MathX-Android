@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.AppCatalyst" "\0"
-            VALUE "FileDescription", "mathx_android" "\0"
+            VALUE "FileDescription", "MathX" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "mathx_android" "\0"
+            VALUE "InternalName", "MathX" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.AppCatalyst. All rights reserved." "\0"
             VALUE "OriginalFilename", "mathx_android.exe" "\0"
-            VALUE "ProductName", "mathx_android" "\0"
+            VALUE "ProductName", "MathX" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
