@@ -15,15 +15,15 @@ class _QuadraticCalculatorState extends State<QuadraticCalculator> {
 
   @override
   Widget build(BuildContext context) {
-    return ToolTemplate(
+    return Tool(
         appbar: AppBar(title: const Text("Quadratic Calculator")),
         options: null,
         limitEntries: const ["a", "b", "c"],
         bottomSheetContent: (List<String> list, Set<dynamic>? selectedValues,
             GlobalKey<FormBuilderState> formKey) {
           if (formKey.currentState?.isValid ?? false) {
-            equation = QuadraticEquation(double.parse(list[0]),
-                double.parse(list[1]), double.parse(list[2]));
+            equation = QuadraticEquation(double.tryParse(list[0]) ?? 0,
+                double.tryParse(list[1]) ?? 0, double.tryParse(list[2]) ?? 0);
           }
 
           return Column(

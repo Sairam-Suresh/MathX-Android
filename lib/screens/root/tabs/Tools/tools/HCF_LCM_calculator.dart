@@ -19,7 +19,7 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
   Widget build(BuildContext context) {
     // TODO: Need to make HCF have an option to have only prime numbers
 
-    return ToolTemplate(
+    return Tool(
         appbar: AppBar(title: const Text("HCF/LCM Calculator")),
         segmentedButtonMultiSelect: false,
         options: const {"HCF": HCFLCM.HCF, "LCM": HCFLCM.LCM},

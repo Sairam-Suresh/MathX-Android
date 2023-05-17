@@ -19,7 +19,7 @@ class _PythagorasTheoremCalculatorPageState
 
   @override
   Widget build(BuildContext context) {
-    return ToolTemplate(
+    return Tool(
         appbar: AppBar(title: const Text("Pythagoras Theorem")),
         validatorComposer: FormBuilderValidators.compose([
           FormBuilderValidators.numeric(

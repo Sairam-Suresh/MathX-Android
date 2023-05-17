@@ -3,8 +3,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-class ToolTemplate extends StatefulWidget {
-  ToolTemplate(
+class Tool extends StatefulWidget {
+  const Tool(
       {Key? key,
       required this.appbar,
       this.segmentedButtonMultiSelect,
@@ -15,20 +15,20 @@ class ToolTemplate extends StatefulWidget {
       : super(key: key);
 
   // Generic Arguments
-  late bool? segmentedButtonMultiSelect;
-  late Map<String, dynamic>? options;
-  late Function(List<String> list, Set<dynamic>? selectedValues,
+  final bool? segmentedButtonMultiSelect;
+  final Map<String, dynamic>? options;
+  final Function(List<String> list, Set<dynamic>? selectedValues,
       GlobalKey<FormBuilderState> formKey) bottomSheetContent;
-  late AppBar appbar;
+  final AppBar appbar;
 
-  late List? limitEntries;
-  late dynamic validatorComposer;
+  final List? limitEntries;
+  final dynamic validatorComposer;
 
   @override
-  _ToolTemplateState createState() => _ToolTemplateState();
+  _ToolState createState() => _ToolState();
 }
 
-class _ToolTemplateState extends State<ToolTemplate> {
+class _ToolState extends State<Tool> {
   final _formKey = GlobalKey<FormBuilderState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -114,6 +114,10 @@ class _ToolTemplateState extends State<ToolTemplate> {
               )
             : null,
         appBar: generatedAppBar,
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {},
+        //   child: Icon(Icons.add),
+        // ),
         body: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
