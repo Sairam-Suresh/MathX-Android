@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/logic/tools/AverageLogic.dart';
 import 'package:mathx_android/widgets/tooltemplate.dart';
 
@@ -24,13 +23,8 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
 
     return Tool(
         appbar: AppBar(title: const Text("Average Calculator")),
-        options: {
-          "Mean": Averages.mean,
-          "Mdian": Averages.median,
-          "Mode": Averages.mode,
-          "Std Dev": Averages.standardDeviation,
-        },
-        segmentedButtonMultiSelect: true,
+        options: null,
+        segmentedButtonMultiSelect: null,
         resultContent: (List<String> list, Set<dynamic>? selectedValues,
             GlobalKey<FormBuilderState> formKey) {
           modeText = "";
@@ -47,63 +41,53 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
               "Average",
               style: TextStyle(fontSize: 25),
             ),
-            selectedValues!.contains(Averages.mean)
-                ? ListTile(
-                    title: const Text("Mean"),
-                    trailing: (formKey.currentState?.isValid ?? false)
-                        ? Text(
-                            calculateMean(list
-                                    .map((e) => num.tryParse(e) ?? 0)
-                                    .toList())
-                                .toString(),
-                            style: TextStyle(fontSize: 20),
-                          )
-                        : const Text("--"),
-                  )
-                : Container(),
-            selectedValues.contains(Averages.median)
-                ? ListTile(
-                    title: const Text("Median"),
-                    trailing: (formKey.currentState?.isValid ?? false)
-                        ? Text(
-                            calculateMedian(list
-                                    .map((e) => num.tryParse(e) ?? 0)
-                                    .toList())
-                                .toString(),
-                            style: TextStyle(fontSize: 20),
-                          )
-                        : const Text("--"),
-                  )
-                : Container(),
-            selectedValues.contains(Averages.mode)
-                ? ListTile(
-                    title: const Text("Mode"),
-                    trailing: (formKey.currentState?.isValid ?? false)
-                        ? SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.6,
-                            child: AutoSizeText(
-                              modeText,
-                              maxLines: 3,
-                              minFontSize: 10,
-                              maxFontSize: 30,
-                              textAlign: TextAlign.end,
-                            ))
-                        : const Text("--"),
-                  )
-                : Container(),
-            selectedValues.contains(Averages.standardDeviation)
-                ? ListTile(
-                    title: const Text("Standard Deviation"),
-                    trailing: (formKey.currentState?.isValid ?? false)
-                        ? Text(
-                            calculateStandardDeviation(
-                                    list.map((e) => num.parse(e)).toList())
-                                .toString(),
-                            style: TextStyle(fontSize: 20),
-                          )
-                        : const Text("--"),
-                  )
-                : Container(),
+            ListTile(
+              title: const Text("Mean"),
+              trailing: (formKey.currentState?.isValid ?? false)
+                  ? Text(
+                      calculateMean(
+                              list.map((e) => num.tryParse(e) ?? 0).toList())
+                          .toString(),
+                      style: TextStyle(fontSize: 20),
+                    )
+                  : const Text("--"),
+            ),
+            ListTile(
+              title: const Text("Median"),
+              trailing: (formKey.currentState?.isValid ?? false)
+                  ? Text(
+                      calculateMedian(
+                              list.map((e) => num.tryParse(e) ?? 0).toList())
+                          .toString(),
+                      style: TextStyle(fontSize: 20),
+                    )
+                  : const Text("--"),
+            ),
+            ListTile(
+              title: const Text("Mode"),
+              trailing: (formKey.currentState?.isValid ?? false)
+                  ? SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: AutoSizeText(
+                        modeText,
+                        maxLines: 3,
+                        minFontSize: 10,
+                        maxFontSize: 30,
+                        textAlign: TextAlign.end,
+                      ))
+                  : const Text("--"),
+            ),
+            ListTile(
+              title: const Text("Standard Deviation"),
+              trailing: (formKey.currentState?.isValid ?? false)
+                  ? Text(
+                      calculateStandardDeviation(
+                              list.map((e) => num.parse(e)).toList())
+                          .toString(),
+                      style: TextStyle(fontSize: 20),
+                    )
+                  : const Text("--"),
+            ),
             !(formKey.currentState?.isValid ?? false)
                 ? const Center(
                     child: Row(
