@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mathx_android/widgets/tooltemplate.dart';
 
 class AverageCalculatorPage extends StatefulWidget {
   const AverageCalculatorPage({Key? key}) : super(key: key);
@@ -18,7 +17,7 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
     //     .toList())
     //     .join(", ")
 
-    return Tool();
+    return Container();
   }
 
 // return KeyboardVisibilityBuilder(builder: (context, keyboardVisible) {

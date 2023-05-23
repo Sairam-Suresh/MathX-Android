@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mathx_android/widgets/tooltemplate.dart';
 
 class PythagorasTheoremCalculatorPage extends StatefulWidget {
   const PythagorasTheoremCalculatorPage({Key? key}) : super(key: key);
@@ -16,6 +15,6 @@ class _PythagorasTheoremCalculatorPageState
 
   @override
   Widget build(BuildContext context) {
-    return Tool();
+    return Container();
   }
 }

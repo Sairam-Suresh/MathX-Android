@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/logic/tools/RandomiserLogic.dart';
-import 'package:mathx_android/widgets/tooltemplate.dart';
 
 class RandomiserPage extends StatefulWidget {
   const RandomiserPage({Key? key}) : super(key: key);
@@ -37,6 +36,6 @@ class _RandomiserPageState extends State<RandomiserPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Tool();
+    return Container();
   }
 }

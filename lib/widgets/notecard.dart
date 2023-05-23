@@ -9,7 +9,7 @@ import 'package:styled_widget/styled_widget.dart';
 class NoteCard extends StatelessWidget {
   NoteCard({Key? key, required this.note}) : super(key: key);
 
-  late Note note;
+  late final Note note;
 
   @override
   Widget build(BuildContext context) {
