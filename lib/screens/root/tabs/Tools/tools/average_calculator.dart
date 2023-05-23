@@ -1,7 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:mathx_android/logic/tools/AverageLogic.dart';
 import 'package:mathx_android/widgets/tooltemplate.dart';
 
 class AverageCalculatorPage extends StatefulWidget {
@@ -21,92 +18,7 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
     //     .toList())
     //     .join(", ")
 
-    return Tool(
-        appbar: AppBar(title: const Text("Average Calculator")),
-        options: null,
-        segmentedButtonMultiSelect: null,
-        resultContent: (List<String> list, Set<dynamic>? selectedValues,
-            GlobalKey<FormBuilderState> formKey) {
-          modeText = "";
-
-          calculateMode(list.map((e) => num.tryParse(e) ?? 0).toList())
-              .forEach((key, value) {
-            // setState(() {
-            modeText += " $key($value)";
-            // });
-          });
-
-          return Column(mainAxisSize: MainAxisSize.min, children: [
-            const Text(
-              "Average",
-              style: TextStyle(fontSize: 25),
-            ),
-            ListTile(
-              title: const Text("Mean"),
-              trailing: (formKey.currentState?.isValid ?? false)
-                  ? Text(
-                      calculateMean(
-                              list.map((e) => num.tryParse(e) ?? 0).toList())
-                          .toString(),
-                      style: TextStyle(fontSize: 20),
-                    )
-                  : const Text("--"),
-            ),
-            ListTile(
-              title: const Text("Median"),
-              trailing: (formKey.currentState?.isValid ?? false)
-                  ? Text(
-                      calculateMedian(
-                              list.map((e) => num.tryParse(e) ?? 0).toList())
-                          .toString(),
-                      style: TextStyle(fontSize: 20),
-                    )
-                  : const Text("--"),
-            ),
-            ListTile(
-              title: const Text("Mode"),
-              trailing: (formKey.currentState?.isValid ?? false)
-                  ? SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      child: AutoSizeText(
-                        modeText,
-                        maxLines: 3,
-                        minFontSize: 10,
-                        maxFontSize: 30,
-                        textAlign: TextAlign.end,
-                      ))
-                  : const Text("--"),
-            ),
-            ListTile(
-              title: const Text("Standard Deviation"),
-              trailing: (formKey.currentState?.isValid ?? false)
-                  ? Text(
-                      calculateStandardDeviation(
-                              list.map((e) => num.parse(e)).toList())
-                          .toString(),
-                      style: TextStyle(fontSize: 20),
-                    )
-                  : const Text("--"),
-            ),
-            !(formKey.currentState?.isValid ?? false)
-                ? const Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.warning_amber),
-                        SizedBox(width: 10),
-                        AutoSizeText(
-                            "Please ensure all numbers are filled and valid.",
-                            maxLines: 2,
-                            textAlign: TextAlign.justify),
-                      ],
-                    ),
-                  )
-                : Container()
-          ]);
-        });
+    return Tool();
   }
 
 // return KeyboardVisibilityBuilder(builder: (context, keyboardVisible) {
