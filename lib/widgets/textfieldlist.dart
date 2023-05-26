@@ -36,7 +36,6 @@ class TextFieldList extends StatefulWidget {
 
   late final Map<String, dynamic>? limitEntries;
   late final dynamic validators;
-  // late final Widget Function(List<String> values) builder;
   late final TextFieldListController controller;
   late final void Function(List<String> values)? onChange;
 
@@ -46,12 +45,6 @@ class TextFieldList extends StatefulWidget {
 
 class _TextFieldListState extends State<TextFieldList> {
   final _formKey = GlobalKey<FormBuilderState>();
-
-  // void addTextField() {
-  //   setState(() {
-  //     widget.controller.addNewField();
-  //   });
-  // }
 
   void deleteTextField() {
     setState(() {
