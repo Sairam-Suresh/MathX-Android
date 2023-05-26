@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Tool extends StatefulWidget {
-  Tool({Key? key, this.displayOptions, this.tabs, this.builder})
+  Tool({Key? key, this.displayOptions, this.tabs, this.builder, this.child})
       : super(key: key);
 
   late List<Widget>? displayOptions;
   late Map<String, Widget>? tabs;
   late Widget Function(String tab)? builder;
+  late Widget? child;
 
   @override
   _ToolState createState() => _ToolState();
@@ -51,7 +52,7 @@ class _ToolState extends State<Tool> {
                         Container()),
               ),
             ))
-        : widget.builder?.call(activeTab) ?? Container();
+        : widget.builder?.call(activeTab) ?? widget.child ?? Container();
   }
 }
 
