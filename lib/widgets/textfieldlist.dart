@@ -83,6 +83,9 @@ class _TextFieldListState extends State<TextFieldList> {
                       'number_${index + 1}'),
               keyboardType: TextInputType.number,
               autovalidateMode: AutovalidateMode.onUserInteraction,
+              initialValue: widget.controller.textFieldValues.length <= index
+                  ? ""
+                  : widget.controller.textFieldValues[index],
               validator: widget.validators != null
                   ? widget.validators!
                   : FormBuilderValidators.compose([
@@ -112,7 +115,11 @@ class _TextFieldListState extends State<TextFieldList> {
                       : null),
               onChanged: (value) {
                 setState(() {
-                  widget.controller.textFieldValues[index] = value ?? "";
+                  try {
+                    widget.controller.textFieldValues[index] = value ?? "";
+                  } catch (e) {
+                    widget.controller.textFieldValues.add(value ?? "");
+                  }
                   widget.onChange?.call(widget.controller.textFieldValues);
                 });
               },
