@@ -31,9 +31,9 @@ class _ToolState extends State<Tool> {
               appBar: AppBar(
                 title: Text("amongs"),
                 bottom: TabBar(
-                  tabs: widget.tabs!.keys
+                  tabs: widget.tabs!.keys.indexed
                       .map((key) => Tab(
-                            child: widget.tabs![key],
+                            child: widget.displayOptions!.toList()[key.$1],
                           ))
                       .toList(),
                   onTap: (index) {
