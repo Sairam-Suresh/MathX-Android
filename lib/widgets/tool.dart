@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 
 class Tool extends StatefulWidget {
-  Tool({Key? key, this.displayOptions, this.tabs, this.builder, this.child})
+  Tool(
+      {Key? key,
+      required this.pageName,
+      this.displayOptions,
+      this.tabs,
+      this.builder,
+      this.child})
       : super(key: key);
 
   late List<Widget>? displayOptions;
   late Map<String, Widget>? tabs;
   late Widget Function(String tab)? builder;
+  late String pageName;
   late Widget? child;
 
   @override
@@ -29,7 +36,7 @@ class _ToolState extends State<Tool> {
             length: widget.tabs!.values.toList().length,
             child: Scaffold(
               appBar: AppBar(
-                title: Text("amongs"),
+                title: Text(widget.pageName),
                 bottom: TabBar(
                   tabs: widget.tabs!.keys.indexed
                       .map((key) => Tab(
