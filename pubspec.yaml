@@ -42,7 +42,7 @@ dependencies:
   flutter_form_builder: any
   form_builder_validators: any
   flutter_keyboard_visibility: ^5.4.1
-  equations: ^4.1.0
+  equations: ^5.0.0
   flutter_custom_clippers: ^2.1.0
   flutter_shapes: ^0.3.0
   flutter_launcher_icons: ^0.13.1
