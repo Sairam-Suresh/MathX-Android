@@ -29,7 +29,9 @@ class TextFieldList extends StatefulWidget {
       this.limitEntries,
       this.validators,
       this.onChange,
-      required this.controller
+      this.stateSetter,
+      required this.controller,
+      required this.formKey
       // required this.builder
       })
       : super(key: key);
@@ -38,13 +40,15 @@ class TextFieldList extends StatefulWidget {
   late final dynamic validators;
   late final TextFieldListController controller;
   late final void Function(List<String> values)? onChange;
+  late final void Function(Function())? stateSetter;
+  late final GlobalKey<FormBuilderState> formKey;
 
   @override
   State<TextFieldList> createState() => _TextFieldListState();
 }
 
 class _TextFieldListState extends State<TextFieldList> {
-  final _formKey = GlobalKey<FormBuilderState>();
+  TextEditingController controller = TextEditingController();
 
   void deleteTextField() {
     setState(() {
@@ -53,20 +57,29 @@ class _TextFieldListState extends State<TextFieldList> {
   }
 
   @override
+  void initState() {
+    // widget.formKey.currentState?.validate();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // setState(() {});
+
     return FormBuilder(
-      key: _formKey,
-      clearValueOnUnregister: true,
-      onChanged: () {},
+      key: widget.formKey,
+      // clearValueOnUnregister: true,
       child: ListView.builder(
         itemCount: widget.limitEntries == null
             ? widget.controller.textFieldValues.length
             : widget.limitEntries!.length,
         shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: FormBuilderTextField(
+              // controller: widget.controller,
               name: widget.limitEntries == null
                   ? 'number_${index + 1}'
                   : (widget.limitEntries?.entries
@@ -76,9 +89,6 @@ class _TextFieldListState extends State<TextFieldList> {
                       'number_${index + 1}'),
               keyboardType: TextInputType.number,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              initialValue: widget.controller.textFieldValues.length <= index
-                  ? ""
-                  : widget.controller.textFieldValues[index],
               validator: widget.validators != null
                   ? widget.validators!
                   : FormBuilderValidators.compose([
@@ -101,6 +111,7 @@ class _TextFieldListState extends State<TextFieldList> {
                               widget.controller.textFieldValues.removeLast();
                               widget.onChange
                                   ?.call(widget.controller.textFieldValues);
+                              widget.stateSetter?.call(() {});
                             });
                           },
                           icon: Icon(Icons.delete),
@@ -114,8 +125,12 @@ class _TextFieldListState extends State<TextFieldList> {
                     widget.controller.textFieldValues.add(value ?? "");
                   }
                   widget.onChange?.call(widget.controller.textFieldValues);
+                  widget.stateSetter?.call(() {});
                 });
               },
+              // onReset: () {
+              //   setState(() {});
+              // },
             ),
           );
         },
