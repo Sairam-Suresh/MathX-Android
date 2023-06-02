@@ -27,22 +27,27 @@ int calculateLCM(int a, int b) {
   return lcm;
 }
 
-int calculateLCMForMultiple(List<int> numbers) {
+int? calculateLCMForMultiple(List<int> numbers) {
   int lcm = numbers[0];
 
-  for (int i = 1; i < numbers.length; i++) {
-    lcm = calculateLCM(lcm, numbers[i]);
+  try {
+    for (int i = 1; i < numbers.length; i++) {
+      lcm = calculateLCM(lcm, numbers[i]);
+    }
+    return lcm == 0 ? null : lcm;
+  } catch (e) {
+    return null;
   }
-
-  return lcm;
 }
 
-int calculateHCFForMultiple(List<int> numbers) {
+int? calculateHCFForMultiple(List<int> numbers) {
   int hcf = numbers[0];
-
-  for (int i = 1; i < numbers.length; i++) {
-    hcf = calculateHCF(hcf, numbers[i]);
+  try {
+    for (int i = 1; i < numbers.length; i++) {
+      hcf = calculateHCF(hcf, numbers[i]);
+    }
+    return hcf == 0 ? null : hcf;
+  } catch (e) {
+    return null;
   }
-
-  return hcf;
 }
