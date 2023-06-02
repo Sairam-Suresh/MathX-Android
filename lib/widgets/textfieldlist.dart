@@ -29,18 +29,14 @@ class TextFieldList extends StatefulWidget {
       this.limitEntries,
       this.validators,
       this.onChange,
-      this.stateSetter,
       required this.controller,
-      required this.formKey
-      // required this.builder
-      })
+      required this.formKey})
       : super(key: key);
 
   late final Map<String, dynamic>? limitEntries;
   late final dynamic validators;
   late final TextFieldListController controller;
   late final void Function(List<String> values)? onChange;
-  late final void Function(Function())? stateSetter;
   late final GlobalKey<FormBuilderState> formKey;
 
   @override
@@ -58,17 +54,14 @@ class _TextFieldListState extends State<TextFieldList> {
 
   @override
   void initState() {
-    // widget.formKey.currentState?.validate();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // setState(() {});
-
     return FormBuilder(
       key: widget.formKey,
-      // clearValueOnUnregister: true,
+      clearValueOnUnregister: true,
       child: ListView.builder(
         itemCount: widget.limitEntries == null
             ? widget.controller.textFieldValues.length
@@ -103,7 +96,7 @@ class _TextFieldListState extends State<TextFieldList> {
                               .elementAt(index)
                               .key ??
                           'Number ${index + 1}'),
-                  suffixIcon: widget.limitEntries == null &&
+                  prefixIcon: widget.limitEntries == null &&
                           index == widget.controller.textFieldValues.length - 1
                       ? IconButton(
                           onPressed: () {
@@ -111,10 +104,12 @@ class _TextFieldListState extends State<TextFieldList> {
                               widget.controller.textFieldValues.removeLast();
                               widget.onChange
                                   ?.call(widget.controller.textFieldValues);
-                              widget.stateSetter?.call(() {});
                             });
                           },
-                          icon: Icon(Icons.delete),
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
                         )
                       : null),
               onChanged: (value) {
@@ -125,7 +120,6 @@ class _TextFieldListState extends State<TextFieldList> {
                     widget.controller.textFieldValues.add(value ?? "");
                   }
                   widget.onChange?.call(widget.controller.textFieldValues);
-                  widget.stateSetter?.call(() {});
                 });
               },
               // onReset: () {
