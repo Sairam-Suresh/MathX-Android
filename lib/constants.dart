@@ -29,4 +29,4 @@ enum HCFOptions { primeNumberOnly }
 
 enum Averages { mean, median, mode, standardDeviation }
 
-enum RandomiserPages { occurences, recent }
+enum RandomiserPages { recent, occurences }
