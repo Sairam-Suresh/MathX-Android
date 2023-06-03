@@ -52,7 +52,7 @@ class _ToolsPageState extends State<ToolsPage> {
     ToolCard(
       name: "Shapes Calculator",
       category: ToolCategory.Calculators,
-      child: const ShapesCalculatorPage(),
+      child: ShapesCalculatorPage(),
     ),
     ToolCard(
       name: "Trigonometry Calculator",
