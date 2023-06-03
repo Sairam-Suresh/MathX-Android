@@ -34,49 +34,29 @@ class _ShapesCalculatorPageState extends State<ShapesCalculatorPage> {
                   setState(() {});
                 },
               )),
-          body: TabBarView(children: [
+          body: const TabBarView(children: [
             NestedTabBar(
               "2D",
               children: {
-                "Rectangle": const buildRectangle(),
-                "Triangle": const buildTriangle(),
-                "Circle": const buildCircle(),
-                "Trapezium": const buildTrapezium(),
-                "Parallelogram": buildParallelogram(),
+                "Rectangle": buildRectangle(),
+                "Triangle": buildTriangle(),
+                "Circle": buildCircle(),
+                "Trapezium": buildTrapezium(),
+                "Parallelogram": const buildParallelogram(),
               },
             ),
             NestedTabBar(
               "3D",
               children: {
-                "Cuboid": buildCuboid(),
-                "Pyramid": buildPyramid(),
-                "Sphere": buildSphere(),
+                "Cuboid": const buildCuboid(),
+                "Pyramid": const buildPyramid(),
+                "Sphere": const buildSphere(),
                 "Cylinder": buildCylinder(),
                 "Cone": buildCone(),
               },
             )
           ]),
         ));
-  }
-
-  Widget buildCuboid() {
-    return const Text("Cuboid");
-  }
-
-  Widget buildPyramid() {
-    return const Text("Pyramid");
-  }
-
-  Widget buildSphere() {
-    return const Text("Sphere");
-  }
-
-  Widget buildCylinder() {
-    return const Text("Cylinder");
-  }
-
-  Widget buildCone() {
-    return const Text("Cone");
   }
 }
 
@@ -283,6 +263,253 @@ class _buildParallelogramState extends State<buildParallelogram> {
           controller: controller,
           formKey: formKey,
           limitEntries: const {"Length (l)": 0, "Breadth (b)": 0},
+          onChange: (_) {
+            setState(() {});
+          },
+        )
+      ]),
+    );
+  }
+}
+
+class buildCuboid extends StatefulWidget {
+  const buildCuboid({super.key});
+
+  @override
+  State<buildCuboid> createState() => _buildCuboidState();
+}
+
+class _buildCuboidState extends State<buildCuboid> {
+  TextFieldListController controller = TextFieldListController();
+  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: Column(children: [
+        Card(
+          child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Math.tex(
+                      "V = "
+                      "${controller.textFieldValues[0] == "" ? "l" : controller.textFieldValues[0]}"
+                      " * "
+                      "${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "b" : controller.textFieldValues.elementAt(1)} "
+                      " * "
+                      "${controller.textFieldValues.elementAtOrNull(2) == "" || controller.textFieldValues.length != 3 ? "h" : controller.textFieldValues.elementAt(2)} "
+                      "${(controller.textFieldValues.length == 3 && (formKey.currentState?.isValid ?? false)) ? "= ${controller.textFieldValues.map((e) => int.parse(e)).reduce((value, element) => value * element)}" : ""}",
+                      textStyle: const TextStyle(fontSize: 20),
+                    ),
+                  ))),
+        ),
+        TextFieldList(
+          controller: controller,
+          formKey: formKey,
+          limitEntries: const {
+            "Length (l)": 0,
+            "Breadth (b)": 0,
+            "Height (h)": 0
+          },
+          onChange: (_) {
+            setState(() {});
+          },
+        )
+      ]),
+    );
+  }
+}
+
+class buildPyramid extends StatefulWidget {
+  const buildPyramid({super.key});
+
+  @override
+  State<buildPyramid> createState() => _buildPyramidState();
+}
+
+class _buildPyramidState extends State<buildPyramid> {
+  @override
+  TextFieldListController controller = TextFieldListController();
+  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: Column(children: [
+        Card(
+          child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Math.tex(
+                      r"V = \frac{"
+                      "${controller.textFieldValues[0] == "" ? "l" : controller.textFieldValues[0]}"
+                      "*"
+                      "${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "b" : controller.textFieldValues.elementAt(1)} "
+                      "*"
+                      "${controller.textFieldValues.elementAtOrNull(2) == "" || controller.textFieldValues.length != 3 ? "h" : controller.textFieldValues.elementAt(2)} "
+                      "}{3}"
+                      "${(controller.textFieldValues.length == 3 && (formKey.currentState?.isValid ?? false)) ? "= ${controller.textFieldValues.map((e) => int.parse(e)).reduce((value, element) => value * element) / 3}" : ""}",
+                      textStyle: const TextStyle(fontSize: 20),
+                    ),
+                  ))),
+        ),
+        TextFieldList(
+          controller: controller,
+          formKey: formKey,
+          limitEntries: const {
+            "Base Length (l)": 0,
+            "Base Breadth (b)": 0,
+            "Height (h)": 0
+          },
+          onChange: (_) {
+            setState(() {});
+          },
+        )
+      ]),
+    );
+  }
+}
+
+class buildSphere extends StatefulWidget {
+  const buildSphere({super.key});
+
+  @override
+  State<buildSphere> createState() => _buildSphereState();
+}
+
+class _buildSphereState extends State<buildSphere> {
+  TextFieldListController controller = TextFieldListController();
+  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: Column(children: [
+        Card(
+          child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Math.tex(
+                      r"V = \frac{4}{3} * \pi * "
+                      "${controller.textFieldValues[0] == "" ? "r^3" : "${controller.textFieldValues[0]}^2"}"
+                      "${controller.textFieldValues[0] != "" ? int.tryParse(controller.textFieldValues[0]) != null ? "= ${pow(int.tryParse(controller.textFieldValues[0])!, 3) * pi * 4 / 3}" : "= ERROR" : ""}",
+                      textStyle: const TextStyle(fontSize: 20),
+                    ),
+                  ))),
+        ),
+        TextFieldList(
+          controller: controller,
+          formKey: formKey,
+          limitEntries: const {"Radius (r)": 0},
+          onChange: (_) {
+            setState(() {});
+          },
+        )
+      ]),
+    );
+  }
+}
+
+class buildCylinder extends StatefulWidget {
+  const buildCylinder({super.key});
+
+  @override
+  State<buildCylinder> createState() => _buildCylinderState();
+}
+
+class _buildCylinderState extends State<buildCylinder> {
+  TextFieldListController controller = TextFieldListController();
+  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: Column(children: [
+        Card(
+          child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Math.tex(
+                      r"V = \pi * "
+                      "${controller.textFieldValues[0] == "" ? "r^2" : "${controller.textFieldValues[0]}^2"}"
+                      "*"
+                      "${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "h" : controller.textFieldValues.elementAt(1)}"
+                      "${controller.textFieldValues[0] != "" && controller.textFieldValues.elementAtOrNull(1) != "" ? int.tryParse(controller.textFieldValues[0]) != null ? "= ${pow(int.tryParse(controller.textFieldValues[0])!, 2) * pi}" : "= ERROR" : ""}",
+                      textStyle: const TextStyle(fontSize: 20),
+                    ),
+                  ))),
+        ),
+        TextFieldList(
+          controller: controller,
+          formKey: formKey,
+          limitEntries: const {"Radius (r)": 0, "Height (h)": 0},
+          onChange: (_) {
+            setState(() {});
+          },
+        )
+      ]),
+    );
+  }
+}
+
+class buildCone extends StatefulWidget {
+  const buildCone({super.key});
+
+  @override
+  State<buildCone> createState() => _buildConeState();
+}
+
+class _buildConeState extends State<buildCone> {
+  TextFieldListController controller = TextFieldListController();
+  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+
+  @override
+  Widget build(BuildContext context) {
+    print(
+      r"V = \pi * "
+      "${controller.textFieldValues[0] == "" ? "r^2" : "${controller.textFieldValues[0]}^2"}"
+      "* "
+      r"\frac"
+      "{${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "h" : controller.textFieldValues.elementAt(1)}}{3}"
+      "${controller.textFieldValues[0] != "" && controller.textFieldValues.elementAtOrNull(1) != "" ? int.tryParse(controller.textFieldValues[0]) != null ? "= ${pow(int.tryParse(controller.textFieldValues[0])!, 2) * pi}" : "= ERROR" : ""}",
+    );
+
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: Column(children: [
+        Card(
+          child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Math.tex(
+                      r"V = \pi * "
+                      "${controller.textFieldValues[0] == "" ? "r^2" : "${controller.textFieldValues[0]}^2"}"
+                      "* "
+                      r"\frac"
+                      "{${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "h" : controller.textFieldValues.elementAt(1)}}{3}"
+                      "${controller.textFieldValues[0] != "" && controller.textFieldValues.elementAtOrNull(1) != "" && controller.textFieldValues.elementAtOrNull(1) != null ? int.tryParse(controller.textFieldValues[0]) != null ? "= ${pow(int.tryParse(controller.textFieldValues[0])!, 2) * pi * (int.tryParse(controller.textFieldValues[1])! / 3)}" : "= ERROR" : ""}",
+                      textStyle: const TextStyle(fontSize: 20),
+                    ),
+                  ))),
+        ),
+        TextFieldList(
+          controller: controller,
+          formKey: formKey,
+          limitEntries: const {"Radius (r)": 0, "Height (h)": 0},
           onChange: (_) {
             setState(() {});
           },
