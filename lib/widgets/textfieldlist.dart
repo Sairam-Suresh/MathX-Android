@@ -29,6 +29,7 @@ class TextFieldList extends StatefulWidget {
       this.limitEntries,
       this.validators,
       this.onChange,
+      this.nameBuilder,
       required this.controller,
       required this.formKey})
       : super(key: key);
@@ -38,6 +39,7 @@ class TextFieldList extends StatefulWidget {
   late final TextFieldListController controller;
   late final void Function(List<String> values)? onChange;
   late final GlobalKey<FormBuilderState> formKey;
+  late final String Function(int length, int index)? nameBuilder;
 
   @override
   State<TextFieldList> createState() => _TextFieldListState();
@@ -90,7 +92,10 @@ class _TextFieldListState extends State<TextFieldList> {
                     ]),
               decoration: InputDecoration(
                   labelText: widget.limitEntries == null
-                      ? 'Number ${index + 1}'
+                      ? widget.nameBuilder == null
+                          ? 'Number ${index + 1}'
+                          : widget.nameBuilder?.call(
+                              widget.controller.textFieldValues.length, index)
                       : (widget.limitEntries?.entries
                               .toList()
                               .elementAt(index)
