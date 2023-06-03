@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:mathx_android/logic/tools/QuadraticSolverLogic.dart';
 import 'package:mathx_android/widgets/textfieldlist.dart';
 
@@ -37,77 +37,107 @@ class _QuadraticCalculatorPageState extends State<QuadraticCalculatorPage> {
       onChange: (_) {
         setState(() {});
       },
-      nameBuilder: (length, index) {
-        if (index == 0) {
-          return "Constant value";
-        } else if (index == 1) {
-          return "Coefficient of x";
-        } else {
-          return "Coefficient of x^$index";
-        }
-      },
+      limitEntries: {"a": null, "b": null, "c": null},
     );
 
-    return NotificationListener(
-      onNotification: (notification) {
-        if (notification is UserScrollNotification) {
-          if (notification.direction == ScrollDirection.reverse && isVisible) {
-            setState(() {
-              isVisible = false;
-            });
-          } else if (notification.direction == ScrollDirection.forward &&
-              !isVisible) {
-            setState(() {
-              isVisible = false;
-            });
-          }
-        } else if (notification is ScrollEndNotification) {
-          setState(() {
-            isVisible = true;
-          });
-        }
-        return false;
-      },
-      child: Scaffold(
-          appBar: AppBar(title: const Text("Polynomial Solver")),
-          floatingActionButton: buildFAB(),
-          body: Column(
-            children: [
-              Expanded(
-                  child: SingleChildScrollView(
-                      controller: scrollController,
-                      child: Column(
-                        children: [
-                          buildResults(),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: textFields!,
-                          ),
-                        ],
-                      ))),
-            ],
-          )),
-    );
+    if (formKey.currentState?.isValid ?? false) {
+      equation = QuadraticEquation(
+          double.parse(controller.textFieldValues[0]),
+          double.parse(controller.textFieldValues[1]),
+          double.parse(controller.textFieldValues[2]));
+    }
+
+    return Scaffold(
+        appBar: AppBar(title: const Text("Quadratic Equation Solver")),
+        body: Column(
+          children: [
+            Expanded(
+                child: SingleChildScrollView(
+                    controller: scrollController,
+                    child: Column(
+                      children: [
+                        buildResults(),
+                        Card(
+                          child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Center(
+                                    child: Math.tex(
+                                      "V = "
+                                      "${controller.textFieldValues[0] == "" ? "ax^2" : "${controller.textFieldValues[0]}x^2"}"
+                                      " + "
+                                      "${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "bx" : "${controller.textFieldValues.elementAt(1)}x"}"
+                                      " + "
+                                      "${controller.textFieldValues.elementAtOrNull(2) == "" || controller.textFieldValues.length != 3 ? "c" : controller.textFieldValues.elementAt(2)}"
+                                      "=0",
+                                      textStyle: const TextStyle(fontSize: 20),
+                                    ),
+                                  ))),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: textFields!,
+                        ),
+                      ],
+                    ))),
+          ],
+        ));
   }
 
   Widget buildResults() {
-    return Card();
-  }
-
-  AnimatedOpacity buildFAB() {
-    return AnimatedOpacity(
-      opacity: isVisible || controller.textFieldValues.isEmpty ? 1 : 0,
-      duration: const Duration(milliseconds: 300),
-      child: isVisible || controller.textFieldValues.isEmpty
-          ? FloatingActionButton(
-              onPressed: () {
-                setState(() {
-                  controller.addNewField();
-                });
-              },
-              child: const Icon(Icons.add),
-            )
-          : null,
+    return Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            title: const Text("Y-Intercept"),
+            trailing: Text((formKey.currentState?.isValid ?? false)
+                ? "(0 ,${equation.getYIntercept()})"
+                : "--"),
+          ),
+          equation.getNumberOfRoots() >= 1
+              ? ListTile(
+                  title: const Text("X-Intercept 1"),
+                  trailing: Text((formKey.currentState?.isValid ?? false)
+                      ? "(0 ,${equation.getXIntercepts()[0]})"
+                      : "--"),
+                )
+              : Container(),
+          equation.getNumberOfRoots() == 2
+              ? ListTile(
+                  title: const Text("X-Intercept 2"),
+                  trailing: Text((formKey.currentState?.isValid ?? false)
+                      ? "(0 ,${equation.getXIntercepts()[1]})"
+                      : "--"),
+                )
+              : Container(),
+          ListTile(
+            title: const Text("Line of Symmetry"),
+            trailing: Text((formKey.currentState?.isValid ?? false)
+                ? "x = ${equation.getLineOfSymmetry()}"
+                : "--"),
+          ),
+          ListTile(
+            title: const Text("Turning Point"),
+            trailing: Text((formKey.currentState?.isValid ?? false)
+                ? "(${equation.getTurningPointX()} , ${equation.getTurningPointY()})"
+                : "--"),
+          ),
+          ListTile(
+            title: const Text("Discriminant"),
+            trailing: Text((formKey.currentState?.isValid ?? false)
+                ? "${equation.calculateDiscriminant()}"
+                : "--"),
+          ),
+          ListTile(
+            title: const Text("Number of Roots"),
+            trailing: Text((formKey.currentState?.isValid ?? false)
+                ? "${equation.getNumberOfRoots()}"
+                : "--"),
+          ),
+        ],
+      ),
     );
   }
 }
