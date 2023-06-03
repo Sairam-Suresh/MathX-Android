@@ -116,80 +116,83 @@ class _PythagorasTheoremCalculatorPageState
     }
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.all(5),
       child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              title: const Text("Side A"),
-              trailing:
-                  (formKey.currentState?.isValid ?? false) && only2FieldsFilled
-                      ? Text(
-                          controller.textFieldValues.first != ""
-                              ? controller.textFieldValues.first
-                              : calculateSide(
-                                      num.parse(controller.textFieldValues[2]),
-                                      num.parse(controller.textFieldValues[1]))
-                                  .toString(),
-                          style: const TextStyle(fontSize: 20),
-                        )
-                      : const Text("--"),
-            ),
-            ListTile(
-              title: const Text("Side B"),
-              trailing:
-                  (formKey.currentState?.isValid ?? false) && only2FieldsFilled
-                      ? Text(
-                          controller.textFieldValues[1] != ""
-                              ? controller.textFieldValues[1]
-                              : calculateSide(
-                                      num.parse(controller.textFieldValues[2]),
-                                      num.parse(controller.textFieldValues[0]))
-                                  .toString(),
-                          style: const TextStyle(fontSize: 20),
-                        )
-                      : const Text("--"),
-            ),
-            ListTile(
-              title: const Text("Side C"),
-              trailing:
-                  (formKey.currentState?.isValid ?? false) && only2FieldsFilled
-                      ? Text(
-                          controller.textFieldValues.last != ""
-                              ? controller.textFieldValues.last
-                              : calculateHypotenuse(
-                                      num.parse(controller.textFieldValues[0]),
-                                      num.parse(controller.textFieldValues[1]))
-                                  .toString(),
-                          style: const TextStyle(fontSize: 20),
-                        )
-                      : const Text("--"),
-            ),
-            _noOfFieldsFilled > 2
-                ? const Center(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.warning_amber),
-                        SizedBox(width: 10),
-                        Text("Please only enter 2 values"),
-                      ],
-                    ),
-                  )
-                : _noOfFieldsFilled < 2
-                    ? const Center(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.warning_amber),
-                            SizedBox(width: 10),
-                            Text("Please enter at least 2 values"),
-                          ],
-                        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: const Text("Side A"),
+                trailing: (formKey.currentState?.isValid ?? false) &&
+                        only2FieldsFilled
+                    ? Text(
+                        controller.textFieldValues.first != ""
+                            ? controller.textFieldValues.first
+                            : calculateSide(
+                                    num.parse(controller.textFieldValues[2]),
+                                    num.parse(controller.textFieldValues[1]))
+                                .toString(),
+                        style: const TextStyle(fontSize: 20),
                       )
-                    : Container()
-          ],
+                    : const Text("--"),
+              ),
+              ListTile(
+                title: const Text("Side B"),
+                trailing: (formKey.currentState?.isValid ?? false) &&
+                        only2FieldsFilled
+                    ? Text(
+                        controller.textFieldValues[1] != ""
+                            ? controller.textFieldValues[1]
+                            : calculateSide(
+                                    num.parse(controller.textFieldValues[2]),
+                                    num.parse(controller.textFieldValues[0]))
+                                .toString(),
+                        style: const TextStyle(fontSize: 20),
+                      )
+                    : const Text("--"),
+              ),
+              ListTile(
+                title: const Text("Side C"),
+                trailing: (formKey.currentState?.isValid ?? false) &&
+                        only2FieldsFilled
+                    ? Text(
+                        controller.textFieldValues.last != ""
+                            ? controller.textFieldValues.last
+                            : calculateHypotenuse(
+                                    num.parse(controller.textFieldValues[0]),
+                                    num.parse(controller.textFieldValues[1]))
+                                .toString(),
+                        style: const TextStyle(fontSize: 20),
+                      )
+                    : const Text("--"),
+              ),
+              _noOfFieldsFilled > 2
+                  ? const Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.warning_amber),
+                          SizedBox(width: 10),
+                          Text("Please only enter 2 values"),
+                        ],
+                      ),
+                    )
+                  : _noOfFieldsFilled < 2
+                      ? const Center(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.warning_amber),
+                              SizedBox(width: 10),
+                              Text("Please enter at least 2 values"),
+                            ],
+                          ),
+                        )
+                      : Container()
+            ],
+          ),
         ),
       ),
     );

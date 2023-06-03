@@ -180,8 +180,6 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                             : const Text("--"),
                       ),
                     )
-
-                    // TODO: Implement results here
                   ],
                 ))),
       ),
