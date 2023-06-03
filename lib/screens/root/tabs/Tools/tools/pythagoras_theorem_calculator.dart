@@ -33,7 +33,7 @@ class _PythagorasTheoremCalculatorPageState
     textFields = TextFieldList(
       controller: controller,
       formKey: formKey,
-      limitEntries: const {"a": null, "b": null, "c": null},
+      limitEntries: const {"A": null, "B": null, "C": null},
       validators: FormBuilderValidators.compose([
         FormBuilderValidators.numeric(errorText: "Please enter a valid number.")
       ]),
@@ -51,7 +51,7 @@ class _PythagorasTheoremCalculatorPageState
     textFields = TextFieldList(
       controller: controller,
       formKey: formKey,
-      limitEntries: const {"a": null, "b": null, "c": null},
+      limitEntries: const {"Side A": 0, "Side B": 0, "Side C": 0},
       onChange: (_) {
         setState(() {});
         // formKey.currentState?.validate();
@@ -154,7 +154,7 @@ class _PythagorasTheoremCalculatorPageState
                     : const Text("--"),
               ),
               ListTile(
-                title: const Text("Side C"),
+                title: const Text("Side C (Hypotenuse)"),
                 trailing: (formKey.currentState?.isValid ?? false) &&
                         only2FieldsFilled
                     ? Text(
