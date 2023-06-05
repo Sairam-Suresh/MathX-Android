@@ -1,21 +1,21 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart' as widgets;
 import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/widgets/textwithequations.dart';
 
 class NoteEditorPage extends StatefulWidget {
-  NoteEditorPage(
-      {Key? key,
-      required this.note,
-      this.isinEditMode,
-      required this.onChange,
-      required this.onDelete})
-      : super(key: key);
+  NoteEditorPage({
+    Key? key,
+    required this.note,
+    this.isinEditMode,
+    required this.onChange,
+    required this.onDelete,
+  }) : super(key: key);
 
-  late Note note;
-  late void Function(Note note) onChange;
-  late void Function(Note note) onDelete;
-  late bool? isinEditMode;
+  final Note note;
+  final bool? isinEditMode;
+  final void Function(Note note) onChange;
+  final void Function(Note note) onDelete;
 
   @override
   _NoteEditorPageState createState() => _NoteEditorPageState();
@@ -29,6 +29,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
   FocusNode titleFocusNode = FocusNode();
   FocusNode contentFocusNode = FocusNode();
 
+  DateTime lastModified = DateTime.now();
   String newTitle = "";
   String newContent = "";
   bool renderMath = true;
@@ -36,12 +37,14 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
   @override
   void initState() {
     super.initState();
+    contentFocusNode.requestFocus();
     setState(() {
       isEditMode = widget.isinEditMode ?? false;
 
       newTitle = widget.note.name;
       newContent = widget.note.content;
       renderMath = widget.note.renderMath ?? true;
+      lastModified = widget.note.date;
       titleEditingController = TextEditingController(text: widget.note.name);
       contentEditingController =
           TextEditingController(text: widget.note.content);
@@ -51,39 +54,54 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: IntrinsicWidth(
-            child: widgets.EditableText(
-              textAlign: TextAlign.center,
-              readOnly: !isEditMode,
-              backgroundCursorColor: Colors.white,
-              controller: titleEditingController,
-              cursorColor: Colors.white,
-              focusNode: titleFocusNode,
-              style: const TextStyle(color: Colors.white, fontSize: 20),
-              onChanged: (value) {
-                setState(() {
-                  newTitle = value;
-                });
-              },
-              onTapOutside: (_) {
-                titleFocusNode.unfocus();
-              },
-              onSubmitted: (value) {
-                setState(() {
-                  newTitle = value;
-                });
-                widget.onChange(Note(
-                    name: newTitle,
-                    content: newContent,
-                    date: DateTime.now(),
-                    renderMath: renderMath));
-              },
-            ),
-          ),
-          actions: isEditMode
-              ? [
-                  IconButton(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar.medium(
+            pinned: true,
+            centerTitle: true,
+            title: isEditMode
+                ? IntrinsicWidth(
+                    child: EditableText(
+                      textAlign: TextAlign.center,
+                      readOnly: !isEditMode,
+                      controller: titleEditingController,
+                      cursorColor: Colors.white,
+                      focusNode: titleFocusNode,
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                      onChanged: (value) {
+                        setState(() {
+                          newTitle = value;
+                        });
+                      },
+                      onTapOutside: (_) {
+                        titleFocusNode.unfocus();
+                      },
+                      onSubmitted: (value) {
+                        setState(() {
+                          newTitle = value;
+                        });
+
+                        lastModified = DateTime.now();
+
+                        widget.onChange(
+                          Note(
+                            name: newTitle,
+                            content: newContent,
+                            date: lastModified,
+                            renderMath: renderMath,
+                          ),
+                        );
+                      },
+                      backgroundCursorColor: Colors.white,
+                    ),
+                  )
+                : Text(
+                    widget.note.name,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+            actions: isEditMode
+                ? [
+                    IconButton(
                       onPressed: () {
                         print(titleFocusNode.hasFocus);
                         setState(
@@ -93,113 +111,141 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                           },
                         );
                       },
-                      icon: const Icon(Icons.delete)),
-                  IconButton(
-                    onPressed: () {
-                      print(titleFocusNode.hasFocus);
-                      setState(() {
-                        if (titleFocusNode.hasFocus) {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          widget.onChange(Note(
-                              name: newTitle,
-                              content: newContent,
-                              date: DateTime.now(),
-                              renderMath: renderMath));
-                        } else {
-                          isEditMode = false;
-                          widget.onChange(Note(
-                              name: newTitle,
-                              content: newContent,
-                              date: DateTime.now(),
-                              renderMath: renderMath));
-                        }
-                      });
-                    },
-                    icon: const Icon(Icons.check),
-                  )
-                ]
-              : [],
-        ),
-        floatingActionButton: buildFloatingActionButton(),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              isEditMode
-                  ? SwitchListTile(
-                      value: renderMath ?? true,
-                      onChanged: (value) {
-                        setState(() {
-                          renderMath = value;
-                          print(renderMath);
-                        });
-                        widget.onChange(Note(
-                            name: newTitle,
-                            content: newContent,
-                            date: DateTime.now(),
-                            renderMath: renderMath));
-                      },
-                      title: Row(
-                        children: [
-                          const Text("Math Rendering"),
-                          IconButton(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return MathEquationFAQ();
-                                  });
-                            },
-                            icon: const Icon(Icons.question_mark),
-                            iconSize: 20,
-                            color: Colors.blue,
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(),
-              !isEditMode
-                  ? renderMath
-                      ? TextWithEquations(text: newContent)
-                      : Text(newContent)
-                  : Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: EditableText(
-                          controller: contentEditingController,
-                          focusNode: contentFocusNode,
-                          maxLines: 9007199254740991,
-                          onChanged: (value) {
-                            setState(() {
-                              newContent = value;
-                            });
-                          },
-                          onTapOutside: (_) {
-                            contentFocusNode.unfocus();
-                          },
-                          style: const TextStyle(),
-                          cursorColor: Colors.white,
-                          backgroundCursorColor: Colors.white,
-                        ),
-                      ),
+                      icon: const Icon(Icons.delete),
                     ),
-            ],
-          ),
-        ));
-  }
+                    IconButton(
+                      onPressed: () {
+                        print(titleFocusNode.hasFocus);
+                        setState(() {
+                          if (titleFocusNode.hasFocus) {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            lastModified = DateTime.now();
 
-  FloatingActionButton? buildFloatingActionButton() {
-    return !isEditMode
-        ? FloatingActionButton(
-            child: const Icon(Icons.edit),
-            onPressed: () {
-              setState(() {
-                isEditMode = true;
-              });
-            })
-        : null;
+                            widget.onChange(
+                              Note(
+                                name: newTitle,
+                                content: newContent,
+                                date: lastModified,
+                                renderMath: renderMath,
+                              ),
+                            );
+                          } else {
+                            isEditMode = false;
+                            lastModified = DateTime.now();
+                            widget.onChange(
+                              Note(
+                                name: newTitle,
+                                content: newContent,
+                                date: lastModified,
+                                renderMath: renderMath,
+                              ),
+                            );
+                          }
+                        });
+                      },
+                      icon: const Icon(Icons.check),
+                    ),
+                  ]
+                : [],
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  isEditMode
+                      ? Column(
+                          children: [
+                            SwitchListTile(
+                              value: renderMath ?? true,
+                              onChanged: (value) {
+                                setState(() {
+                                  renderMath = value;
+                                  print(renderMath);
+                                });
+                                lastModified = DateTime.now();
+
+                                widget.onChange(
+                                  Note(
+                                    name: newTitle,
+                                    content: newContent,
+                                    date: lastModified,
+                                    renderMath: renderMath,
+                                  ),
+                                );
+                              },
+                              title: Row(
+                                children: [
+                                  const Text("Math Rendering"),
+                                  IconButton(
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return MathEquationFAQ();
+                                        },
+                                      );
+                                    },
+                                    icon: const Icon(Icons.question_mark),
+                                    iconSize: 20,
+                                    color: Colors.blue,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            ListTile(
+                              title: Text("Last Modified"),
+                              trailing: AutoSizeText(
+                                "${lastModified.day}/${lastModified.month}/${lastModified.year} at ${lastModified.hour}:${lastModified.minute}:${lastModified.second}",
+                                minFontSize: 15,
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  !isEditMode
+                      ? renderMath
+                          ? TextWithEquations(text: newContent)
+                          : Text(newContent)
+                      : Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: TextField(
+                            controller: contentEditingController,
+                            focusNode: contentFocusNode,
+                            maxLines: null,
+                            onChanged: (value) {
+                              setState(() {
+                                newContent = value;
+                              });
+                            },
+                            style: const TextStyle(),
+                            cursorColor: Colors.white,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: !isEditMode
+          ? FloatingActionButton(
+              child: const Icon(Icons.edit),
+              onPressed: () {
+                setState(() {
+                  isEditMode = true;
+                });
+              },
+            )
+          : null,
+    );
   }
 }
 
