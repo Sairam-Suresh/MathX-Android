@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mathx_android/constants.dart';
+import 'package:mathx_android/logic/NotesDatabaseHelper.dart';
 import 'package:mathx_android/widgets/notecard.dart';
+
+import 'noteeditor.dart';
 
 class NotesPage extends StatefulWidget {
   const NotesPage({Key? key}) : super(key: key);
@@ -14,17 +17,32 @@ class _NotesPageState extends State<NotesPage> {
   List<Note> listOfNotes = [
     Note(
         name: "Note 1",
-        description: "Description 1",
         date: DateTime.now(),
-        content: "Content 1"),
-    Note(
-        name: "Note 2",
-        description: "Description 2",
-        date: DateTime.now(),
-        content: "Content 2")
+        content: r"Content 1 \frac{1}{2}"),
+    Note(name: "Note 2", date: DateTime.now(), content: "Content 2")
   ];
 
+  TextEditingController searchController = TextEditingController();
+
   List<Widget> noteCards = [];
+  final DatabaseHelper databaseHelper = DatabaseHelper.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    loadNotes();
+  }
+
+  Future<void> loadNotes() async {
+    final List<Note> notes = await databaseHelper.loadNotesFromPersistence();
+    setState(() {
+      listOfNotes = notes;
+    });
+  }
+
+  Future<void> saveNotes() async {
+    await databaseHelper.saveNotesToPersistence(listOfNotes);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,147 +51,134 @@ class _NotesPageState extends State<NotesPage> {
       noteCards.add(NoteCard(note: note));
     }
 
-    // Function to help refresh Notes List in case it was updated in the add notes sheet
-    void outerSetState(dynamic value) {
-      setState(() {});
-    }
-
-    String name = "";
-    String desc = "";
-    DateTime? time;
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Notes"),
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (BuildContext context) {
-              return BottomSheet(
-                builder: (BuildContext context) {
-                  return StatefulBuilder(
-                      builder: (BuildContext context, StateSetter setState) {
-                    return Padding(
-                      padding: EdgeInsets.all(PADDING_FOR_MODAL_BOTTOM_SHEET),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Create New Note',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(fontSize: 30),
-                          ),
-                          const Spacer(),
-                          TextField(
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: "Note Name",
-                              ),
-                              onChanged: (value) {
-                                setState(() {
-                                  name = value;
-                                });
-                              }),
-                          const Spacer(),
-                          TextField(
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: "Description",
-                              ),
-                              onChanged: (value) {
-                                setState(() {
-                                  desc = value;
-                                });
-                              }),
-                          const Spacer(),
-                          Center(
-                            child: FilledButton(
-                              onPressed: () async {
-                                time = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(), // Refer step 1
-                                  firstDate: DateTime(2000),
-                                  lastDate: DateTime(2025),
-                                );
+          setState(() {
+            listOfNotes.add(Note(
+              content: "",
+              name: "New Note",
+              date: DateTime.now(),
+            ));
+            Navigator.push(context, MaterialPageRoute(builder: (context1) {
+              return NoteEditorPage(
+                note: listOfNotes.last,
+                isinEditMode: true,
+                onChange: (note) {
+                  setState(() {
+                    listOfNotes[listOfNotes.length - 1] = note;
+                  });
+                  saveNotes();
+                },
+                onDelete: (Note note) {
+                  Note temp = listOfNotes.last;
 
-                                setState(() {});
-                                setState(() {
-                                  time = time;
-                                });
-
-                                // _selectDate(context).then((value) {
-                                //   if (value != null) {
-                                //     setState(() {
-                                //       time = value;
-                                //     });
-                                //   }
-                                // }).whenomplete(() {
-                                //   setState(() {});
-                                // });
-                                // setState(() {
-                                //
-                                // });
-                                //
-                              },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Text("Select Date"),
-                                  Icon(time != null
-                                      ? Icons.check
-                                      : Icons.calendar_month),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const Spacer(flex: 6),
-                          Center(
-                            child: FilledButton(
-                              onPressed:
-                                  name == "" || desc == "" || time == null
-                                      ? null
-                                      : () {
-                                          setState(() {
-                                            listOfNotes.add(Note(
-                                              name: name,
-                                              description: desc,
-                                              date: time!,
-                                              content: "",
-                                            ));
-                                          });
-                                          name = "";
-                                          desc = "";
-                                          time = null;
-
-                                          setState(() {});
-                                          outerSetState(null);
-                                          Navigator.pop(context);
-                                        },
-                              child: const Text("Save"),
-                            ),
-                          ),
-                          const Spacer(flex: 2)
-                        ],
+                  setState(() {
+                    listOfNotes.remove(listOfNotes.last);
+                  });
+                  saveNotes();
+                  Future.delayed(Duration(milliseconds: 220)).then((_) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        "Note ${temp.name} deleted",
                       ),
-                    );
+                      action: SnackBarAction(
+                          label: "Undo",
+                          onPressed: () {
+                            setState(() {
+                              listOfNotes.add(temp);
+                              saveNotes();
+                            });
+                          }),
+                    ));
                   });
                 },
-                onClosing: () {},
-                enableDrag: false,
               );
-            },
-          );
+            }));
+          });
         },
         child: const Icon(Icons.add),
       ),
-      body: GridView(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: SearchBar(
+                controller: searchController,
+                onChanged: (value) {
+                  setState(() {});
+                },
+                hintText: "Search Notes",
+                padding: MaterialStateProperty.all<EdgeInsets>(
+                    const EdgeInsets.symmetric(horizontal: 15)),
+                leading: const Icon(Icons.search),
+              ),
+            ),
+            Expanded(
+              child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: listOfNotes.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return listOfNotes[index]
+                            .name
+                            .contains(searchController.text)
+                        ? InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context1) => NoteEditorPage(
+                                        note: listOfNotes[index],
+                                        onChange: (note) {
+                                          setState(() {
+                                            listOfNotes[index] = note;
+                                          });
+                                          saveNotes();
+                                        },
+                                        onDelete: (note) {
+                                          setState(() {
+                                            listOfNotes.removeAt(index);
+                                          });
+
+                                          Note temp = note;
+                                          saveNotes();
+
+                                          setState(() {
+                                            listOfNotes.remove(note);
+                                          });
+                                          Future.delayed(
+                                                  Duration(milliseconds: 220))
+                                              .then((_) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                      "Note ${temp.name} deleted",
+                                                    ),
+                                                    action: SnackBarAction(
+                                                        label: "Undo",
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            listOfNotes.insert(
+                                                                index, temp);
+                                                            saveNotes();
+                                                          });
+                                                        })));
+                                          });
+                                        },
+                                      )));
+                            },
+                            child: noteCards[index])
+                        : Container();
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return listOfNotes[index]
+                            .name
+                            .contains(searchController.text)
+                        ? Divider()
+                        : Container();
+                  }),
+            ),
+          ],
         ),
-        padding: EdgeInsets.all(PADDING_BETWEEN_SQUARES),
-        children: noteCards,
       ),
     );
   }
