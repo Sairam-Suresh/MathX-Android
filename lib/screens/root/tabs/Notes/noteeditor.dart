@@ -53,6 +53,8 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -65,9 +67,11 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                       textAlign: TextAlign.center,
                       readOnly: !isEditMode,
                       controller: titleEditingController,
-                      cursorColor: Colors.white,
+                      cursorColor: isDarkMode ? Colors.white : Colors.black,
                       focusNode: titleFocusNode,
-                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                      style: TextStyle(
+                          color: isDarkMode ? Colors.white : Colors.black,
+                          fontSize: 20),
                       onChanged: (value) {
                         setState(() {
                           newTitle = value;
@@ -223,7 +227,8 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                               });
                             },
                             style: const TextStyle(),
-                            cursorColor: Colors.white,
+                            cursorColor:
+                                isDarkMode ? Colors.white : Colors.black,
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                             ),
