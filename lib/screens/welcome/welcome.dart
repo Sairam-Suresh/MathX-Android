@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:mathx_android/screens/root/root.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -11,6 +12,9 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
+    var brightness = MediaQuery.of(context).platformBrightness;
+    bool isDarkMode = brightness == Brightness.dark;
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -105,24 +109,30 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       child: FilledButton(
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
-                              Color.fromARGB(255, 169, 100, 255)),
+                              const Color.fromARGB(255, 169, 100, 255)),
                         ),
-                        child: Row(
+                        child: const Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Text("Get Started"),
-                            Icon(Icons.chevron_right_rounded)
+                          children: [
+                            Text(
+                              "Get Started",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            Icon(
+                              Icons.chevron_right_rounded,
+                              color: Colors.white,
+                            )
                           ],
                         ),
                         onPressed: () {
                           // TODO: Make the other tab view the permanent view once this view has been dismissed
                           // WARN: During the merge into main make sure that this gets changed to "pushReplacement" during the merge conflict
-                          // Navigator.push(
-                          //   context,
-                          //   // MaterialPageRoute(
-                          //   //     builder: (context) => const TabRootController(
-                          //   //         title: "hello world")),
-                          // );
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => root()),
+                          );
                         },
                       ),
                     ),
