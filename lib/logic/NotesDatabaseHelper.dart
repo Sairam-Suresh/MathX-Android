@@ -13,13 +13,17 @@ class DatabaseHelper {
   Database? _database;
 
   Future<Database> get database async {
-    _database ??= await _initDatabase();
+    if (_database != null) return _database!;
+
+    // Initialize the database
+    _database = await _initDatabase();
     return _database!;
   }
 
   Future<Database> _initDatabase() async {
     final String path = await getDatabasesPath();
     final String fullPath = join(path, _dbName);
+
     return await openDatabase(
       fullPath,
       version: 1,
@@ -42,7 +46,11 @@ class DatabaseHelper {
     await db.transaction((txn) async {
       await txn.delete(_tableName); // Clear the table
       for (final note in notes) {
-        await txn.insert(_tableName, note.toMap());
+        await txn.insert(
+          _tableName,
+          note.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
       }
     });
   }
