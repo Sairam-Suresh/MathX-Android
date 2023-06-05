@@ -96,7 +96,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                     ),
                   )
                 : Text(
-                    widget.note.name,
+                    newTitle,
                     style: const TextStyle(fontSize: 20),
                   ),
             actions: isEditMode
