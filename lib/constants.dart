@@ -36,13 +36,6 @@ class Note {
   }
 }
 
-enum ToolCategory {
-  Calculators,
-  Graphers,
-  Randomise,
-  Unit_Converter;
-}
-
 enum HCFLCM { HCF, LCM }
 
 enum HCFOptions { primeNumberOnly }
