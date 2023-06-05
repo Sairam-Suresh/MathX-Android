@@ -74,7 +74,7 @@ class _NotesPageState extends State<NotesPage> {
                     listOfNotes.remove(listOfNotes.last);
                   });
                   saveNotes();
-                  Future.delayed(Duration(milliseconds: 220)).then((_) {
+                  Future.delayed(const Duration(milliseconds: 220)).then((_) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(
                         "Note ${temp.name} deleted",
@@ -115,81 +115,99 @@ class _NotesPageState extends State<NotesPage> {
             ),
             Expanded(
               child: isLoading
-                  ? Center(
+                  ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: listOfNotes.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return listOfNotes[index]
-                                .name
-                                .contains(searchController.text)
-                            ? InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context1) => NoteEditorPage(
-                                        note: listOfNotes[index],
-                                        onChange: (note) {
-                                          setState(() {
-                                            listOfNotes[index] = note;
-                                          });
-                                          saveNotes();
-                                        },
-                                        onDelete: (note) {
-                                          setState(() {
-                                            listOfNotes.removeAt(index);
-                                          });
+                  : listOfNotes.length != 0
+                      ? ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: listOfNotes.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return listOfNotes[index]
+                                    .name
+                                    .contains(searchController.text)
+                                ? InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context1) => NoteEditorPage(
+                                            note: listOfNotes[index],
+                                            onChange: (note) {
+                                              setState(() {
+                                                listOfNotes[index] = note;
+                                              });
+                                              saveNotes();
+                                            },
+                                            onDelete: (note) {
+                                              setState(() {
+                                                listOfNotes.removeAt(index);
+                                              });
 
-                                          Note temp = note;
-                                          saveNotes();
+                                              Note temp = note;
+                                              saveNotes();
 
-                                          setState(() {
-                                            listOfNotes.remove(note);
-                                          });
-                                          Future.delayed(
-                                            Duration(milliseconds: 220),
-                                          ).then((_) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  "Note ${temp.name} deleted",
-                                                ),
-                                                action: SnackBarAction(
-                                                  label: "Undo",
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      listOfNotes.insert(
-                                                          index, temp);
-                                                      saveNotes();
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                            );
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                    child: noteCards[index]),
+                                              setState(() {
+                                                listOfNotes.remove(note);
+                                              });
+                                              Future.delayed(
+                                                const Duration(
+                                                    milliseconds: 220),
+                                              ).then((_) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      "Note ${temp.name} deleted",
+                                                    ),
+                                                    action: SnackBarAction(
+                                                      label: "Undo",
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          listOfNotes.insert(
+                                                              index, temp);
+                                                          saveNotes();
+                                                        });
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: noteCards[index]),
+                                  )
+                                : Container();
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return listOfNotes[index]
+                                    .name
+                                    .contains(searchController.text)
+                                ? const Divider()
+                                : Container();
+                          },
+                        )
+                      : Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Hmmmm...",
+                                style: Theme.of(context).textTheme.headline2,
+                              ),
+                              Text(
+                                "You do not seem to have any notes. Create a new one using the button below.",
+                                textAlign: TextAlign.center,
                               )
-                            : Container();
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return listOfNotes[index]
-                                .name
-                                .contains(searchController.text)
-                            ? Divider()
-                            : Container();
-                      },
-                    ),
+                            ],
+                          ),
+                        ),
             ),
           ],
         ),
