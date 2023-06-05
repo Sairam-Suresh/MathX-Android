@@ -48,6 +48,7 @@ dependencies:
   sqflite: ^2.2.8+4
   sqflite_common_ffi: ^2.2.5
   sqlite3_flutter_libs: ^0.5.15
+  app_links: ^3.4.3
 
 dev_dependencies:
   flutter_test:
