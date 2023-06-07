@@ -90,7 +90,12 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                           buildResults(),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: textFields!,
+                            child: SingleChildScrollView(
+                                child: Column(
+                              children: [
+                                textFields!,
+                              ],
+                            )),
                           ),
                         ],
                       ))),
@@ -118,7 +123,7 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
 
   Widget buildResults() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Card(
         child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.25,
@@ -131,29 +136,29 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                   children: [
                     Expanded(
                       child: ListTile(
-                        title: Text("Mean"),
+                        title: const Text("Mean"),
                         trailing: (formKey.currentState?.isValid ?? false)
                             ? Text(calculateMean(controller.textFieldValues
                                     .map((e) => num.tryParse(e) ?? 0)
                                     .toList())
                                 .toString())
-                            : Text("--"),
+                            : const Text("--"),
                       ),
                     ),
                     Expanded(
                       child: ListTile(
-                        title: Text("Median"),
+                        title: const Text("Median"),
                         trailing: (formKey.currentState?.isValid ?? false)
                             ? Text(calculateMedian(controller.textFieldValues
                                     .map((e) => num.tryParse(e) ?? 0)
                                     .toList())
                                 .toString())
-                            : Text("--"),
+                            : const Text("--"),
                       ),
                     ),
                     Expanded(
                       child: ListTile(
-                        title: Text("Mode"),
+                        title: const Text("Mode"),
                         trailing: (formKey.currentState?.isValid ?? false)
                             ? SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.6,
@@ -165,12 +170,12 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                                   maxFontSize: 20,
                                   textAlign: TextAlign.end,
                                 ))
-                            : Text("--"),
+                            : const Text("--"),
                       ),
                     ),
                     Expanded(
                       child: ListTile(
-                        title: Text("Standard Deviation"),
+                        title: const Text("Standard Deviation"),
                         trailing: (formKey.currentState?.isValid ?? false)
                             ? Text(calculateStandardDeviation(controller
                                     .textFieldValues
