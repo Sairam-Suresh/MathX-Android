@@ -64,7 +64,6 @@ class _QuadraticCalculatorPageState extends State<QuadraticCalculatorPage> {
                                   width: MediaQuery.of(context).size.width,
                                   child: Center(
                                     child: Math.tex(
-                                      "V = "
                                       "${controller.textFieldValues[0] == "" ? "ax^2" : "${controller.textFieldValues[0]}x^2"}"
                                       " + "
                                       "${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "bx" : "${controller.textFieldValues.elementAt(1)}x"}"
