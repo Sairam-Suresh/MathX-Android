@@ -44,11 +44,11 @@ class _RandomiserPageState extends State<RandomiserPage> {
         appBar: AppBar(
           title: const Text("Randomiser"),
           bottom: TabBar(
-            tabs: [
-              const Tab(
+            tabs: const [
+              Tab(
                 child: Text("Recent"),
               ),
-              const Tab(
+              Tab(
                 child: Text("Occurrences"),
               )
             ],

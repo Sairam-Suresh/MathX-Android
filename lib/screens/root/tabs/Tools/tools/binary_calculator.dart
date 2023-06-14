@@ -25,7 +25,7 @@ class _BinaryConverterPageState extends State<BinaryConverterPage> {
         title: const Text("Binary Converter"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
             buildResults(),

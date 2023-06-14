@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mathx_android/logic/tools/AverageLogic.dart';
 import 'package:mathx_android/widgets/textfieldlist.dart';
@@ -57,30 +56,22 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
       },
     );
 
-    return NotificationListener(
-      onNotification: (notification) {
-        if (notification is UserScrollNotification) {
-          if (notification.direction == ScrollDirection.reverse && isVisible) {
-            setState(() {
-              isVisible = false;
-            });
-          } else if (notification.direction == ScrollDirection.forward &&
-              !isVisible) {
-            setState(() {
-              isVisible = false;
-            });
-          }
-        } else if (notification is ScrollEndNotification) {
-          setState(() {
-            isVisible = true;
-          });
-        }
-        return false;
-      },
-      child: Scaffold(
-          appBar: AppBar(title: const Text("Average Calculator")),
-          floatingActionButton: buildFAB(),
-          body: Column(
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("Average Calculator"),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    controller.addNewField();
+                  });
+                },
+                icon: Icon(Icons.add))
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
             children: [
               Expanded(
                   child: SingleChildScrollView(
@@ -88,106 +79,83 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                       child: Column(
                         children: [
                           buildResults(),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: SingleChildScrollView(
-                                child: Column(
-                              children: [
-                                textFields!,
-                              ],
-                            )),
-                          ),
+                          SingleChildScrollView(
+                              child: Column(
+                            children: [
+                              textFields!,
+                            ],
+                          )),
                         ],
                       ))),
             ],
-          )),
-    );
-  }
-
-  AnimatedOpacity buildFAB() {
-    return AnimatedOpacity(
-      opacity: isVisible || controller.textFieldValues.isEmpty ? 1 : 0,
-      duration: const Duration(milliseconds: 300),
-      child: isVisible || controller.textFieldValues.isEmpty
-          ? FloatingActionButton(
-              onPressed: () {
-                setState(() {
-                  controller.addNewField();
-                });
-              },
-              child: const Icon(Icons.add),
-            )
-          : null,
-    );
+          ),
+        ));
   }
 
   Widget buildResults() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: Card(
-        child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.25,
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 15, left: 15, right: 15, bottom: 20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: ListTile(
-                        title: const Text("Mean"),
-                        trailing: (formKey.currentState?.isValid ?? false)
-                            ? Text(calculateMean(controller.textFieldValues
-                                    .map((e) => num.tryParse(e) ?? 0)
-                                    .toList())
-                                .toString())
-                            : const Text("--"),
-                      ),
+    return Card(
+      child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.25,
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 15, left: 15, right: 15, bottom: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: ListTile(
+                      title: const Text("Mean"),
+                      trailing: (formKey.currentState?.isValid ?? false)
+                          ? Text(calculateMean(controller.textFieldValues
+                                  .map((e) => num.tryParse(e) ?? 0)
+                                  .toList())
+                              .toString())
+                          : const Text("--"),
                     ),
-                    Expanded(
-                      child: ListTile(
-                        title: const Text("Median"),
-                        trailing: (formKey.currentState?.isValid ?? false)
-                            ? Text(calculateMedian(controller.textFieldValues
-                                    .map((e) => num.tryParse(e) ?? 0)
-                                    .toList())
-                                .toString())
-                            : const Text("--"),
-                      ),
+                  ),
+                  Expanded(
+                    child: ListTile(
+                      title: const Text("Median"),
+                      trailing: (formKey.currentState?.isValid ?? false)
+                          ? Text(calculateMedian(controller.textFieldValues
+                                  .map((e) => num.tryParse(e) ?? 0)
+                                  .toList())
+                              .toString())
+                          : const Text("--"),
                     ),
-                    Expanded(
-                      child: ListTile(
-                        title: const Text("Mode"),
-                        trailing: (formKey.currentState?.isValid ?? false)
-                            ? SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: AutoSizeText(
-                                  modeText,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 3,
-                                  minFontSize: 10,
-                                  maxFontSize: 20,
-                                  textAlign: TextAlign.end,
-                                ))
-                            : const Text("--"),
-                      ),
+                  ),
+                  Expanded(
+                    child: ListTile(
+                      title: const Text("Mode"),
+                      trailing: (formKey.currentState?.isValid ?? false)
+                          ? SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              child: AutoSizeText(
+                                modeText,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 3,
+                                minFontSize: 10,
+                                maxFontSize: 20,
+                                textAlign: TextAlign.end,
+                              ))
+                          : const Text("--"),
                     ),
-                    Expanded(
-                      child: ListTile(
-                        title: const Text("Standard Deviation"),
-                        trailing: (formKey.currentState?.isValid ?? false)
-                            ? Text(calculateStandardDeviation(controller
-                                    .textFieldValues
-                                    .map((e) => num.tryParse(e) ?? 0)
-                                    .toList())
-                                .toString())
-                            : const Text("--"),
-                      ),
-                    )
-                  ],
-                ))),
-      ),
+                  ),
+                  Expanded(
+                    child: ListTile(
+                      title: const Text("Standard Deviation"),
+                      trailing: (formKey.currentState?.isValid ?? false)
+                          ? Text(calculateStandardDeviation(controller
+                                  .textFieldValues
+                                  .map((e) => num.tryParse(e) ?? 0)
+                                  .toList())
+                              .toString())
+                          : const Text("--"),
+                    ),
+                  )
+                ],
+              ))),
     );
   }
 }

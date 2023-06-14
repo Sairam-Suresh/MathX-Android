@@ -49,38 +49,39 @@ class _QuadraticCalculatorPageState extends State<QuadraticCalculatorPage> {
 
     return Scaffold(
         appBar: AppBar(title: const Text("Quadratic Equation Solver")),
-        body: Column(
-          children: [
-            Expanded(
-                child: SingleChildScrollView(
-                    controller: scrollController,
-                    child: Column(
-                      children: [
-                        buildResults(),
-                        Card(
-                          child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Center(
-                                    child: Math.tex(
-                                      "${controller.textFieldValues[0] == "" ? "ax^2" : "${controller.textFieldValues[0]}x^2"}"
-                                      " + "
-                                      "${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "bx" : "${controller.textFieldValues.elementAt(1)}x"}"
-                                      " + "
-                                      "${controller.textFieldValues.elementAtOrNull(2) == "" || controller.textFieldValues.length != 3 ? "c" : controller.textFieldValues.elementAt(2)}"
-                                      "=0",
-                                      textStyle: const TextStyle(fontSize: 20),
-                                    ),
-                                  ))),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: textFields!,
-                        ),
-                      ],
-                    ))),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              Expanded(
+                  child: SingleChildScrollView(
+                      controller: scrollController,
+                      child: Column(
+                        children: [
+                          buildResults(),
+                          Card(
+                            child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Center(
+                                      child: Math.tex(
+                                        "${controller.textFieldValues[0] == "" ? "ax^2" : "${controller.textFieldValues[0]}x^2"}"
+                                        " + "
+                                        "${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "bx" : "${controller.textFieldValues.elementAt(1)}x"}"
+                                        " + "
+                                        "${controller.textFieldValues.elementAtOrNull(2) == "" || controller.textFieldValues.length != 3 ? "c" : controller.textFieldValues.elementAt(2)}"
+                                        "=0",
+                                        textStyle:
+                                            const TextStyle(fontSize: 20),
+                                      ),
+                                    ))),
+                          ),
+                          textFields!,
+                        ],
+                      ))),
+            ],
+          ),
         ));
   }
 

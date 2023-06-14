@@ -74,7 +74,7 @@ class _buildRectangleState extends State<buildRectangle> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(10),
       child: Column(children: [
         Card(
           child: Padding(
@@ -115,7 +115,7 @@ class _buildTriangleState extends State<buildTriangle> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(10),
       child: Column(children: [
         Card(
           child: Padding(
@@ -125,7 +125,7 @@ class _buildTriangleState extends State<buildTriangle> {
                   child: Center(
                     child: Math.tex(
                       r"A = \frac 1 2 * "
-                      "${controller.textFieldValues[0] == "" ? "l" : controller.textFieldValues[0]} * ${controller.textFieldValues.last == "" || controller.textFieldValues.length == 1 ? "b" : controller.textFieldValues.last}${(controller.textFieldValues.length == 2 && (formKey.currentState?.isValid ?? false)) ? "= ${controller.textFieldValues.map((e) => int.parse(e)).reduce((value, element) => value * element) * 0.5}" : ""}",
+                      "${controller.textFieldValues[0] == "" ? "l" : controller.textFieldValues[0]} * ${controller.textFieldValues.last == "" || controller.textFieldValues.length == 1 ? "b" : controller.textFieldValues.last}${(controller.textFieldValues.length == 2 && (formKey.currentState?.isValid ?? false)) ? "= ${controller.textFieldValues.map((e) => int.parse(e)).reduce((value, element) => value * element) * 0.10}" : ""}",
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                   ))),
@@ -157,7 +157,7 @@ class _buildCircleState extends State<buildCircle> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(10),
       child: Column(children: [
         Card(
           child: Padding(
@@ -200,7 +200,7 @@ class _buildTrapeziumState extends State<buildTrapezium> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(10),
       child: Column(children: [
         Card(
           child: Padding(
@@ -245,7 +245,7 @@ class _buildParallelogramState extends State<buildParallelogram> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(10),
       child: Column(children: [
         Card(
           child: Padding(
@@ -286,7 +286,7 @@ class _buildCuboidState extends State<buildCuboid> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(10),
       child: Column(children: [
         Card(
           child: Padding(
@@ -338,7 +338,7 @@ class _buildPyramidState extends State<buildPyramid> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(10),
       child: Column(children: [
         Card(
           child: Padding(
@@ -390,7 +390,7 @@ class _buildSphereState extends State<buildSphere> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(10),
       child: Column(children: [
         Card(
           child: Padding(
@@ -433,7 +433,7 @@ class _buildCylinderState extends State<buildCylinder> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(10),
       child: Column(children: [
         Card(
           child: Padding(
@@ -487,7 +487,7 @@ class _buildConeState extends State<buildCone> {
     );
 
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(10),
       child: Column(children: [
         Card(
           child: Padding(
