@@ -95,7 +95,7 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
             ),
             floatingActionButton: buildFAB(),
             body: Padding(
-              padding: EdgeInsets.only(bottom: 30),
+              padding: const EdgeInsets.only(bottom: 30),
               child: Column(
                 children: [
                   Expanded(
