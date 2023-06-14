@@ -42,7 +42,7 @@ class DatabaseHelper {
           Note(
                   name: "LaTeX Example Note",
                   content:
-                      "Welcome to MathX! This note is an example of how you can integrate LaTeX into your math notes :) \n\nFor example, here's the quadratic equation: \n \\[x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}\\] \n\nLaTeX allows us to do all sorts of cool things with math, ranging from simple things like \\[x^2\\] to more advanced mathematical formulas.\n\nFeel free to click the \"Edit\" button in the top right hand corner to look at the LaTeX code, or you could click on the blue \"?\" button to learn more about LaTeX.",
+                      "Welcome to MathX! This note is an example of how you can integrate LaTeX into your math notes :) \n\nFor example, here's the quadratic equation: \n \\[x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}\\] \n\nLaTeX allows us to do all sorts of cool things with math, ranging from simple things like \\[x^2\\] to more advanced mathematical formulas.\n\nFeel free to click the \"Edit\" button in the top right hand corner to look at the LaTeX code, or you could click on the blue \"?\" button in edit mode to learn more about LaTeX.",
                   date: DateTime.now(),
                   renderMath: true)
               .toMap(),
