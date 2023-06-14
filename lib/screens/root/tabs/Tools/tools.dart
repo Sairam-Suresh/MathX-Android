@@ -11,6 +11,7 @@ import 'package:mathx_android/screens/root/tabs/Tools/tools/quadratic_calculator
 import 'package:mathx_android/screens/root/tabs/Tools/tools/randomiser.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/set_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/shapes_calculator.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/trigonometry_calculator.dart';
 
 class ToolsPage extends StatefulWidget {
   ToolsPage(
@@ -69,7 +70,7 @@ class _ToolsPageState extends State<ToolsPage> {
                 }));
               } else if (val == "Trigonometry Calculator") {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Container();
+                  return const TrigonometryCalculatorPage();
                 }));
               } else if (val == "Binary Calculator") {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
