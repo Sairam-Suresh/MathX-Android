@@ -66,7 +66,7 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                     controller.addNewField();
                   });
                 },
-                icon: Icon(Icons.add))
+                icon: const Icon(Icons.add))
           ],
         ),
         body: Padding(
@@ -105,29 +105,50 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                 children: [
                   Expanded(
                     child: ListTile(
-                      title: const Text("Mean"),
+                      title: Text(
+                        "Mean",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                       trailing: (formKey.currentState?.isValid ?? false)
-                          ? Text(calculateMean(controller.textFieldValues
-                                  .map((e) => num.tryParse(e) ?? 0)
-                                  .toList())
-                              .toString())
-                          : const Text("--"),
+                          ? Text(
+                              calculateMean(controller.textFieldValues
+                                      .map((e) => num.tryParse(e) ?? 0)
+                                      .toList())
+                                  .toString(),
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            )
+                          : Text(
+                              "--",
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
                     ),
                   ),
                   Expanded(
                     child: ListTile(
-                      title: const Text("Median"),
+                      title: Text(
+                        "Median",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                       trailing: (formKey.currentState?.isValid ?? false)
-                          ? Text(calculateMedian(controller.textFieldValues
-                                  .map((e) => num.tryParse(e) ?? 0)
-                                  .toList())
-                              .toString())
-                          : const Text("--"),
+                          ? Text(
+                              calculateMedian(controller.textFieldValues
+                                      .map((e) => num.tryParse(e) ?? 0)
+                                      .toList())
+                                  .toString(),
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            )
+                          : Text(
+                              "--",
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
                     ),
                   ),
                   Expanded(
                     child: ListTile(
-                      title: const Text("Mode"),
+                      title: Text(
+                        "Mode",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                       trailing: (formKey.currentState?.isValid ?? false)
                           ? SizedBox(
                               width: MediaQuery.of(context).size.width * 0.6,
@@ -138,20 +159,33 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                                 minFontSize: 10,
                                 maxFontSize: 20,
                                 textAlign: TextAlign.end,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ))
-                          : const Text("--"),
+                          : Text(
+                              "--",
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
                     ),
                   ),
                   Expanded(
                     child: ListTile(
-                      title: const Text("Standard Deviation"),
+                      title: Text(
+                        "Standard Deviation",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                       trailing: (formKey.currentState?.isValid ?? false)
-                          ? Text(calculateStandardDeviation(controller
-                                  .textFieldValues
-                                  .map((e) => num.tryParse(e) ?? 0)
-                                  .toList())
-                              .toString())
-                          : const Text("--"),
+                          ? Text(
+                              calculateStandardDeviation(controller
+                                      .textFieldValues
+                                      .map((e) => num.tryParse(e) ?? 0)
+                                      .toList())
+                                  .toString(),
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            )
+                          : Text(
+                              "--",
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
                     ),
                   )
                 ],
