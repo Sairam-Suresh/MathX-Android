@@ -113,14 +113,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
-  equations:
-    dependency: "direct main"
-    description:
-      name: equations
-      sha256: abfb576a2062162a65c7e64d008af316df4a20128c2f7264304e922993c75fc1
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -237,14 +229,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.0.0"
-  fraction:
-    dependency: transitive
-    description:
-      name: fraction
-      sha256: e09bce4d217541e67657c3ace2b89c356cc2f26abbca4dd76b25338af0d6a799
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.0"
   image:
     dependency: transitive
     description:
@@ -277,14 +261,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.8.1"
-  lint:
-    dependency: transitive
-    description:
-      name: lint
-      sha256: "4a539aa34ec5721a2c7574ae2ca0336738ea4adc2a34887d54b7596310b33c85"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.10.0"
   lints:
     dependency: transitive
     description:
@@ -546,14 +522,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  styled_widget:
-    dependency: "direct main"
-    description:
-      name: styled_widget
-      sha256: "4d439802919b6ccf10d1488798656da8804633b03012682dd1c8ca70a084aa84"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.1"
   synchronized:
     dependency: transitive
     description:

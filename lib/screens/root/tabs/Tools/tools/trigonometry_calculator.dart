@@ -5,23 +5,14 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mathx_android/logic/tools/TrigonometryCalculatorLogic.dart';
 import 'package:mathx_android/widgets/textfieldlist.dart';
 
-void main() {
-  runApp(TrigonometryCalculatorPage());
-}
-
-class TrigonometryCalculatorPage extends StatelessWidget {
+class TrigonometryCalculatorPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return TrigoCalc();
-  }
+  _TrigonometryCalculatorPageState createState() =>
+      _TrigonometryCalculatorPageState();
 }
 
-class TrigoCalc extends StatefulWidget {
-  @override
-  _TrigoCalcState createState() => _TrigoCalcState();
-}
-
-class _TrigoCalcState extends State<TrigoCalc> {
+class _TrigonometryCalculatorPageState
+    extends State<TrigonometryCalculatorPage> {
   TextFieldListController controller = TextFieldListController();
   GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 
