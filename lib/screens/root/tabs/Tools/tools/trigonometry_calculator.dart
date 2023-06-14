@@ -15,6 +15,7 @@ class _TrigonometryCalculatorPageState
     extends State<TrigonometryCalculatorPage> {
   TextFieldListController controller = TextFieldListController();
   GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  AngleUnit selectedUnit = AngleUnit.degrees;
 
   @override
   void initState() {
@@ -37,6 +38,31 @@ class _TrigonometryCalculatorPageState
         child: Column(children: [
           SizedBox(
               width: MediaQuery.of(context).size.width, child: buildResult()),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: SegmentedButton<AngleUnit>(
+                  segments: const [
+                    ButtonSegment(
+                      value: AngleUnit.degrees,
+                      label: Text("Degrees"),
+                    ),
+                    ButtonSegment(
+                      value: AngleUnit.radians,
+                      label: Text("Radians"),
+                    )
+                  ],
+                  showSelectedIcon: false,
+                  selected: {selectedUnit},
+                  multiSelectionEnabled: false,
+                  onSelectionChanged: (value) {
+                    setState(() {
+                      selectedUnit = value.first;
+                    });
+                  }),
+            ),
+          ),
           TextFieldList(
             controller: controller,
             formKey: formKey,
@@ -84,7 +110,7 @@ class _TrigonometryCalculatorPageState
         sideC: double.tryParse(
                 (controller.textFieldValues.elementAtOrNull(2) ?? "")) ??
             0,
-        angleUnitSelection: AngleUnit.degrees);
+        angleUnitSelection: selectedUnit);
 
     return Card(
       child: Padding(
@@ -94,11 +120,20 @@ class _TrigonometryCalculatorPageState
             (formKey.currentState?.validate() ?? false) && moreThan2FieldsFilled
                 ? Center(
                     child: Math.tex(
-                      "x° = ${result[TrigonometryResultKey.equation]} = ${result[TrigonometryResultKey.answer]}",
-                    ),
+                        "x° = ${result[TrigonometryResultKey.equation]} = ${result[TrigonometryResultKey.answer]}",
+                        textStyle: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .fontSize)),
                   )
                 : Center(
-                    child: Math.tex("x° = --"),
+                    child: Math.tex("x° = --",
+                        textStyle: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .fontSize)),
                   ),
             !moreThan2FieldsFilled
                 ? const Center(
