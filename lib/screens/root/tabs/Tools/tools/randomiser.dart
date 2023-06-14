@@ -43,6 +43,16 @@ class _RandomiserPageState extends State<RandomiserPage> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Randomiser"),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    randomiserData.reset();
+                    newValue = null;
+                  });
+                },
+                icon: Icon(Icons.restart_alt))
+          ],
           bottom: TabBar(
             tabs: const [
               Tab(
