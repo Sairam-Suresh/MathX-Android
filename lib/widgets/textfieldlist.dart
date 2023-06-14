@@ -52,6 +52,8 @@ class _TextFieldListState extends State<TextFieldList> {
     setState(() {
       widget.controller.removeLastField();
     });
+
+    widget.onChange?.call(widget.controller.textFieldValues);
   }
 
   @override
@@ -83,7 +85,8 @@ class _TextFieldListState extends State<TextFieldList> {
                           .key ??
                       'number_${index + 1}'),
               keyboardType: TextInputType.number,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
+              autovalidateMode: AutovalidateMode.always,
+              autofocus: false,
               validator: widget.validators != null
                   ? widget.validators!
                   : FormBuilderValidators.compose([
