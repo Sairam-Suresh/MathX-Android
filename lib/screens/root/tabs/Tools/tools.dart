@@ -70,7 +70,7 @@ class _ToolsPageState extends State<ToolsPage> {
                 }));
               } else if (val == "Trigonometry Calculator") {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const TrigonometryCalculatorPage();
+                  return TrigonometryCalculatorPage();
                 }));
               } else if (val == "Binary Calculator") {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
