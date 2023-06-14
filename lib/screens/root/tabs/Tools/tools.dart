@@ -9,6 +9,7 @@ import 'package:mathx_android/screens/root/tabs/Tools/tools/grapher.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/pythagoras_theorem_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/quadratic_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/randomiser.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/set_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/shapes_calculator.dart';
 
 class ToolsPage extends StatefulWidget {
@@ -60,7 +61,7 @@ class _ToolsPageState extends State<ToolsPage> {
                 }));
               } else if (val == "Set Calculator") {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Container();
+                  return SetCalculatorPage();
                 }));
               } else if (val == "Shapes Calculator") {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -72,7 +73,7 @@ class _ToolsPageState extends State<ToolsPage> {
                 }));
               } else if (val == "Binary Calculator") {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return BinaryConverterPage();
+                  return const BinaryConverterPage();
                 }));
               } else if (val == "Grapher (Desmos)") {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
