@@ -104,7 +104,7 @@ class _TextFieldListState extends State<TextFieldList> {
                               .elementAt(index)
                               .key ??
                           'Number ${index + 1}'),
-                  prefixIcon: widget.limitEntries == null &&
+                  suffixIcon: widget.limitEntries == null &&
                           index == widget.controller.textFieldValues.length - 1
                       ? IconButton(
                           onPressed: () {
