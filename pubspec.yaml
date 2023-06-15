@@ -48,6 +48,7 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.15
   app_links: ^3.4.3
   shared_preferences: ^2.1.1
+  units_converter: ^2.1.0
 
 dev_dependencies:
   flutter_test:
