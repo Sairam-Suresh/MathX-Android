@@ -164,7 +164,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                       ? Column(
                           children: [
                             SwitchListTile(
-                              value: renderMath ?? true,
+                              value: renderMath,
                               onChanged: (value) {
                                 setState(() {
                                   renderMath = value;

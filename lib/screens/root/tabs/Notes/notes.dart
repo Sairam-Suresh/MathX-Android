@@ -199,7 +199,8 @@ class _NotesPageState extends State<NotesPage> {
                             children: [
                               Text(
                                 "Hmmmm...",
-                                style: Theme.of(context).textTheme.headline2,
+                                style:
+                                    Theme.of(context).textTheme.displayMedium,
                               ),
                               Text(
                                 "You do not seem to have any notes. Create a new one using the button below.",

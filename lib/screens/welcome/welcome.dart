@@ -12,15 +12,12 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
-    var brightness = MediaQuery.of(context).platformBrightness;
-    bool isDarkMode = brightness == Brightness.dark;
-
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
             gradient: RadialGradient(
                 colors: [Color.fromARGB(255, 169, 100, 255), Colors.white],
-                stops: [0.0, 1.0],
+                stops: [0.3, 1],
                 center: Alignment.topCenter,
                 radius: 2)),
         child: Padding(

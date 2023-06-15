@@ -331,7 +331,6 @@ class buildPyramid extends StatefulWidget {
 }
 
 class _buildPyramidState extends State<buildPyramid> {
-  @override
   TextFieldListController controller = TextFieldListController();
   GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 

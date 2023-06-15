@@ -14,12 +14,12 @@ import 'package:mathx_android/screens/root/tabs/Tools/tools/shapes_calculator.da
 import 'package:mathx_android/screens/root/tabs/Tools/tools/trigonometry_calculator.dart';
 
 class ToolsPage extends StatefulWidget {
-  ToolsPage(
+  const ToolsPage(
       {Key? key, required this.hideBottomBar, required this.appLinkInstance})
       : super(key: key);
 
-  late void Function(bool hide) hideBottomBar;
-  late AppLinks appLinkInstance;
+  final void Function(bool hide) hideBottomBar;
+  final AppLinks appLinkInstance;
 
   @override
   State<ToolsPage> createState() => _ToolsPageState();
