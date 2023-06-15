@@ -179,27 +179,30 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
                       : element.secondaryLevel == SecondaryLevel.three
                           ? Icons.looks_3
                           : Icons.looks_4),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return CheatSheetViewer(
-                    cheatsheet: element,
-                    onToggleStarred: (value) {
-                      setState(() {
-                        cheatsheetsData[cheatsheetsData.contains(element)
-                                ? cheatsheetsData.indexOf(
-                                    element) // Somehow putting this condition to make this be 0 if it is -1 makes it work properly for some reason
-                                : 0] =
-                            CheatsheetDetails(
-                                element.title,
-                                element.secondaryLevel,
-                                element.isComingSoon,
-                                value);
-                        saveCheatsheets();
-                      });
-                    },
-                  );
-                }));
-              },
+              onTap: !element.isComingSoon
+                  ? () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CheatSheetViewer(
+                          cheatsheet: element,
+                          onToggleStarred: (value) {
+                            setState(() {
+                              cheatsheetsData[cheatsheetsData.contains(element)
+                                      ? cheatsheetsData.indexOf(
+                                          element) // Somehow putting this condition to make this be 0 if it is -1 makes it work properly for some reason
+                                      : 0] =
+                                  CheatsheetDetails(
+                                      element.title,
+                                      element.secondaryLevel,
+                                      element.isComingSoon,
+                                      value);
+                              saveCheatsheets();
+                            });
+                          },
+                        );
+                      }));
+                    }
+                  : null,
             );
           } else {
             return Container();
