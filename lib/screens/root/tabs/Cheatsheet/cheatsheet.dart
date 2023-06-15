@@ -148,21 +148,34 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(element.secondaryLevel == SecondaryLevel.one
-                      ? Icons.looks_one
-                      : element.secondaryLevel == SecondaryLevel.two
-                          ? Icons.looks_two
-                          : element.secondaryLevel == SecondaryLevel.three
-                              ? Icons.looks_3
-                              : Icons.looks_4),
+                  element.isStarred ? const Icon(Icons.star) : Container(),
                   !element.isComingSoon
                       ? const Icon(Icons.chevron_right)
                       : Container(),
                 ],
               ),
+              leading: Icon(element.secondaryLevel == SecondaryLevel.one
+                  ? Icons.looks_one
+                  : element.secondaryLevel == SecondaryLevel.two
+                      ? Icons.looks_two
+                      : element.secondaryLevel == SecondaryLevel.three
+                          ? Icons.looks_3
+                          : Icons.looks_4),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return CheatSheetViewer();
+                  return CheatSheetViewer(
+                    cheatsheet: element,
+                    onToggleStarred: (value) {
+                      setState(() {
+                        cheatsheetsData[cheatsheetsData.indexOf(element)] =
+                            CheatsheetDetails(
+                                element.title,
+                                element.secondaryLevel,
+                                element.isComingSoon,
+                                value);
+                      });
+                    },
+                  );
                 }));
               },
             );

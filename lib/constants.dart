@@ -52,7 +52,8 @@ class CheatsheetDetails {
   String title;
   SecondaryLevel secondaryLevel;
   bool isComingSoon;
+  bool isStarred;
 
   CheatsheetDetails(this.title, this.secondaryLevel,
-      [this.isComingSoon = false]);
+      [this.isComingSoon = false, this.isStarred = false]);
 }
