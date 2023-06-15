@@ -2,6 +2,8 @@ import 'package:mathx_android/constants.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'CheatsheetsExtractionHelper.dart';
+
 class DatabaseHelper {
   static const String _dbName = 'notes.db';
   static const String _tableName = 'notes';
@@ -28,6 +30,8 @@ class DatabaseHelper {
       fullPath,
       version: 1,
       onCreate: (db, version) async {
+        await extractCheatsheets();
+
         await db.execute('''
           CREATE TABLE $_tableName (
             id INTEGER PRIMARY KEY,
