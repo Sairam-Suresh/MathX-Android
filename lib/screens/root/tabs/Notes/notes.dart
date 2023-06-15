@@ -14,7 +14,7 @@ class NotesPage extends StatefulWidget {
 
 class _NotesPageState extends State<NotesPage> {
   List<Note> listOfNotes = [];
-  TextEditingController searchController = TextEditingController();
+  TextEditingController _searchController = TextEditingController();
   List<Widget> noteCards = [];
   final NotesDatabaseHelper databaseHelper = NotesDatabaseHelper.instance;
   bool isLoading = true;
@@ -102,7 +102,7 @@ class _NotesPageState extends State<NotesPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: SearchBar(
-                controller: searchController,
+                controller: _searchController,
                 onChanged: (value) {
                   setState(() {});
                 },
@@ -111,6 +111,17 @@ class _NotesPageState extends State<NotesPage> {
                   const EdgeInsets.symmetric(horizontal: 15),
                 ),
                 leading: const Icon(Icons.search),
+                trailing: [
+                  if (_searchController.value.text != "")
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _searchController.clear();
+                        });
+                      },
+                      icon: const Icon(Icons.delete),
+                    )
+                ],
               ),
             ),
             Expanded(
@@ -118,14 +129,14 @@ class _NotesPageState extends State<NotesPage> {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : listOfNotes.length != 0
+                  : listOfNotes.isNotEmpty
                       ? ListView.separated(
                           shrinkWrap: true,
                           itemCount: listOfNotes.length,
                           itemBuilder: (BuildContext context, int index) {
                             return listOfNotes[index]
                                     .name
-                                    .contains(searchController.text)
+                                    .contains(_searchController.text)
                                 ? InkWell(
                                     onTap: () {
                                       Navigator.of(context).push(
@@ -187,7 +198,7 @@ class _NotesPageState extends State<NotesPage> {
                           separatorBuilder: (BuildContext context, int index) {
                             return listOfNotes[index]
                                     .name
-                                    .contains(searchController.text)
+                                    .contains(_searchController.text)
                                 ? const Divider()
                                 : Container();
                           },
@@ -202,7 +213,7 @@ class _NotesPageState extends State<NotesPage> {
                                 style:
                                     Theme.of(context).textTheme.displayMedium,
                               ),
-                              Text(
+                              const Text(
                                 "You do not seem to have any notes. Create a new one using the button below.",
                                 textAlign: TextAlign.center,
                               )

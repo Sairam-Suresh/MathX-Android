@@ -85,6 +85,18 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
                 padding: MaterialStateProperty.all<EdgeInsets>(
                   const EdgeInsets.symmetric(horizontal: 15),
                 ),
+                trailing: [
+                  if (searchController.value.text != "")
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          searchController.clear();
+                          searchText = null;
+                        });
+                      },
+                      icon: const Icon(Icons.delete),
+                    )
+                ],
                 leading: const Icon(Icons.search),
               ),
             ),
