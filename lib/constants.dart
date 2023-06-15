@@ -45,3 +45,14 @@ enum Averages { mean, median, mode, standardDeviation }
 enum RandomiserPages { recent, occurences }
 
 enum setEvalType { union, intersection }
+
+enum SecondaryLevel { one, two, three, four }
+
+class CheatsheetDetails {
+  String title;
+  SecondaryLevel secondaryLevel;
+  bool isComingSoon;
+
+  CheatsheetDetails(this.title, this.secondaryLevel,
+      [this.isComingSoon = false]);
+}

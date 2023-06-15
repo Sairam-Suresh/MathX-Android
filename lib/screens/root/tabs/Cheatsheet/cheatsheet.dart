@@ -1,16 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/screens/root/tabs/Cheatsheet/cheatsheetviewer.dart';
-
-enum SecondaryLevel { one, two, three, four }
-
-class CheatsheetDetails {
-  String title;
-  SecondaryLevel secondaryLevel;
-  bool isComingSoon;
-
-  CheatsheetDetails(this.title, this.secondaryLevel,
-      [this.isComingSoon = false]);
-}
 
 var cheatsheetsData = [
   CheatsheetDetails("Numbers and Their Operations Part 1", SecondaryLevel.one),
