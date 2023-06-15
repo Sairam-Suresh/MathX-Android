@@ -21,34 +21,39 @@ class CheatSheetViewer extends HookWidget {
 
     var starred = useState(cheatsheet.isStarred);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: AutoSizeText(
-          cheatsheet.title,
-          maxLines: 1,
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              starred.value = !starred.value;
-              onToggleStarred(starred.value);
-            },
-            icon: starred.value
-                ? const Icon(Icons.star)
-                : const Icon(Icons.star_border),
-          )
-        ],
-      ),
-      body: getAppDir.hasData
-          ? Stack(
-              children: [
-                PdfView(
-                    gestureNavigationEnabled: true,
-                    path:
-                        "${(getAppDir.data!).toString().replaceAll("Directory: '", "").replaceAll("'", "")}/cheatsheets/${cheatsheet.title}.pdf"),
-              ],
+    return WillPopScope(
+      onWillPop: () async {
+        onToggleStarred(starred.value);
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: AutoSizeText(
+            cheatsheet.title,
+            maxLines: 1,
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                starred.value = !starred.value;
+              },
+              icon: starred.value
+                  ? const Icon(Icons.star)
+                  : const Icon(Icons.star_border),
             )
-          : const Center(child: CircularProgressIndicator()),
+          ],
+        ),
+        body: getAppDir.hasData
+            ? Stack(
+                children: [
+                  PdfView(
+                      gestureNavigationEnabled: true,
+                      path:
+                          "${(getAppDir.data!).toString().replaceAll("Directory: '", "").replaceAll("'", "")}/cheatsheets/${cheatsheet.title}.pdf"),
+                ],
+              )
+            : const Center(child: CircularProgressIndicator()),
+      ),
     );
   }
 }
