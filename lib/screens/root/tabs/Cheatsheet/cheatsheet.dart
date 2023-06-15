@@ -1,46 +1,50 @@
 import 'package:flutter/material.dart';
 
+enum SecondaryLevel { one, two, three, four }
+
 class CheatsheetDetails {
   final String title;
   final String? notePath;
+  final SecondaryLevel secondaryLevel;
 
-  CheatsheetDetails(this.title, this.notePath);
+  CheatsheetDetails(this.title, this.notePath, this.secondaryLevel);
 }
 
 var cheatsheetsData = [
-  [
-    CheatsheetDetails("Numbers and Their Operations Part 1", ""),
-    CheatsheetDetails("Numbers and Their Operations Part 2", ""),
-    CheatsheetDetails("Percentages", ""),
-    CheatsheetDetails("Basic Algebra and Algebraic Manipulation", ""),
-    CheatsheetDetails("Linear Equations and Inequalities", ""),
-    CheatsheetDetails("Functions and Linear Graphs", ""),
-    CheatsheetDetails("Basic Geometry", ""),
-    CheatsheetDetails("Polygons", ""),
-    CheatsheetDetails("Geometrical Construction", ""),
-    CheatsheetDetails("Number Sequences", ""),
-  ],
-  [
-    CheatsheetDetails("Similarity and Congruence Part 1", ""),
-    CheatsheetDetails("Similarity and Congruence Part 2", ""),
-    CheatsheetDetails("Ratio and Proportion", ""),
-    CheatsheetDetails("Direct and Inverse Proportions", ""),
-    CheatsheetDetails("Pythagoras Theorem", ""),
-    CheatsheetDetails("Trigonometric Ratios", ""),
-  ],
-  [
-    CheatsheetDetails("Indices", ""),
-    CheatsheetDetails("Surds", ""),
-    CheatsheetDetails("Functions and Graphs", ""),
-    CheatsheetDetails("Quadratic Functions, Equations, and Inequalities", ""),
-    CheatsheetDetails("Coordinate Geometry", ""),
-    CheatsheetDetails("Exponentials and Logarithms", ""),
-    CheatsheetDetails("Further Coordinate Geometry", ""),
-    CheatsheetDetails("Linear Law", ""),
-    CheatsheetDetails("Geometrical Properties of Circles", ""),
-    CheatsheetDetails("Polynomials and Partial Fractions", "")
-  ],
-  [CheatsheetDetails("Coming Soon...", null)],
+  CheatsheetDetails(
+      "Numbers and Their Operations Part 1", "", SecondaryLevel.one),
+  CheatsheetDetails(
+      "Numbers and Their Operations Part 2", "", SecondaryLevel.one),
+  CheatsheetDetails("Percentages", "", SecondaryLevel.one),
+  CheatsheetDetails(
+      "Basic Algebra and Algebraic Manipulation", "", SecondaryLevel.one),
+  CheatsheetDetails(
+      "Linear Equations and Inequalities", "", SecondaryLevel.one),
+  CheatsheetDetails("Functions and Linear Graphs", "", SecondaryLevel.one),
+  CheatsheetDetails("Basic Geometry", "", SecondaryLevel.one),
+  CheatsheetDetails("Polygons", "", SecondaryLevel.one),
+  CheatsheetDetails("Geometrical Construction", "", SecondaryLevel.one),
+  CheatsheetDetails("Number Sequences", "", SecondaryLevel.one),
+  CheatsheetDetails("Similarity and Congruence Part 1", "", SecondaryLevel.two),
+  CheatsheetDetails("Similarity and Congruence Part 2", "", SecondaryLevel.two),
+  CheatsheetDetails("Ratio and Proportion", "", SecondaryLevel.two),
+  CheatsheetDetails("Direct and Inverse Proportions", "", SecondaryLevel.two),
+  CheatsheetDetails("Pythagoras Theorem", "", SecondaryLevel.two),
+  CheatsheetDetails("Trigonometric Ratios", "", SecondaryLevel.two),
+  CheatsheetDetails("Indices", "", SecondaryLevel.three),
+  CheatsheetDetails("Surds", "", SecondaryLevel.three),
+  CheatsheetDetails("Functions and Graphs", "", SecondaryLevel.three),
+  CheatsheetDetails("Quadratic Functions, Equations, and Inequalities", "",
+      SecondaryLevel.three),
+  CheatsheetDetails("Coordinate Geometry", "", SecondaryLevel.three),
+  CheatsheetDetails("Exponentials and Logarithms", "", SecondaryLevel.three),
+  CheatsheetDetails("Further Coordinate Geometry", "", SecondaryLevel.three),
+  CheatsheetDetails("Linear Law", "", SecondaryLevel.three),
+  CheatsheetDetails(
+      "Geometrical Properties of Circles", "", SecondaryLevel.three),
+  CheatsheetDetails(
+      "Polynomials and Partial Fractions", "", SecondaryLevel.three),
+  CheatsheetDetails("Coming Soon...", null, SecondaryLevel.four)
 ];
 
 class CheatsheetPage extends StatefulWidget {
@@ -51,90 +55,126 @@ class CheatsheetPage extends StatefulWidget {
 }
 
 class _CheatsheetPageState extends State<CheatsheetPage> {
+  // create texteditingcontroller for search
+  TextEditingController searchController = TextEditingController();
+  String? searchText;
+
   @override
   Widget build(BuildContext context) {
+    List<CheatsheetDetails> displayList = [];
+
+    if (searchText != null) {
+      cheatsheetsData.forEach((element) {
+        if (element.title.contains(searchText!)) {
+          displayList.add(element);
+        }
+      });
+    } else {
+      displayList = cheatsheetsData;
+    }
+
+    // To conditionally render the headings if there are topics that fall under them in search
+    Set<SecondaryLevel> secondaryLevelsPresent =
+        displayList.map((e) => e.secondaryLevel).toSet();
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SafeArea(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: SearchBar(
-                  // controller: searchController,
-                  onChanged: (value) {
-                    setState(() {});
-                  },
-                  hintText: "Search Cheatsheets",
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                    const EdgeInsets.symmetric(horizontal: 15),
-                  ),
-                  leading: const Icon(Icons.search),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: SearchBar(
+                controller: searchController,
+                onChanged: (value) {
+                  setState(() {
+                    if (value == "") {
+                      searchText = null;
+                    } else {
+                      searchText = value;
+                    }
+                  });
+                },
+                hintText: "Search Cheatsheets",
+                padding: MaterialStateProperty.all<EdgeInsets>(
+                  const EdgeInsets.symmetric(horizontal: 15),
                 ),
+                leading: const Icon(Icons.search),
               ),
             ),
-            ListView.builder(
-                itemCount: 4,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext buildContext, int index) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15.0, right: 15.0, top: 20),
-                        child: Text(
-                          "Secondary ${index + 1}",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall
-                                  ?.fontSize),
-                        ),
-                      ),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: cheatsheetsData[index].length,
-                        itemBuilder: (context, innerIndex) {
-                          return ListTile(
-                              title: Text(
-                                cheatsheetsData[index][innerIndex].title,
-                              ),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(index == 0
-                                      ? Icons.looks_one
-                                      : index == 1
-                                          ? Icons.looks_two
-                                          : index == 2
-                                              ? Icons.looks_3
-                                              : Icons.looks_4),
-                                  cheatsheetsData[index][innerIndex].notePath !=
-                                          null
-                                      ? Icon(Icons.chevron_right)
-                                      : Container(),
-                                ],
-                              ));
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15.0),
-                            child: Divider(),
-                          );
-                        },
-                      )
-                    ],
-                  );
-                }),
-          ],
-        ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildHeadings(context, "Secondary 1",
+                        secondaryLevelsPresent.contains(SecondaryLevel.one)),
+                    buildListViews(displayList, SecondaryLevel.one),
+                    buildHeadings(context, "Secondary 2",
+                        secondaryLevelsPresent.contains(SecondaryLevel.two)),
+                    buildListViews(displayList, SecondaryLevel.two),
+                    buildHeadings(context, "Secondary 3",
+                        secondaryLevelsPresent.contains(SecondaryLevel.three)),
+                    buildListViews(displayList, SecondaryLevel.three),
+                    buildHeadings(context, "Secondary 4",
+                        secondaryLevelsPresent.contains(SecondaryLevel.four)),
+                    buildListViews(displayList, SecondaryLevel.four),
+                  ]),
+            ),
+          )
+        ],
       ),
+    );
+  }
+
+  Widget buildHeadings(BuildContext context, String text, bool show) {
+    return show
+        ? Padding(
+            padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 20),
+            child: Text(
+              text,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize:
+                      Theme.of(context).textTheme.headlineSmall?.fontSize),
+            ),
+          )
+        : Container();
+  }
+
+  ListView buildListViews(
+      List<CheatsheetDetails> displayList, SecondaryLevel level) {
+    return ListView(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      children: displayList.map((element) {
+        if (element.secondaryLevel == level) {
+          return ListTile(
+            title: Text(
+              element.title,
+            ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(element.secondaryLevel == SecondaryLevel.one
+                    ? Icons.looks_one
+                    : element.secondaryLevel == SecondaryLevel.two
+                        ? Icons.looks_two
+                        : element.secondaryLevel == SecondaryLevel.three
+                            ? Icons.looks_3
+                            : Icons.looks_4),
+                element.notePath != null
+                    ? const Icon(Icons.chevron_right)
+                    : Container(),
+              ],
+            ),
+          );
+        } else {
+          return Container();
+        }
+      }).toList(),
     );
   }
 }
