@@ -30,7 +30,8 @@ class _NotesPageState extends State<NotesPage> {
       isLoading = true;
     });
 
-    final List<Note> notes = await databaseHelper.loadNotesFromPersistence();
+    final List<Note> notes = (await databaseHelper.loadNotesFromPersistence())
+      ..sort((a, b) => b.date.compareTo(a.date));
     setState(() {
       listOfNotes = notes;
       isLoading = false;
@@ -38,6 +39,7 @@ class _NotesPageState extends State<NotesPage> {
   }
 
   Future<void> saveNotes() async {
+    listOfNotes.sort((a, b) => b.date.compareTo(a.date));
     await databaseHelper.saveNotesToPersistence(listOfNotes);
   }
 
@@ -65,6 +67,7 @@ class _NotesPageState extends State<NotesPage> {
                   setState(() {
                     listOfNotes[listOfNotes.length - 1] = note;
                   });
+
                   saveNotes();
                 },
                 onDelete: (Note note) {
@@ -84,6 +87,7 @@ class _NotesPageState extends State<NotesPage> {
                           onPressed: () {
                             setState(() {
                               listOfNotes.add(temp);
+
                               saveNotes();
                             });
                           }),
@@ -147,6 +151,7 @@ class _NotesPageState extends State<NotesPage> {
                                               setState(() {
                                                 listOfNotes[index] = note;
                                               });
+
                                               saveNotes();
                                             },
                                             onDelete: (note) {
