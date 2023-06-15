@@ -43,47 +43,98 @@ var cheatsheetsData = [
   [CheatsheetDetails("Coming Soon...", null)],
 ];
 
-class CheatsheetPage extends StatelessWidget {
+class CheatsheetPage extends StatefulWidget {
   const CheatsheetPage({Key? key}) : super(key: key);
 
   @override
+  State<CheatsheetPage> createState() => _CheatsheetPageState();
+}
+
+class _CheatsheetPageState extends State<CheatsheetPage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Cheatsheets"),
-      ),
-      body: ListView.builder(
-          itemCount: 4,
-          shrinkWrap: true,
-          itemBuilder: (BuildContext buildContext, int index) {
-            return ExpansionTile(
-              title: Text("Secondary ${index + 1}"),
-              children: [
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: cheatsheetsData[index].length,
-                  itemBuilder: (context, innerIndex) {
-                    return ListTile(
-                      title: Text(
-                        cheatsheetsData[index][innerIndex].title,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SafeArea(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: SearchBar(
+                  // controller: searchController,
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                  hintText: "Search Cheatsheets",
+                  padding: MaterialStateProperty.all<EdgeInsets>(
+                    const EdgeInsets.symmetric(horizontal: 15),
+                  ),
+                  leading: const Icon(Icons.search),
+                ),
+              ),
+            ),
+            ListView.builder(
+                itemCount: 4,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext buildContext, int index) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 15.0, right: 15.0, top: 20),
+                        child: Text(
+                          "Secondary ${index + 1}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.fontSize),
+                        ),
                       ),
-                      trailing:
-                          cheatsheetsData[index][innerIndex].notePath != null
-                              ? Icon(Icons.chevron_right)
-                              : null,
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Divider(),
-                    );
-                  },
-                )
-              ],
-            );
-          }),
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: cheatsheetsData[index].length,
+                        itemBuilder: (context, innerIndex) {
+                          return ListTile(
+                              title: Text(
+                                cheatsheetsData[index][innerIndex].title,
+                              ),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(index == 0
+                                      ? Icons.looks_one
+                                      : index == 1
+                                          ? Icons.looks_two
+                                          : index == 2
+                                              ? Icons.looks_3
+                                              : Icons.looks_4),
+                                  cheatsheetsData[index][innerIndex].notePath !=
+                                          null
+                                      ? Icon(Icons.chevron_right)
+                                      : Container(),
+                                ],
+                              ));
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 15.0),
+                            child: Divider(),
+                          );
+                        },
+                      )
+                    ],
+                  );
+                }),
+          ],
+        ),
+      ),
     );
   }
 }
