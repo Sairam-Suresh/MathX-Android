@@ -170,6 +170,11 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
                       : Container(),
                 ],
               ),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return CheatSheetViewer();
+                }));
+              },
             );
           } else {
             return Container();
