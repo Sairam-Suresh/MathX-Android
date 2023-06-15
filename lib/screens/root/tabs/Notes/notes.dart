@@ -16,7 +16,7 @@ class _NotesPageState extends State<NotesPage> {
   List<Note> listOfNotes = [];
   TextEditingController searchController = TextEditingController();
   List<Widget> noteCards = [];
-  final DatabaseHelper databaseHelper = DatabaseHelper.instance;
+  final NotesDatabaseHelper databaseHelper = NotesDatabaseHelper.instance;
   bool isLoading = true;
 
   @override

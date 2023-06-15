@@ -4,13 +4,13 @@ import 'package:sqflite/sqflite.dart';
 
 import 'CheatsheetsExtractionHelper.dart';
 
-class DatabaseHelper {
+class NotesDatabaseHelper {
   static const String _dbName = 'notes.db';
   static const String _tableName = 'notes';
 
-  DatabaseHelper._(); // Private constructor
+  NotesDatabaseHelper._(); // Private constructor
 
-  static final DatabaseHelper instance = DatabaseHelper._();
+  static final NotesDatabaseHelper instance = NotesDatabaseHelper._();
 
   Database? _database;
 
