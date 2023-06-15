@@ -1,50 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:mathx_android/screens/root/tabs/Cheatsheet/cheatsheetviewer.dart';
 
 enum SecondaryLevel { one, two, three, four }
 
 class CheatsheetDetails {
-  final String title;
-  final String? notePath;
-  final SecondaryLevel secondaryLevel;
+  String title;
+  SecondaryLevel secondaryLevel;
+  bool isComingSoon;
 
-  CheatsheetDetails(this.title, this.notePath, this.secondaryLevel);
+  CheatsheetDetails(this.title, this.secondaryLevel,
+      [this.isComingSoon = false]);
 }
 
 var cheatsheetsData = [
+  CheatsheetDetails("Numbers and Their Operations Part 1", SecondaryLevel.one),
+  CheatsheetDetails("Numbers and Their Operations Part 2", SecondaryLevel.one),
+  CheatsheetDetails("Percentages", SecondaryLevel.one),
   CheatsheetDetails(
-      "Numbers and Their Operations Part 1", "", SecondaryLevel.one),
+      "Basic Algebra and Algebraic Manipulation", SecondaryLevel.one),
+  CheatsheetDetails("Linear Equations and Inequalities", SecondaryLevel.one),
+  CheatsheetDetails("Functions and Linear Graphs", SecondaryLevel.one),
+  CheatsheetDetails("Basic Geometry", SecondaryLevel.one),
+  CheatsheetDetails("Polygons", SecondaryLevel.one),
+  CheatsheetDetails("Geometrical Construction", SecondaryLevel.one),
+  CheatsheetDetails("Number Sequences", SecondaryLevel.one),
+  CheatsheetDetails("Similarity and Congruence Part 1", SecondaryLevel.two),
+  CheatsheetDetails("Similarity and Congruence Part 2", SecondaryLevel.two),
+  CheatsheetDetails("Ratio and Proportion", SecondaryLevel.two),
+  CheatsheetDetails("Direct and Inverse Proportions", SecondaryLevel.two),
+  CheatsheetDetails("Pythagoras Theorem", SecondaryLevel.two),
+  CheatsheetDetails("Trigonometric Ratios", SecondaryLevel.two),
+  CheatsheetDetails("Indices", SecondaryLevel.three),
+  CheatsheetDetails("Surds", SecondaryLevel.three),
+  CheatsheetDetails("Functions and Graphs", SecondaryLevel.three),
   CheatsheetDetails(
-      "Numbers and Their Operations Part 2", "", SecondaryLevel.one),
-  CheatsheetDetails("Percentages", "", SecondaryLevel.one),
-  CheatsheetDetails(
-      "Basic Algebra and Algebraic Manipulation", "", SecondaryLevel.one),
-  CheatsheetDetails(
-      "Linear Equations and Inequalities", "", SecondaryLevel.one),
-  CheatsheetDetails("Functions and Linear Graphs", "", SecondaryLevel.one),
-  CheatsheetDetails("Basic Geometry", "", SecondaryLevel.one),
-  CheatsheetDetails("Polygons", "", SecondaryLevel.one),
-  CheatsheetDetails("Geometrical Construction", "", SecondaryLevel.one),
-  CheatsheetDetails("Number Sequences", "", SecondaryLevel.one),
-  CheatsheetDetails("Similarity and Congruence Part 1", "", SecondaryLevel.two),
-  CheatsheetDetails("Similarity and Congruence Part 2", "", SecondaryLevel.two),
-  CheatsheetDetails("Ratio and Proportion", "", SecondaryLevel.two),
-  CheatsheetDetails("Direct and Inverse Proportions", "", SecondaryLevel.two),
-  CheatsheetDetails("Pythagoras Theorem", "", SecondaryLevel.two),
-  CheatsheetDetails("Trigonometric Ratios", "", SecondaryLevel.two),
-  CheatsheetDetails("Indices", "", SecondaryLevel.three),
-  CheatsheetDetails("Surds", "", SecondaryLevel.three),
-  CheatsheetDetails("Functions and Graphs", "", SecondaryLevel.three),
-  CheatsheetDetails("Quadratic Functions, Equations, and Inequalities", "",
-      SecondaryLevel.three),
-  CheatsheetDetails("Coordinate Geometry", "", SecondaryLevel.three),
-  CheatsheetDetails("Exponentials and Logarithms", "", SecondaryLevel.three),
-  CheatsheetDetails("Further Coordinate Geometry", "", SecondaryLevel.three),
-  CheatsheetDetails("Linear Law", "", SecondaryLevel.three),
-  CheatsheetDetails(
-      "Geometrical Properties of Circles", "", SecondaryLevel.three),
-  CheatsheetDetails(
-      "Polynomials and Partial Fractions", "", SecondaryLevel.three),
-  CheatsheetDetails("Coming Soon...", null, SecondaryLevel.four)
+      "Quadratic Functions, Equations, and Inequalities", SecondaryLevel.three),
+  CheatsheetDetails("Coordinate Geometry", SecondaryLevel.three),
+  CheatsheetDetails("Exponentials and Logarithms", SecondaryLevel.three),
+  CheatsheetDetails("Further Coordinate Geometry", SecondaryLevel.three),
+  CheatsheetDetails("Linear Law", SecondaryLevel.three),
+  CheatsheetDetails("Geometrical Properties of Circles", SecondaryLevel.three),
+  CheatsheetDetails("Polynomials and Partial Fractions", SecondaryLevel.three),
+  CheatsheetDetails("Coming Soon...", SecondaryLevel.four, true)
 ];
 
 class CheatsheetPage extends StatefulWidget {
@@ -168,7 +165,7 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
                           : element.secondaryLevel == SecondaryLevel.three
                               ? Icons.looks_3
                               : Icons.looks_4),
-                  element.notePath != null
+                  !element.isComingSoon
                       ? const Icon(Icons.chevron_right)
                       : Container(),
                 ],
