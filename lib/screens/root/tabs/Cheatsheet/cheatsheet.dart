@@ -1,39 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mathx_android/constants.dart';
+import 'package:mathx_android/logic/tools/CheatsheetsDatabaseHelper.dart';
 import 'package:mathx_android/screens/root/tabs/Cheatsheet/cheatsheetviewer.dart';
-
-var cheatsheetsData = [
-  CheatsheetDetails("Numbers and Their Operations Part 1", SecondaryLevel.one),
-  CheatsheetDetails("Numbers and Their Operations Part 2", SecondaryLevel.one),
-  CheatsheetDetails("Percentages", SecondaryLevel.one),
-  CheatsheetDetails(
-      "Basic Algebra and Algebraic Manipulation", SecondaryLevel.one),
-  CheatsheetDetails("Linear Equations and Inequalities", SecondaryLevel.one),
-  CheatsheetDetails("Functions and Linear Graphs", SecondaryLevel.one),
-  CheatsheetDetails("Basic Geometry", SecondaryLevel.one),
-  CheatsheetDetails("Polygons", SecondaryLevel.one),
-  CheatsheetDetails("Geometrical Construction", SecondaryLevel.one),
-  CheatsheetDetails("Number Sequences", SecondaryLevel.one),
-  CheatsheetDetails("Similarity and Congruence Part 1", SecondaryLevel.two),
-  CheatsheetDetails("Similarity and Congruence Part 2", SecondaryLevel.two),
-  CheatsheetDetails("Ratio and Proportion", SecondaryLevel.two),
-  CheatsheetDetails("Direct and Inverse Proportions", SecondaryLevel.two),
-  CheatsheetDetails("Pythagoras Theorem", SecondaryLevel.two),
-  CheatsheetDetails("Trigonometric Ratios", SecondaryLevel.two),
-  CheatsheetDetails("Indices", SecondaryLevel.three),
-  CheatsheetDetails("Surds", SecondaryLevel.three),
-  CheatsheetDetails("Functions and Graphs", SecondaryLevel.three),
-  CheatsheetDetails(
-      "Quadratic Functions, Equations, and Inequalities", SecondaryLevel.three),
-  CheatsheetDetails("Coordinate Geometry", SecondaryLevel.three),
-  CheatsheetDetails("Exponentials and Logarithms", SecondaryLevel.three),
-  CheatsheetDetails("Further Coordinate Geometry", SecondaryLevel.three),
-  CheatsheetDetails("Linear Law", SecondaryLevel.three),
-  CheatsheetDetails("Geometrical Properties of Circles", SecondaryLevel.three),
-  CheatsheetDetails("Polynomials and Partial Fractions", SecondaryLevel.three),
-  CheatsheetDetails("Coming Soon...", SecondaryLevel.four, true)
-];
 
 class CheatsheetPage extends StatefulWidget {
   const CheatsheetPage({Key? key}) : super(key: key);
@@ -43,8 +12,36 @@ class CheatsheetPage extends StatefulWidget {
 }
 
 class _CheatsheetPageState extends State<CheatsheetPage> {
+  List<CheatsheetDetails> cheatsheetsData = [];
+
   TextEditingController searchController = TextEditingController();
   String? searchText;
+  final CheatsheetsDatabaseHelper databaseHelper =
+      CheatsheetsDatabaseHelper.instance;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    loadCheatsheets();
+  }
+
+  Future<void> loadCheatsheets() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final List<CheatsheetDetails> cheatSheets =
+        await databaseHelper.loadCheatsheetsFromPersistence();
+    setState(() {
+      cheatsheetsData = cheatSheets;
+      isLoading = false;
+    });
+  }
+
+  Future<void> saveCheatsheets() async {
+    await databaseHelper.saveCheatsheetsToPersistence(cheatsheetsData);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +60,8 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
     // To conditionally render the headings if there are topics that fall under them in search
     Set<SecondaryLevel> secondaryLevelsPresent =
         displayList.map((e) => e.secondaryLevel).toSet();
+
+    // extractCheatsheets();
 
     return Scaffold(
       body: Column(
@@ -90,27 +89,45 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
               ),
             ),
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildHeadings(context, "Secondary 1",
-                        secondaryLevelsPresent.contains(SecondaryLevel.one)),
-                    buildListViews(displayList, SecondaryLevel.one),
-                    buildHeadings(context, "Secondary 2",
-                        secondaryLevelsPresent.contains(SecondaryLevel.two)),
-                    buildListViews(displayList, SecondaryLevel.two),
-                    buildHeadings(context, "Secondary 3",
-                        secondaryLevelsPresent.contains(SecondaryLevel.three)),
-                    buildListViews(displayList, SecondaryLevel.three),
-                    buildHeadings(context, "Secondary 4",
-                        secondaryLevelsPresent.contains(SecondaryLevel.four)),
-                    buildListViews(displayList, SecondaryLevel.four),
-                  ]),
-            ),
-          )
+          isLoading
+              ? Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          buildHeadings(
+                              context,
+                              "Secondary 1",
+                              secondaryLevelsPresent
+                                  .contains(SecondaryLevel.one)),
+                          buildListViews(displayList, SecondaryLevel.one),
+                          buildHeadings(
+                              context,
+                              "Secondary 2",
+                              secondaryLevelsPresent
+                                  .contains(SecondaryLevel.two)),
+                          buildListViews(displayList, SecondaryLevel.two),
+                          buildHeadings(
+                              context,
+                              "Secondary 3",
+                              secondaryLevelsPresent
+                                  .contains(SecondaryLevel.three)),
+                          buildListViews(displayList, SecondaryLevel.three),
+                          buildHeadings(
+                              context,
+                              "Secondary 4",
+                              secondaryLevelsPresent
+                                  .contains(SecondaryLevel.four)),
+                          buildListViews(displayList, SecondaryLevel.four),
+                        ]),
+                  ),
+                )
         ],
       ),
     );
@@ -168,12 +185,16 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
                     cheatsheet: element,
                     onToggleStarred: (value) {
                       setState(() {
-                        cheatsheetsData[cheatsheetsData.indexOf(element)] =
+                        cheatsheetsData[cheatsheetsData.contains(element)
+                                ? cheatsheetsData.indexOf(
+                                    element) // Somehow putting this condition to make this be 0 if it is -1 makes it work properly for some reason
+                                : 0] =
                             CheatsheetDetails(
                                 element.title,
                                 element.secondaryLevel,
                                 element.isComingSoon,
                                 value);
+                        saveCheatsheets();
                       });
                     },
                   );
