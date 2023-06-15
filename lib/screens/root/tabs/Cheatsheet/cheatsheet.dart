@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/screens/root/tabs/Cheatsheet/cheatsheetviewer.dart';
@@ -42,7 +43,6 @@ class CheatsheetPage extends StatefulWidget {
 }
 
 class _CheatsheetPageState extends State<CheatsheetPage> {
-  // create texteditingcontroller for search
   TextEditingController searchController = TextEditingController();
   String? searchText;
 
@@ -142,8 +142,9 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
         children: displayList.map((element) {
           if (element.secondaryLevel == level) {
             return ListTile(
-              title: Text(
+              title: AutoSizeText(
                 element.title,
+                maxLines: 1,
               ),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
