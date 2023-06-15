@@ -46,14 +46,51 @@ enum RandomiserPages { recent, occurences }
 
 enum setEvalType { union, intersection }
 
-enum SecondaryLevel { one, two, three, four }
-
 class CheatsheetDetails {
   String title;
   SecondaryLevel secondaryLevel;
   bool isComingSoon;
   bool isStarred;
 
-  CheatsheetDetails(this.title, this.secondaryLevel,
-      [this.isComingSoon = false, this.isStarred = false]);
+  CheatsheetDetails(
+    this.title,
+    this.secondaryLevel, [
+    this.isComingSoon = false,
+    this.isStarred = false,
+  ]);
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'secondaryLevel': secondaryLevel.toString(),
+      'isComingSoon': isComingSoon ? 1 : 0,
+      'isStarred': isStarred ? 1 : 0,
+    };
+  }
+
+  factory CheatsheetDetails.fromMap(Map<String, dynamic> map) {
+    return CheatsheetDetails(
+      map['title'],
+      _parseSecondaryLevel(map['secondaryLevel']),
+      map['isComingSoon'] == 1,
+      map['isStarred'] == 1,
+    );
+  }
+
+  static SecondaryLevel _parseSecondaryLevel(String level) {
+    switch (level) {
+      case 'SecondaryLevel.one':
+        return SecondaryLevel.one;
+      case 'SecondaryLevel.two':
+        return SecondaryLevel.two;
+      case 'SecondaryLevel.three':
+        return SecondaryLevel.three;
+      case 'SecondaryLevel.four':
+        return SecondaryLevel.four;
+      default:
+        throw ArgumentError('Invalid secondary level: $level');
+    }
+  }
 }
+
+enum SecondaryLevel { one, two, three, four }
