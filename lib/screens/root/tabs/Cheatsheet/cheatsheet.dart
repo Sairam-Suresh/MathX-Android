@@ -64,11 +64,11 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
     List<CheatsheetDetails> displayList = [];
 
     if (searchText != null) {
-      cheatsheetsData.forEach((element) {
+      for (var element in cheatsheetsData) {
         if (element.title.contains(searchText!)) {
           displayList.add(element);
         }
-      });
+      }
     } else {
       displayList = cheatsheetsData;
     }
@@ -144,37 +144,41 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
         : Container();
   }
 
-  ListView buildListViews(
+  Widget buildListViews(
       List<CheatsheetDetails> displayList, SecondaryLevel level) {
-    return ListView(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      children: displayList.map((element) {
-        if (element.secondaryLevel == level) {
-          return ListTile(
-            title: Text(
-              element.title,
-            ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(element.secondaryLevel == SecondaryLevel.one
-                    ? Icons.looks_one
-                    : element.secondaryLevel == SecondaryLevel.two
-                        ? Icons.looks_two
-                        : element.secondaryLevel == SecondaryLevel.three
-                            ? Icons.looks_3
-                            : Icons.looks_4),
-                element.notePath != null
-                    ? const Icon(Icons.chevron_right)
-                    : Container(),
-              ],
-            ),
-          );
-        } else {
-          return Container();
-        }
-      }).toList(),
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: ListView(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        children: displayList.map((element) {
+          if (element.secondaryLevel == level) {
+            return ListTile(
+              title: Text(
+                element.title,
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(element.secondaryLevel == SecondaryLevel.one
+                      ? Icons.looks_one
+                      : element.secondaryLevel == SecondaryLevel.two
+                          ? Icons.looks_two
+                          : element.secondaryLevel == SecondaryLevel.three
+                              ? Icons.looks_3
+                              : Icons.looks_4),
+                  element.notePath != null
+                      ? const Icon(Icons.chevron_right)
+                      : Container(),
+                ],
+              ),
+            );
+          } else {
+            return Container();
+          }
+        }).toList(),
+      ),
     );
   }
 }
