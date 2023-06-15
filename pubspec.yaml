@@ -49,6 +49,7 @@ dependencies:
   app_links: ^3.4.3
   shared_preferences: ^2.1.1
   units_converter: ^2.1.0
+  path_provider: ^2.0.15
 
 dev_dependencies:
   flutter_test:
