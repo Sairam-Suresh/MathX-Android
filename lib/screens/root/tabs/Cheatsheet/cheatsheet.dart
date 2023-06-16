@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/logic/tools/CheatsheetsDatabaseHelper.dart';
 import 'package:mathx_android/screens/root/tabs/Cheatsheet/cheatsheetviewer.dart';
@@ -170,7 +171,8 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
   }
 
   Widget buildListViews(
-      List<CheatsheetDetails> displayList, SecondaryLevel level) {
+      List<CheatsheetDetails> displayList, SecondaryLevel level,
+      [void Function()? onChange]) {
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
@@ -179,51 +181,85 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
         physics: const NeverScrollableScrollPhysics(),
         children: displayList.map((element) {
           if (element.secondaryLevel == level) {
-            return ListTile(
-              title: AutoSizeText(
-                element.title,
-                maxLines: 1,
-              ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
+            return Slidable(
+              endActionPane: ActionPane(
+                motion: const DrawerMotion(),
+                extentRatio: 1 / 4,
                 children: [
-                  element.isStarred ? const Icon(Icons.star) : Container(),
-                  !element.isComingSoon
-                      ? const Icon(Icons.chevron_right)
-                      : Container(),
+                  SlidableAction(
+                    onPressed: (context) {
+                      setState(() {
+                        cheatsheetsData[cheatsheetsData.contains(element)
+                                ? cheatsheetsData.indexOf(
+                                    element) // Somehow putting this condition to make this be 0 if it is -1 makes it work properly for some reason
+                                : 0] =
+                            CheatsheetDetails(
+                                element.title,
+                                element.secondaryLevel,
+                                element.isComingSoon,
+                                !element.isStarred);
+                        saveCheatsheets();
+                        onChange?.call();
+                      });
+                    },
+                    backgroundColor: Colors.yellow,
+                    foregroundColor: Colors.white,
+                    autoClose: true,
+                    icon: element.isStarred ? Icons.star_outline : Icons.star,
+                    label: element.isStarred ? 'Un-star' : "Star",
+                  ),
                 ],
               ),
-              leading: Icon(element.secondaryLevel == SecondaryLevel.one
-                  ? Icons.looks_one
-                  : element.secondaryLevel == SecondaryLevel.two
-                      ? Icons.looks_two
-                      : element.secondaryLevel == SecondaryLevel.three
-                          ? Icons.looks_3
-                          : Icons.looks_4),
-              onTap: !element.isComingSoon
-                  ? () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return CheatSheetViewer(
-                          cheatsheet: element,
-                          onToggleStarred: (value) {
-                            setState(() {
-                              cheatsheetsData[cheatsheetsData.contains(element)
-                                      ? cheatsheetsData.indexOf(
-                                          element) // Somehow putting this condition to make this be 0 if it is -1 makes it work properly for some reason
-                                      : 0] =
-                                  CheatsheetDetails(
-                                      element.title,
-                                      element.secondaryLevel,
-                                      element.isComingSoon,
-                                      value);
-                              saveCheatsheets();
-                            });
-                          },
-                        );
-                      }));
-                    }
-                  : null,
+
+              // The child of the Slidable is what the user sees when the
+              // component is not dragged.
+              child: ListTile(
+                title: AutoSizeText(
+                  element.title,
+                  maxLines: 1,
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    element.isStarred ? const Icon(Icons.star) : Container(),
+                    !element.isComingSoon
+                        ? const Icon(Icons.chevron_right)
+                        : Container(),
+                  ],
+                ),
+                leading: Icon(element.secondaryLevel == SecondaryLevel.one
+                    ? Icons.looks_one
+                    : element.secondaryLevel == SecondaryLevel.two
+                        ? Icons.looks_two
+                        : element.secondaryLevel == SecondaryLevel.three
+                            ? Icons.looks_3
+                            : Icons.looks_4),
+                onTap: !element.isComingSoon
+                    ? () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return CheatSheetViewer(
+                            cheatsheet: element,
+                            onToggleStarred: (value) {
+                              setState(() {
+                                cheatsheetsData[
+                                    cheatsheetsData.contains(element)
+                                        ? cheatsheetsData.indexOf(
+                                            element) // Somehow putting this condition to make this be 0 if it is -1 makes it work properly for some reason
+                                        : 0] = CheatsheetDetails(
+                                    element.title,
+                                    element.secondaryLevel,
+                                    element.isComingSoon,
+                                    value);
+                                saveCheatsheets();
+                                onChange?.call();
+                              });
+                            },
+                          );
+                        }));
+                      }
+                    : null,
+              ),
             );
           } else {
             return Container();
@@ -234,32 +270,42 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
   }
 
   Widget showStarredItems() {
-    List<CheatsheetDetails> filteredList = List.of(cheatsheetsData);
-
-    filteredList.removeWhere((element) => !element.isStarred);
-    Set<SecondaryLevel> secondaryLevelsPresent =
-        filteredList.map((e) => e.secondaryLevel).toSet();
-
     return Scaffold(
         appBar: AppBar(title: Text("Starred Cheatsheets")),
-        body: SingleChildScrollView(
-          child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildHeadings(context, "Secondary 1",
-                    secondaryLevelsPresent.contains(SecondaryLevel.one)),
-                buildListViews(filteredList, SecondaryLevel.one),
-                buildHeadings(context, "Secondary 2",
-                    secondaryLevelsPresent.contains(SecondaryLevel.two)),
-                buildListViews(filteredList, SecondaryLevel.two),
-                buildHeadings(context, "Secondary 3",
-                    secondaryLevelsPresent.contains(SecondaryLevel.three)),
-                buildListViews(filteredList, SecondaryLevel.three),
-                buildHeadings(context, "Secondary 4",
-                    secondaryLevelsPresent.contains(SecondaryLevel.four)),
-                buildListViews(filteredList, SecondaryLevel.four),
-              ]),
-        ));
+        body: StatefulBuilder(builder: (context, stateSetter) {
+          List<CheatsheetDetails> filteredList = List.of(cheatsheetsData);
+
+          filteredList.removeWhere((element) => !element.isStarred);
+          Set<SecondaryLevel> secondaryLevelsPresent =
+              filteredList.map((e) => e.secondaryLevel).toSet();
+
+          return SingleChildScrollView(
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildHeadings(context, "Secondary 1",
+                      secondaryLevelsPresent.contains(SecondaryLevel.one)),
+                  buildListViews(filteredList, SecondaryLevel.one, () {
+                    stateSetter(() {});
+                  }),
+                  buildHeadings(context, "Secondary 2",
+                      secondaryLevelsPresent.contains(SecondaryLevel.two)),
+                  buildListViews(filteredList, SecondaryLevel.two, () {
+                    stateSetter(() {});
+                  }),
+                  buildHeadings(context, "Secondary 3",
+                      secondaryLevelsPresent.contains(SecondaryLevel.three)),
+                  buildListViews(filteredList, SecondaryLevel.three, () {
+                    stateSetter(() {});
+                  }),
+                  buildHeadings(context, "Secondary 4",
+                      secondaryLevelsPresent.contains(SecondaryLevel.four)),
+                  buildListViews(filteredList, SecondaryLevel.four, () {
+                    stateSetter(() {});
+                  }),
+                ]),
+          );
+        }));
   }
 }
