@@ -107,7 +107,6 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                 ? [
                     IconButton(
                       onPressed: () {
-                        print(titleFocusNode.hasFocus);
                         setState(
                           () {
                             Navigator.pop(context);
@@ -119,7 +118,6 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                     ),
                     IconButton(
                       onPressed: () {
-                        print(titleFocusNode.hasFocus);
                         setState(() {
                           if (titleFocusNode.hasFocus) {
                             FocusScope.of(context).requestFocus(FocusNode());
@@ -168,7 +166,6 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                               onChanged: (value) {
                                 setState(() {
                                   renderMath = value;
-                                  print(renderMath);
                                 });
                                 lastModified = DateTime.now();
 
@@ -189,7 +186,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                                       showModalBottomSheet(
                                         context: context,
                                         builder: (context) {
-                                          return MathEquationFAQ();
+                                          return const MathEquationFAQ();
                                         },
                                       );
                                     },
@@ -201,7 +198,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                               ),
                             ),
                             ListTile(
-                              title: Text("Last Modified"),
+                              title: const Text("Last Modified"),
                               trailing: AutoSizeText(
                                 "${lastModified.day}/${lastModified.month}/${lastModified.year} at ${lastModified.hour}:${lastModified.minute}:${lastModified.second}",
                                 minFontSize: 15,
@@ -255,6 +252,8 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
 }
 
 class MathEquationFAQ extends StatelessWidget {
+  const MathEquationFAQ({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
