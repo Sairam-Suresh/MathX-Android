@@ -183,12 +183,12 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                                   const Text("Math Rendering"),
                                   IconButton(
                                     onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        builder: (context) {
-                                          return const MathEquationFAQ();
-                                        },
-                                      );
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const MathEquationFAQ(),
+                                              fullscreenDialog: true));
                                     },
                                     icon: const Icon(Icons.question_mark),
                                     iconSize: 20,
