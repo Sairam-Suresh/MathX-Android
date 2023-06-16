@@ -184,7 +184,7 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
             return Slidable(
               endActionPane: ActionPane(
                 motion: const DrawerMotion(),
-                extentRatio: 1 / 4,
+                extentRatio: element.isStarred ? 1 / 4 : 1 / 5.5,
                 children: [
                   SlidableAction(
                     onPressed: (context) {
