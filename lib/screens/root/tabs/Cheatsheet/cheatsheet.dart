@@ -95,14 +95,23 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
                         });
                       },
                       icon: const Icon(Icons.delete),
-                    )
+                    ),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => showStarredItems(),
+                                fullscreenDialog: true));
+                      },
+                      icon: const Icon(Icons.stars))
                 ],
                 leading: const Icon(Icons.search),
               ),
             ),
           ),
           isLoading
-              ? Expanded(
+              ? const Expanded(
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
@@ -222,5 +231,35 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
         }).toList(),
       ),
     );
+  }
+
+  Widget showStarredItems() {
+    List<CheatsheetDetails> filteredList = List.of(cheatsheetsData);
+
+    filteredList.removeWhere((element) => !element.isStarred);
+    Set<SecondaryLevel> secondaryLevelsPresent =
+        filteredList.map((e) => e.secondaryLevel).toSet();
+
+    return Scaffold(
+        appBar: AppBar(title: Text("Starred Cheatsheets")),
+        body: SingleChildScrollView(
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildHeadings(context, "Secondary 1",
+                    secondaryLevelsPresent.contains(SecondaryLevel.one)),
+                buildListViews(filteredList, SecondaryLevel.one),
+                buildHeadings(context, "Secondary 2",
+                    secondaryLevelsPresent.contains(SecondaryLevel.two)),
+                buildListViews(filteredList, SecondaryLevel.two),
+                buildHeadings(context, "Secondary 3",
+                    secondaryLevelsPresent.contains(SecondaryLevel.three)),
+                buildListViews(filteredList, SecondaryLevel.three),
+                buildHeadings(context, "Secondary 4",
+                    secondaryLevelsPresent.contains(SecondaryLevel.four)),
+                buildListViews(filteredList, SecondaryLevel.four),
+              ]),
+        ));
   }
 }
