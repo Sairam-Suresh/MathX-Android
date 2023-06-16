@@ -70,7 +70,7 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.only(bottom: 10.0, left: 10, right: 10),
           child: Column(
             children: [
               Expanded(
