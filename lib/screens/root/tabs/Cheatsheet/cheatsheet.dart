@@ -272,6 +272,7 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
   Widget showStarredItems() {
     return Scaffold(
         appBar: AppBar(title: Text("Starred Cheatsheets")),
+        // Using a stateful builder here so that i can force this to refresh
         body: StatefulBuilder(builder: (context, stateSetter) {
           List<CheatsheetDetails> filteredList = List.of(cheatsheetsData);
 
@@ -279,33 +280,67 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
           Set<SecondaryLevel> secondaryLevelsPresent =
               filteredList.map((e) => e.secondaryLevel).toSet();
 
-          return SingleChildScrollView(
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildHeadings(context, "Secondary 1",
-                      secondaryLevelsPresent.contains(SecondaryLevel.one)),
-                  buildListViews(filteredList, SecondaryLevel.one, () {
-                    stateSetter(() {});
-                  }),
-                  buildHeadings(context, "Secondary 2",
-                      secondaryLevelsPresent.contains(SecondaryLevel.two)),
-                  buildListViews(filteredList, SecondaryLevel.two, () {
-                    stateSetter(() {});
-                  }),
-                  buildHeadings(context, "Secondary 3",
-                      secondaryLevelsPresent.contains(SecondaryLevel.three)),
-                  buildListViews(filteredList, SecondaryLevel.three, () {
-                    stateSetter(() {});
-                  }),
-                  buildHeadings(context, "Secondary 4",
-                      secondaryLevelsPresent.contains(SecondaryLevel.four)),
-                  buildListViews(filteredList, SecondaryLevel.four, () {
-                    stateSetter(() {});
-                  }),
-                ]),
-          );
+          bool empty = filteredList.isEmpty;
+
+          return !empty
+              ? SingleChildScrollView(
+                  child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        buildHeadings(
+                            context,
+                            "Secondary 1",
+                            secondaryLevelsPresent
+                                .contains(SecondaryLevel.one)),
+                        buildListViews(filteredList, SecondaryLevel.one, () {
+                          stateSetter(() {});
+                        }),
+                        buildHeadings(
+                            context,
+                            "Secondary 2",
+                            secondaryLevelsPresent
+                                .contains(SecondaryLevel.two)),
+                        buildListViews(filteredList, SecondaryLevel.two, () {
+                          stateSetter(() {});
+                        }),
+                        buildHeadings(
+                            context,
+                            "Secondary 3",
+                            secondaryLevelsPresent
+                                .contains(SecondaryLevel.three)),
+                        buildListViews(filteredList, SecondaryLevel.three, () {
+                          stateSetter(() {});
+                        }),
+                        buildHeadings(
+                            context,
+                            "Secondary 4",
+                            secondaryLevelsPresent
+                                .contains(SecondaryLevel.four)),
+                        buildListViews(filteredList, SecondaryLevel.four, () {
+                          stateSetter(() {});
+                        }),
+                      ]),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Hmmmm...",
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
+                        const Text(
+                          "You do not seem to have any starred cheatsheets. Try Starring some by swiping left on the cheatsheet!",
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    ),
+                  ),
+                );
         }));
   }
 }
