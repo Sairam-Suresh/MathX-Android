@@ -208,23 +208,26 @@ class _NotesPageState extends State<NotesPage> {
                                 : Container();
                           },
                         )
-                      : Center(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Hmmmm...",
-                                style:
-                                    Theme.of(context).textTheme.displayMedium,
-                              ),
-                              const Text(
-                                "You do not seem to have any notes. Create a new one using the button below.",
-                                textAlign: TextAlign.center,
-                              )
-                            ],
+                      : Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Hmmmm...",
+                                  style:
+                                      Theme.of(context).textTheme.displayMedium,
+                                ),
+                                const Text(
+                                  "You do not seem to have any notes. Create a new one using the button below.",
+                                  textAlign: TextAlign.center,
+                                )
+                              ],
+                            ),
                           ),
-                        ),
+                      ),
             ),
           ],
         ),
