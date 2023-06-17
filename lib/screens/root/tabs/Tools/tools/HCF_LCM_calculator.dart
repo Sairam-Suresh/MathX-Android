@@ -1,8 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mathx_android/logic/tools/HCFLCMLogic.dart';
-import 'package:mathx_android/widgets/textfieldlist.dart';
+import 'package:mathx_android/widgets/dynamictextfieldlist.dart';
 
 class HCFLCMPage extends StatefulWidget {
   const HCFLCMPage({Key? key}) : super(key: key);
@@ -12,22 +11,14 @@ class HCFLCMPage extends StatefulWidget {
 }
 
 class _HCFLCMPageState extends State<HCFLCMPage> {
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
-  Widget? textFields;
   bool isVisible = true;
   ScrollController scrollController = ScrollController();
 
-  int index = 0;
+  int index = 0; // 0 for HCF, 1 for LCM
 
-  @override
-  void initState() {
-    super.initState();
-    textFields = TextFieldList(
-      controller: controller,
-      formKey: formKey,
-    );
-  }
+  int numberOfFields = 2;
+  List<String?> values = ["", ""];
+  bool isFormValid = false;
 
   @override
   void dispose() {
@@ -38,13 +29,6 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: Need to make HCF have an option to have only prime numbers
-    textFields = TextFieldList(
-      controller: controller,
-      formKey: formKey,
-      onChange: (_) {
-        setState(() {});
-      },
-    );
 
     return DefaultTabController(
       length: 2,
@@ -55,7 +39,7 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
               IconButton(
                   onPressed: () {
                     setState(() {
-                      controller.addNewField();
+                      numberOfFields += 1;
                     });
                   },
                   icon: Icon(Icons.add))
@@ -89,7 +73,16 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                         child: Column(
                   children: [
                     buildResults(),
-                    textFields!,
+                    DynamicTextFieldList(
+                      count: numberOfFields,
+                      onChange: (newValues, valid, count) {
+                        setState(() {
+                          isFormValid = valid;
+                          values = newValues;
+                          numberOfFields = count;
+                        });
+                      },
+                    )
                   ],
                 ))),
               ],
@@ -110,23 +103,22 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
               style: const TextStyle(fontSize: 25),
             ),
             AutoSizeText(
-              controller.textFieldValues.length >= 2 &&
-                      (formKey.currentState?.isValid ?? false)
+              values.length >= 2 && (isFormValid)
                   ? index == 0
-                      ? (calculateHCFForMultiple(controller.textFieldValues
-                                  .map((e) => int.tryParse(e) ?? 0)
+                      ? (calculateHCFForMultiple(values
+                                  .map((e) => int.tryParse(e!) ?? 0)
                                   .toList()) ??
                               "ERROR")
                           .toString()
-                      : (calculateLCMForMultiple(controller.textFieldValues
-                                  .map((e) => int.tryParse(e) ?? 0)
+                      : (calculateLCMForMultiple(values
+                                  .map((e) => int.tryParse(e!) ?? 0)
                                   .toList()) ??
                               "ERROR")
                           .toString()
                   : "--",
               style: const TextStyle(fontSize: 30),
             ),
-            controller.textFieldValues.length < 2
+            values.length < 2
                 ? const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: Column(
@@ -153,7 +145,7 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                       ],
                     ),
                   )
-                : !(formKey.currentState?.isValid ?? false)
+                : !isFormValid
                     ? const Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
