@@ -91,7 +91,7 @@ class _buildRectangleState extends State<buildRectangle> {
         TextFieldList(
           controller: controller,
           formKey: formKey,
-          limitEntries: const {"Length (l)": 0, "Breadth (b)": 0},
+          limitEntries: const ["Length (l)", "Breadth (b)"],
           onChange: (_) {
             setState(() {});
           },
@@ -133,7 +133,7 @@ class _buildTriangleState extends State<buildTriangle> {
         TextFieldList(
           controller: controller,
           formKey: formKey,
-          limitEntries: const {"Length (l)": 0, "Breadth (b)": 0},
+          limitEntries: const ["Length (l)", "Breadth (b)"],
           onChange: (_) {
             setState(() {});
           },
@@ -176,7 +176,7 @@ class _buildCircleState extends State<buildCircle> {
         TextFieldList(
           controller: controller,
           formKey: formKey,
-          limitEntries: const {"Radius (r)": 0},
+          limitEntries: const ["Radius (r)"],
           onChange: (_) {
             setState(() {});
           },
@@ -221,7 +221,7 @@ class _buildTrapeziumState extends State<buildTrapezium> {
         TextFieldList(
           controller: controller,
           formKey: formKey,
-          limitEntries: const {"Base (a)": 0, "Base (b)": 0, "Height (h)": 0},
+          limitEntries: const ["Base (a)", "Base (b)", "Height (h)"],
           onChange: (_) {
             setState(() {});
           },
@@ -262,7 +262,7 @@ class _buildParallelogramState extends State<buildParallelogram> {
         TextFieldList(
           controller: controller,
           formKey: formKey,
-          limitEntries: const {"Length (l)": 0, "Breadth (b)": 0},
+          limitEntries: const ["Length (l)", "Breadth (b)"],
           onChange: (_) {
             setState(() {});
           },
@@ -309,11 +309,7 @@ class _buildCuboidState extends State<buildCuboid> {
         TextFieldList(
           controller: controller,
           formKey: formKey,
-          limitEntries: const {
-            "Length (l)": 0,
-            "Breadth (b)": 0,
-            "Height (h)": 0
-          },
+          limitEntries: const ["Length (l)", "Breadth (b)", "Height (h)"],
           onChange: (_) {
             setState(() {});
           },
@@ -361,11 +357,11 @@ class _buildPyramidState extends State<buildPyramid> {
         TextFieldList(
           controller: controller,
           formKey: formKey,
-          limitEntries: const {
-            "Base Length (l)": 0,
-            "Base Breadth (b)": 0,
-            "Height (h)": 0
-          },
+          limitEntries: const [
+            "Base Length (l)",
+            "Base Breadth (b)",
+            "Height (h)"
+          ],
           onChange: (_) {
             setState(() {});
           },
@@ -408,7 +404,7 @@ class _buildSphereState extends State<buildSphere> {
         TextFieldList(
           controller: controller,
           formKey: formKey,
-          limitEntries: const {"Radius (r)": 0},
+          limitEntries: const ["Radius (r)"],
           onChange: (_) {
             setState(() {});
           },
@@ -453,7 +449,7 @@ class _buildCylinderState extends State<buildCylinder> {
         TextFieldList(
           controller: controller,
           formKey: formKey,
-          limitEntries: const {"Radius (r)": 0, "Height (h)": 0},
+          limitEntries: const ["Radius (r)", "Height (h)"],
           onChange: (_) {
             setState(() {});
           },
@@ -508,7 +504,7 @@ class _buildConeState extends State<buildCone> {
         TextFieldList(
           controller: controller,
           formKey: formKey,
-          limitEntries: const {"Radius (r)": 0, "Height (h)": 0},
+          limitEntries: const ["Radius (r)", "Height (h)"],
           onChange: (_) {
             setState(() {});
           },

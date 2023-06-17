@@ -34,7 +34,7 @@ class TextFieldList extends StatefulWidget {
       required this.formKey})
       : super(key: key);
 
-  late final Map<String, dynamic>? limitEntries;
+  late final List<String>? limitEntries;
   late final dynamic validators;
   late final TextFieldListController controller;
   late final void Function(List<String> values)? onChange;
@@ -79,10 +79,7 @@ class _TextFieldListState extends State<TextFieldList> {
               // controller: widget.controller,
               name: widget.limitEntries == null
                   ? 'number_${index + 1}'
-                  : (widget.limitEntries?.entries
-                          .toList()
-                          .elementAt(index)
-                          .key ??
+                  : (widget.limitEntries?.toList().elementAt(index) ??
                       'number_${index + 1}'),
               keyboardType: TextInputType.number,
               autovalidateMode: AutovalidateMode.always,
@@ -99,10 +96,7 @@ class _TextFieldListState extends State<TextFieldList> {
                           ? 'Number ${index + 1}'
                           : widget.nameBuilder?.call(
                               widget.controller.textFieldValues.length, index)
-                      : (widget.limitEntries?.entries
-                              .toList()
-                              .elementAt(index)
-                              .key ??
+                      : (widget.limitEntries?.toList().elementAt(index) ??
                           'Number ${index + 1}'),
                   suffixIcon: widget.limitEntries == null &&
                           index == widget.controller.textFieldValues.length - 1

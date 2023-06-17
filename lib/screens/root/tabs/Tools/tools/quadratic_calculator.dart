@@ -37,7 +37,7 @@ class _QuadraticCalculatorPageState extends State<QuadraticCalculatorPage> {
       onChange: (_) {
         setState(() {});
       },
-      limitEntries: {"a": null, "b": null, "c": null},
+      limitEntries: const ["a", "b", "c"],
     );
 
     if (formKey.currentState?.isValid ?? false) {

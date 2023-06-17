@@ -33,7 +33,7 @@ class _PythagorasTheoremCalculatorPageState
     textFields = TextFieldList(
       controller: controller,
       formKey: formKey,
-      limitEntries: const {"A": null, "B": null, "C": null},
+      limitEntries: const ["A", "B", "C"],
       validators: FormBuilderValidators.compose([
         FormBuilderValidators.numeric(errorText: "Please enter a valid number.")
       ]),
@@ -51,7 +51,7 @@ class _PythagorasTheoremCalculatorPageState
     textFields = TextFieldList(
       controller: controller,
       formKey: formKey,
-      limitEntries: const {"Side A": 0, "Side B": 0, "Side C": 0},
+      limitEntries: const ["Side A", "Side B", "Side C"],
       onChange: (_) {
         setState(() {});
         // formKey.currentState?.validate();

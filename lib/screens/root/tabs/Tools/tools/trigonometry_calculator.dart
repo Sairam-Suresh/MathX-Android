@@ -66,11 +66,11 @@ class _TrigonometryCalculatorPageState
           TextFieldList(
             controller: controller,
             formKey: formKey,
-            limitEntries: const {
-              "Side A (Opposite)": 0,
-              "Side B (Adjacent)": 0,
-              "Side C (Hypotenuse)": 0
-            },
+            limitEntries: const [
+              "Side A (Opposite)",
+              "Side B (Adjacent)",
+              "Side C (Hypotenuse)"
+            ],
             onChange: (_) {
               setState(() {});
             },
