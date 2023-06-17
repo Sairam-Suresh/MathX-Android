@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:mathx_android/logic/tools/QuadraticSolverLogic.dart';
-import 'package:mathx_android/widgets/textfieldlist.dart';
+import 'package:mathx_android/widgets/fixedtextfieldlist.dart';
 
 class QuadraticCalculatorPage extends StatefulWidget {
   const QuadraticCalculatorPage({Key? key}) : super(key: key);
@@ -17,10 +16,9 @@ class _QuadraticCalculatorPageState extends State<QuadraticCalculatorPage> {
   bool isVisible = true;
   ScrollController scrollController = ScrollController();
 
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  List<String?> values = ["", "", ""];
+  bool isFormValid = false;
 
-  Widget? textFields;
   int index = 0;
 
   @override
@@ -31,20 +29,9 @@ class _QuadraticCalculatorPageState extends State<QuadraticCalculatorPage> {
 
   @override
   Widget build(BuildContext context) {
-    textFields = TextFieldList(
-      controller: controller,
-      formKey: formKey,
-      onChange: (_) {
-        setState(() {});
-      },
-      limitEntries: const ["a", "b", "c"],
-    );
-
-    if (formKey.currentState?.isValid ?? false) {
-      equation = QuadraticEquation(
-          double.parse(controller.textFieldValues[0]),
-          double.parse(controller.textFieldValues[1]),
-          double.parse(controller.textFieldValues[2]));
+    if (isFormValid) {
+      equation = QuadraticEquation(double.parse(values[0]!),
+          double.parse(values[1]!), double.parse(values[2]!));
     }
 
     return Scaffold(
@@ -66,18 +53,26 @@ class _QuadraticCalculatorPageState extends State<QuadraticCalculatorPage> {
                                     width: MediaQuery.of(context).size.width,
                                     child: Center(
                                       child: Math.tex(
-                                        "${controller.textFieldValues[0] == "" ? "ax^2" : "${controller.textFieldValues[0]}x^2"}"
+                                        "${values[0] == "" ? "ax^2" : "${values[0]}x^2"}"
                                         " + "
-                                        "${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "bx" : "${controller.textFieldValues.elementAt(1)}x"}"
+                                        "${values.elementAtOrNull(1) == "" || values.length < 2 ? "bx" : "${values.elementAt(1)}x"}"
                                         " + "
-                                        "${controller.textFieldValues.elementAtOrNull(2) == "" || controller.textFieldValues.length != 3 ? "c" : controller.textFieldValues.elementAt(2)}"
+                                        "${values.elementAtOrNull(2) == "" || values.length != 3 ? "c" : values.elementAt(2)}"
                                         "=0",
                                         textStyle:
                                             const TextStyle(fontSize: 20),
                                       ),
                                     ))),
                           ),
-                          textFields!,
+                          FixedTextFieldList(
+                              entries: ["a", "b", "c"],
+                              onChange: (newValues, isValid) {
+                                setState(() {
+                                  isFormValid = isValid;
+                                  values =
+                                      newValues.map((e) => e ?? "").toList();
+                                });
+                              })
                         ],
                       ))),
             ],
@@ -92,14 +87,13 @@ class _QuadraticCalculatorPageState extends State<QuadraticCalculatorPage> {
         children: [
           ListTile(
             title: const Text("Y-Intercept"),
-            trailing: Text((formKey.currentState?.isValid ?? false)
-                ? "(0 ,${equation.getYIntercept()})"
-                : "--"),
+            trailing:
+                Text(isFormValid ? "(0 ,${equation.getYIntercept()})" : "--"),
           ),
           equation.getNumberOfRoots() >= 1
               ? ListTile(
                   title: const Text("X-Intercept 1"),
-                  trailing: Text((formKey.currentState?.isValid ?? false)
+                  trailing: Text(isFormValid
                       ? "(0 ,${equation.getXIntercepts()[0]})"
                       : "--"),
                 )
@@ -107,34 +101,31 @@ class _QuadraticCalculatorPageState extends State<QuadraticCalculatorPage> {
           equation.getNumberOfRoots() == 2
               ? ListTile(
                   title: const Text("X-Intercept 2"),
-                  trailing: Text((formKey.currentState?.isValid ?? false)
+                  trailing: Text(isFormValid
                       ? "(0 ,${equation.getXIntercepts()[1]})"
                       : "--"),
                 )
               : Container(),
           ListTile(
             title: const Text("Line of Symmetry"),
-            trailing: Text((formKey.currentState?.isValid ?? false)
-                ? "x = ${equation.getLineOfSymmetry()}"
-                : "--"),
+            trailing: Text(
+                isFormValid ? "x = ${equation.getLineOfSymmetry()}" : "--"),
           ),
           ListTile(
             title: const Text("Turning Point"),
-            trailing: Text((formKey.currentState?.isValid ?? false)
+            trailing: Text(isFormValid
                 ? "(${equation.getTurningPointX()} , ${equation.getTurningPointY()})"
                 : "--"),
           ),
           ListTile(
             title: const Text("Discriminant"),
-            trailing: Text((formKey.currentState?.isValid ?? false)
-                ? "${equation.calculateDiscriminant()}"
-                : "--"),
+            trailing: Text(
+                isFormValid ? "${equation.calculateDiscriminant()}" : "--"),
           ),
           ListTile(
             title: const Text("Number of Roots"),
-            trailing: Text((formKey.currentState?.isValid ?? false)
-                ? "${equation.getNumberOfRoots()}"
-                : "--"),
+            trailing:
+                Text(isFormValid ? "${equation.getNumberOfRoots()}" : "--"),
           ),
         ],
       ),
