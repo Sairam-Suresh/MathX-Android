@@ -19,7 +19,6 @@ class FixedTextFieldList extends StatefulWidget {
 class _FixedTextFieldListState extends State<FixedTextFieldList> {
   final List<String?> _values = [];
 
-  //create formkey
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
