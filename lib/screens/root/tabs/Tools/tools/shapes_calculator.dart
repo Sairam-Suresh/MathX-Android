@@ -1,10 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
+import 'package:mathx_android/widgets/fixedtextfieldlist.dart';
 import 'package:mathx_android/widgets/nestedtabbar.dart';
-import 'package:mathx_android/widgets/textfieldlist.dart';
 
 class ShapesCalculatorPage extends StatefulWidget {
   ShapesCalculatorPage({Key? key}) : super(key: key);
@@ -42,15 +41,15 @@ class _ShapesCalculatorPageState extends State<ShapesCalculatorPage> {
                 "Triangle": buildTriangle(),
                 "Circle": buildCircle(),
                 "Trapezium": buildTrapezium(),
-                "Parallelogram": const buildParallelogram(),
+                "Parallelogram": buildParallelogram(),
               },
             ),
             NestedTabBar(
               "3D",
               children: {
-                "Cuboid": const buildCuboid(),
-                "Pyramid": const buildPyramid(),
-                "Sphere": const buildSphere(),
+                "Cuboid": buildCuboid(),
+                "Pyramid": buildPyramid(),
+                "Sphere": buildSphere(),
                 "Cylinder": buildCylinder(),
                 "Cone": buildCone(),
               },
@@ -68,8 +67,8 @@ class buildRectangle extends StatefulWidget {
 }
 
 class _buildRectangleState extends State<buildRectangle> {
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  List<String?> values = ["", ""];
+  bool isFormValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -83,17 +82,18 @@ class _buildRectangleState extends State<buildRectangle> {
                   width: MediaQuery.of(context).size.width,
                   child: Center(
                     child: Math.tex(
-                      "A = ${controller.textFieldValues[0] == "" ? "l" : controller.textFieldValues[0]} * ${controller.textFieldValues.last == "" || controller.textFieldValues.length == 1 ? "b" : controller.textFieldValues.last}${(controller.textFieldValues.length == 2 && (formKey.currentState?.isValid ?? false)) ? "= ${controller.textFieldValues.map((e) => int.parse(e)).reduce((value, element) => value * element)}" : ""}",
+                      "A = ${values[0] == "" || values[0] == null ? "l" : values[0]} * ${values.last == "" || values.last == null ? "b" : values.last}${(values.length == 2 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element)}" : ""}",
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                   ))),
         ),
-        TextFieldList(
-          controller: controller,
-          formKey: formKey,
-          limitEntries: const ["Length (l)", "Breadth (b)"],
-          onChange: (_) {
-            setState(() {});
+        FixedTextFieldList(
+          entries: const ["Length (l)", "Breadth (b)"],
+          onChange: (newValue, isValid) {
+            setState(() {
+              values = newValue;
+              isFormValid = isValid;
+            });
           },
         )
       ]),
@@ -109,8 +109,8 @@ class buildTriangle extends StatefulWidget {
 }
 
 class _buildTriangleState extends State<buildTriangle> {
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  List<String?> values = ["", ""];
+  bool isFormValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -125,17 +125,18 @@ class _buildTriangleState extends State<buildTriangle> {
                   child: Center(
                     child: Math.tex(
                       r"A = \frac 1 2 * "
-                      "${controller.textFieldValues[0] == "" ? "l" : controller.textFieldValues[0]} * ${controller.textFieldValues.last == "" || controller.textFieldValues.length == 1 ? "b" : controller.textFieldValues.last}${(controller.textFieldValues.length == 2 && (formKey.currentState?.isValid ?? false)) ? "= ${controller.textFieldValues.map((e) => int.parse(e)).reduce((value, element) => value * element) * 0.10}" : ""}",
+                      "${values[0] == "" ? "l" : values[0]} * ${values.last == "" || values.length == 1 ? "b" : values.last}${(values.length == 2 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element) * 0.10}" : ""}",
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                   ))),
         ),
-        TextFieldList(
-          controller: controller,
-          formKey: formKey,
-          limitEntries: const ["Length (l)", "Breadth (b)"],
-          onChange: (_) {
-            setState(() {});
+        FixedTextFieldList(
+          entries: const ["Length (l)", "Breadth (b)"],
+          onChange: (newValues, isValid) {
+            setState(() {
+              values = newValues.map((e) => e ?? "").toList();
+              isFormValid = isValid;
+            });
           },
         )
       ]),
@@ -151,8 +152,8 @@ class buildCircle extends StatefulWidget {
 }
 
 class _buildCircleState extends State<buildCircle> {
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  List<String?> values = [""];
+  bool isFormValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -167,18 +168,19 @@ class _buildCircleState extends State<buildCircle> {
                   child: Center(
                     child: Math.tex(
                       r"A = \pi * "
-                      "${controller.textFieldValues[0] == "" ? "r^2" : "${controller.textFieldValues[0]}^2"}"
-                      "${controller.textFieldValues[0] != "" ? int.tryParse(controller.textFieldValues[0]) != null ? "= ${pow(int.tryParse(controller.textFieldValues[0])!, 2) * pi}" : "= ERROR" : ""}",
+                      "${values[0] == "" ? "r^2" : "${values[0]}^2"}"
+                      "${values[0] != "" ? int.tryParse(values[0]!) != null ? "= ${pow(int.tryParse(values[0]!)!, 2) * pi}" : "= ERROR" : ""}",
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                   ))),
         ),
-        TextFieldList(
-          controller: controller,
-          formKey: formKey,
-          limitEntries: const ["Radius (r)"],
-          onChange: (_) {
-            setState(() {});
+        FixedTextFieldList(
+          entries: const ["Radius (r)"],
+          onChange: (newValues, isValid) {
+            setState(() {
+              values = newValues.map((e) => e ?? "").toList();
+              isFormValid = isValid;
+            });
           },
         )
       ]),
@@ -194,8 +196,8 @@ class buildTrapezium extends StatefulWidget {
 }
 
 class _buildTrapeziumState extends State<buildTrapezium> {
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  List<String?> values = ["", "", ""];
+  bool isFormValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -210,20 +212,21 @@ class _buildTrapeziumState extends State<buildTrapezium> {
                   child: Center(
                     child: Math.tex(
                       r"A = \frac"
-                      " {${controller.textFieldValues[0] == "" ? "a" : controller.textFieldValues[0]}+${(controller.textFieldValues.elementAtOrNull(1) ?? "") == "" ? "b" : controller.textFieldValues[1]}}"
+                      " {${values[0] == "" ? "a" : values[0]}+${(values.elementAtOrNull(1) ?? "") == "" ? "b" : values[1]}}"
                       "{2}*"
-                      "${(controller.textFieldValues.elementAtOrNull(2) ?? "") == "" ? "h" : controller.textFieldValues[2]}"
-                      "${(controller.textFieldValues.length == 3 && (formKey.currentState?.isValid ?? false)) ? "= ${(int.parse(controller.textFieldValues[0]) + int.parse(controller.textFieldValues[1])) / 2 * int.parse(controller.textFieldValues[2])}" : ""}",
+                      "${(values.elementAtOrNull(2) ?? "") == "" ? "h" : values[2]}"
+                      "${(values.length == 3 && isFormValid) ? "= ${(int.parse(values[0]!) + int.parse(values[1]!)) / 2 * int.parse(values[2]!)}" : ""}",
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                   ))),
         ),
-        TextFieldList(
-          controller: controller,
-          formKey: formKey,
-          limitEntries: const ["Base (a)", "Base (b)", "Height (h)"],
-          onChange: (_) {
-            setState(() {});
+        FixedTextFieldList(
+          entries: const ["Base (a)", "Base (b)", "Height (h)"],
+          onChange: (newValues, isValid) {
+            setState(() {
+              values = newValues.map((e) => e ?? "").toList();
+              isFormValid = isValid;
+            });
           },
         )
       ]),
@@ -239,8 +242,8 @@ class buildParallelogram extends StatefulWidget {
 }
 
 class _buildParallelogramState extends State<buildParallelogram> {
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  List<String?> values = ["", ""];
+  bool isFormValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -254,17 +257,18 @@ class _buildParallelogramState extends State<buildParallelogram> {
                   width: MediaQuery.of(context).size.width,
                   child: Center(
                     child: Math.tex(
-                      "A = ${controller.textFieldValues[0] == "" ? "l" : controller.textFieldValues[0]} * ${controller.textFieldValues.last == "" || controller.textFieldValues.length == 1 ? "b" : controller.textFieldValues.last}${(controller.textFieldValues.length == 2 && (formKey.currentState?.isValid ?? false)) ? "= ${controller.textFieldValues.map((e) => int.parse(e)).reduce((value, element) => value * element)}" : ""}",
+                      "A = ${values[0] == "" ? "l" : values[0]} * ${values.last == "" || values.length == 1 ? "b" : values.last}${(values.length == 2 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element)}" : ""}",
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                   ))),
         ),
-        TextFieldList(
-          controller: controller,
-          formKey: formKey,
-          limitEntries: const ["Length (l)", "Breadth (b)"],
-          onChange: (_) {
-            setState(() {});
+        FixedTextFieldList(
+          entries: const ["Length (l)", "Breadth (b)"],
+          onChange: (newValues, isValid) {
+            setState(() {
+              values = newValues.map((e) => e ?? "").toList();
+              isFormValid = isValid;
+            });
           },
         )
       ]),
@@ -280,8 +284,8 @@ class buildCuboid extends StatefulWidget {
 }
 
 class _buildCuboidState extends State<buildCuboid> {
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  List<String?> values = ["", "", ""];
+  bool isFormValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -296,22 +300,23 @@ class _buildCuboidState extends State<buildCuboid> {
                   child: Center(
                     child: Math.tex(
                       "V = "
-                      "${controller.textFieldValues[0] == "" ? "l" : controller.textFieldValues[0]}"
+                      "${values[0] == "" ? "l" : values[0]}"
                       " * "
-                      "${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "b" : controller.textFieldValues.elementAt(1)} "
+                      "${values.elementAtOrNull(1) == "" || values.length < 2 ? "b" : values.elementAt(1)} "
                       " * "
-                      "${controller.textFieldValues.elementAtOrNull(2) == "" || controller.textFieldValues.length != 3 ? "h" : controller.textFieldValues.elementAt(2)} "
-                      "${(controller.textFieldValues.length == 3 && (formKey.currentState?.isValid ?? false)) ? "= ${controller.textFieldValues.map((e) => int.parse(e)).reduce((value, element) => value * element)}" : ""}",
+                      "${values.elementAtOrNull(2) == "" || values.length != 3 ? "h" : values.elementAt(2)} "
+                      "${(values.length == 3 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element)}" : ""}",
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                   ))),
         ),
-        TextFieldList(
-          controller: controller,
-          formKey: formKey,
-          limitEntries: const ["Length (l)", "Breadth (b)", "Height (h)"],
-          onChange: (_) {
-            setState(() {});
+        FixedTextFieldList(
+          entries: const ["Length (l)", "Breadth (b)", "Height (h)"],
+          onChange: (newValues, isValid) {
+            setState(() {
+              values = newValues.map((e) => e ?? "").toList();
+              isFormValid = isValid;
+            });
           },
         )
       ]),
@@ -327,8 +332,8 @@ class buildPyramid extends StatefulWidget {
 }
 
 class _buildPyramidState extends State<buildPyramid> {
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  List<String?> values = ["", "", ""];
+  bool isFormValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -343,27 +348,24 @@ class _buildPyramidState extends State<buildPyramid> {
                   child: Center(
                     child: Math.tex(
                       r"V = \frac{"
-                      "${controller.textFieldValues[0] == "" ? "l" : controller.textFieldValues[0]}"
+                      "${values[0] == "" ? "l" : values[0]}"
                       "*"
-                      "${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "b" : controller.textFieldValues.elementAt(1)} "
+                      "${values.elementAtOrNull(1) == "" || values.length < 2 ? "b" : values.elementAt(1)} "
                       "*"
-                      "${controller.textFieldValues.elementAtOrNull(2) == "" || controller.textFieldValues.length != 3 ? "h" : controller.textFieldValues.elementAt(2)} "
+                      "${values.elementAtOrNull(2) == "" || values.length != 3 ? "h" : values.elementAt(2)} "
                       "}{3}"
-                      "${(controller.textFieldValues.length == 3 && (formKey.currentState?.isValid ?? false)) ? "= ${controller.textFieldValues.map((e) => int.parse(e)).reduce((value, element) => value * element) / 3}" : ""}",
+                      "${(values.length == 3 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element) / 3}" : ""}",
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                   ))),
         ),
-        TextFieldList(
-          controller: controller,
-          formKey: formKey,
-          limitEntries: const [
-            "Base Length (l)",
-            "Base Breadth (b)",
-            "Height (h)"
-          ],
-          onChange: (_) {
-            setState(() {});
+        FixedTextFieldList(
+          entries: const ["Base Length (l)", "Base Breadth (b)", "Height (h)"],
+          onChange: (newValues, isValid) {
+            setState(() {
+              values = newValues.map((e) => e ?? "").toList();
+              isFormValid = isValid;
+            });
           },
         )
       ]),
@@ -379,8 +381,8 @@ class buildSphere extends StatefulWidget {
 }
 
 class _buildSphereState extends State<buildSphere> {
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  List<String?> values = [""];
+  bool isFormValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -395,18 +397,19 @@ class _buildSphereState extends State<buildSphere> {
                   child: Center(
                     child: Math.tex(
                       r"V = \frac{4}{3} * \pi * "
-                      "${controller.textFieldValues[0] == "" ? "r^3" : "${controller.textFieldValues[0]}^2"}"
-                      "${controller.textFieldValues[0] != "" ? int.tryParse(controller.textFieldValues[0]) != null ? "= ${pow(int.tryParse(controller.textFieldValues[0])!, 3) * pi * 4 / 3}" : "= ERROR" : ""}",
+                      "${values[0] == "" ? "r^3" : "${values[0]}^2"}"
+                      "${values[0] != "" ? int.tryParse(values[0]!) != null ? "= ${pow(int.tryParse(values[0]!)!, 3) * pi * 4 / 3}" : "= ERROR" : ""}",
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                   ))),
         ),
-        TextFieldList(
-          controller: controller,
-          formKey: formKey,
-          limitEntries: const ["Radius (r)"],
-          onChange: (_) {
-            setState(() {});
+        FixedTextFieldList(
+          entries: const ["Radius (r)"],
+          onChange: (newValues, isValid) {
+            setState(() {
+              values = newValues.map((e) => e ?? "").toList();
+              isFormValid = isValid;
+            });
           },
         )
       ]),
@@ -422,8 +425,8 @@ class buildCylinder extends StatefulWidget {
 }
 
 class _buildCylinderState extends State<buildCylinder> {
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  List<String?> values = ["", ""];
+  bool isFormValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -438,20 +441,21 @@ class _buildCylinderState extends State<buildCylinder> {
                   child: Center(
                     child: Math.tex(
                       r"V = \pi * "
-                      "${controller.textFieldValues[0] == "" ? "r^2" : "${controller.textFieldValues[0]}^2"}"
+                      "${values[0] == "" ? "r^2" : "${values[0]}^2"}"
                       "*"
-                      "${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "h" : controller.textFieldValues.elementAt(1)}"
-                      "${controller.textFieldValues[0] != "" && controller.textFieldValues.elementAtOrNull(1) != "" ? int.tryParse(controller.textFieldValues[0]) != null ? "= ${pow(int.tryParse(controller.textFieldValues[0])!, 2) * pi}" : "= ERROR" : ""}",
+                      "${values.elementAtOrNull(1) == "" || values.length < 2 ? "h" : values.elementAt(1)}"
+                      "${values[0] != "" && values.elementAtOrNull(1) != "" ? int.tryParse(values[0]!) != null ? "= ${pow(int.tryParse(values[0]!)!, 2) * pi}" : "= ERROR" : ""}",
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                   ))),
         ),
-        TextFieldList(
-          controller: controller,
-          formKey: formKey,
-          limitEntries: const ["Radius (r)", "Height (h)"],
-          onChange: (_) {
-            setState(() {});
+        FixedTextFieldList(
+          entries: const ["Radius (r)", "Height (h)"],
+          onChange: (newValues, isValid) {
+            setState(() {
+              values = newValues.map((e) => e ?? "").toList();
+              isFormValid = isValid;
+            });
           },
         )
       ]),
@@ -467,18 +471,18 @@ class buildCone extends StatefulWidget {
 }
 
 class _buildConeState extends State<buildCone> {
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  List<String?> values = ["", ""];
+  bool isFormValid = false;
 
   @override
   Widget build(BuildContext context) {
     print(
       r"V = \pi * "
-      "${controller.textFieldValues[0] == "" ? "r^2" : "${controller.textFieldValues[0]}^2"}"
+      "${values[0] == "" ? "r^2" : "${values[0]}^2"}"
       "* "
       r"\frac"
-      "{${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "h" : controller.textFieldValues.elementAt(1)}}{3}"
-      "${controller.textFieldValues[0] != "" && controller.textFieldValues.elementAtOrNull(1) != "" ? int.tryParse(controller.textFieldValues[0]) != null ? "= ${pow(int.tryParse(controller.textFieldValues[0])!, 2) * pi}" : "= ERROR" : ""}",
+      "{${values.elementAtOrNull(1) == "" || values.length < 2 ? "h" : values.elementAt(1)}}{3}"
+      "${values[0] != "" && values.elementAtOrNull(1) != "" ? int.tryParse(values[0]!) != null ? "= ${pow(int.tryParse(values[0]!)!, 2) * pi}" : "= ERROR" : ""}",
     );
 
     return Padding(
@@ -492,21 +496,22 @@ class _buildConeState extends State<buildCone> {
                   child: Center(
                     child: Math.tex(
                       r"V = \pi * "
-                      "${controller.textFieldValues[0] == "" ? "r^2" : "${controller.textFieldValues[0]}^2"}"
+                      "${values[0] == "" ? "r^2" : "${values[0]}^2"}"
                       "* "
                       r"\frac"
-                      "{${controller.textFieldValues.elementAtOrNull(1) == "" || controller.textFieldValues.length < 2 ? "h" : controller.textFieldValues.elementAt(1)}}{3}"
-                      "${controller.textFieldValues[0] != "" && controller.textFieldValues.elementAtOrNull(1) != "" && controller.textFieldValues.elementAtOrNull(1) != null ? int.tryParse(controller.textFieldValues[0]) != null ? "= ${pow(int.tryParse(controller.textFieldValues[0])!, 2) * pi * (int.tryParse(controller.textFieldValues[1])! / 3)}" : "= ERROR" : ""}",
+                      "{${values.elementAtOrNull(1) == "" || values.length < 2 ? "h" : values.elementAt(1)}}{3}"
+                      "${values[0] != "" && values.elementAtOrNull(1) != "" && values.elementAtOrNull(1) != null ? int.tryParse(values[0]!) != null ? "= ${pow(int.tryParse(values[0]!)!, 2) * pi * (int.tryParse(values[1]!)! / 3)}" : "= ERROR" : ""}",
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                   ))),
         ),
-        TextFieldList(
-          controller: controller,
-          formKey: formKey,
-          limitEntries: const ["Radius (r)", "Height (h)"],
-          onChange: (_) {
-            setState(() {});
+        FixedTextFieldList(
+          entries: const ["Radius (r)", "Height (h)"],
+          onChange: (newValues, isValid) {
+            setState(() {
+              values = newValues.map((e) => e ?? "").toList();
+              isFormValid = isValid;
+            });
           },
         )
       ]),
