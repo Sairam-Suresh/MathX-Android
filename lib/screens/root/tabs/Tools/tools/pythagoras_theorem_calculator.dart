@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mathx_android/logic/tools/PythagorasTheoremLogic.dart';
-import 'package:mathx_android/widgets/textfieldlist.dart';
+import 'package:mathx_android/widgets/fixedtextfieldlist.dart';
 
 class PythagorasTheoremCalculatorPage extends StatefulWidget {
   const PythagorasTheoremCalculatorPage({Key? key}) : super(key: key);
@@ -21,23 +20,14 @@ class _PythagorasTheoremCalculatorPageState
   bool isVisible = true;
   ScrollController scrollController = ScrollController();
 
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  List<String?> values = [];
+  bool isFormValid = false;
 
-  Widget? textFields;
   int index = 0;
 
   @override
   void initState() {
     super.initState();
-    textFields = TextFieldList(
-      controller: controller,
-      formKey: formKey,
-      limitEntries: const ["A", "B", "C"],
-      validators: FormBuilderValidators.compose([
-        FormBuilderValidators.numeric(errorText: "Please enter a valid number.")
-      ]),
-    );
   }
 
   @override
@@ -48,19 +38,6 @@ class _PythagorasTheoremCalculatorPageState
 
   @override
   Widget build(BuildContext context) {
-    textFields = TextFieldList(
-      controller: controller,
-      formKey: formKey,
-      limitEntries: const ["Side A", "Side B", "Side C"],
-      onChange: (_) {
-        setState(() {});
-        // formKey.currentState?.validate();
-      },
-      validators: FormBuilderValidators.compose([
-        FormBuilderValidators.numeric(errorText: "Please enter a valid number.")
-      ]),
-    );
-
     return NotificationListener(
       onNotification: (notification) {
         if (notification is UserScrollNotification) {
@@ -93,7 +70,18 @@ class _PythagorasTheoremCalculatorPageState
                         child: Column(
                           children: [
                             buildResults(),
-                            textFields!,
+                            FixedTextFieldList(
+                              entries: const ["Side A", "Side B", "Side C"],
+                              onChange: (list, valid) {
+                                setState(() {
+                                  isFormValid = valid;
+                                  values = list;
+                                });
+                              },
+                              validators: FormBuilderValidators.compose([
+                                FormBuilderValidators.numeric(),
+                              ]),
+                            )
                           ],
                         ))),
               ],
@@ -105,8 +93,8 @@ class _PythagorasTheoremCalculatorPageState
   Widget buildResults() {
     _noOfFieldsFilled = 0;
 
-    for (String i in controller.textFieldValues) {
-      _noOfFieldsFilled += (i == "") ? 0 : 1;
+    for (String? i in values) {
+      _noOfFieldsFilled += (i == "" || i == null) ? 0 : 1;
     }
 
     if (_noOfFieldsFilled == 2) {
@@ -123,48 +111,42 @@ class _PythagorasTheoremCalculatorPageState
           children: [
             ListTile(
               title: const Text("Side A"),
-              trailing:
-                  (formKey.currentState?.isValid ?? false) && only2FieldsFilled
-                      ? Text(
-                          controller.textFieldValues.first != ""
-                              ? controller.textFieldValues.first
-                              : calculateSide(
-                                      num.parse(controller.textFieldValues[2]),
-                                      num.parse(controller.textFieldValues[1]))
-                                  .toString(),
-                          style: const TextStyle(fontSize: 20),
-                        )
-                      : const Text("--"),
+              trailing: (isFormValid) && only2FieldsFilled
+                  ? Text(
+                      values.first != "" && values.first != null
+                          ? values.first!
+                          : calculateSide(
+                                  num.parse(values[2]!), num.parse(values[1]!))
+                              .toString(),
+                      style: const TextStyle(fontSize: 20),
+                    )
+                  : const Text("--"),
             ),
             ListTile(
               title: const Text("Side B"),
-              trailing:
-                  (formKey.currentState?.isValid ?? false) && only2FieldsFilled
-                      ? Text(
-                          controller.textFieldValues[1] != ""
-                              ? controller.textFieldValues[1]
-                              : calculateSide(
-                                      num.parse(controller.textFieldValues[2]),
-                                      num.parse(controller.textFieldValues[0]))
-                                  .toString(),
-                          style: const TextStyle(fontSize: 20),
-                        )
-                      : const Text("--"),
+              trailing: isFormValid && only2FieldsFilled
+                  ? Text(
+                      values[1] != "" && values[1] != null
+                          ? values[1]!
+                          : calculateSide(
+                                  num.parse(values[2]!), num.parse(values[0]!))
+                              .toString(),
+                      style: const TextStyle(fontSize: 20),
+                    )
+                  : const Text("--"),
             ),
             ListTile(
               title: const Text("Side C (Hypotenuse)"),
-              trailing:
-                  (formKey.currentState?.isValid ?? false) && only2FieldsFilled
-                      ? Text(
-                          controller.textFieldValues.last != ""
-                              ? controller.textFieldValues.last
-                              : calculateHypotenuse(
-                                      num.parse(controller.textFieldValues[0]),
-                                      num.parse(controller.textFieldValues[1]))
-                                  .toString(),
-                          style: const TextStyle(fontSize: 20),
-                        )
-                      : const Text("--"),
+              trailing: isFormValid && only2FieldsFilled
+                  ? Text(
+                      values.last != "" && values.last != null
+                          ? values.last!
+                          : calculateHypotenuse(
+                                  num.parse(values[0]!), num.parse(values[1]!))
+                              .toString(),
+                      style: const TextStyle(fontSize: 20),
+                    )
+                  : const Text("--"),
             ),
             _noOfFieldsFilled > 2
                 ? const Center(
