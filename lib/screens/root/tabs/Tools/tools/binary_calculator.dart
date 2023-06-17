@@ -73,18 +73,30 @@ class _BinaryConverterPageState extends State<BinaryConverterPage> {
           children: [
             if (inputNumberCase != NumberCases.decimal)
               ListTile(
-                title: const Text("Decimal:"),
-                trailing: Text(decimalResults),
+                title: Text(
+                  "Decimal:",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                trailing: Text(decimalResults,
+                    style: Theme.of(context).textTheme.bodyLarge),
               ),
             if (inputNumberCase != NumberCases.binary)
               ListTile(
-                title: const Text("Binary:"),
-                trailing: Text(binaryResults),
+                title: Text(
+                  "Binary:",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                trailing: Text(binaryResults,
+                    style: Theme.of(context).textTheme.bodyLarge),
               ),
             if (inputNumberCase != NumberCases.bcd)
               ListTile(
-                title: const Text("BCD:"),
-                trailing: Text(bcdResults),
+                title: Text(
+                  "BCD:",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                trailing: Text(bcdResults,
+                    style: Theme.of(context).textTheme.bodyLarge),
               ),
           ],
         ),
