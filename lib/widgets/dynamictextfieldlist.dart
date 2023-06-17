@@ -15,6 +15,7 @@ class DynamicTextFieldList extends StatefulWidget {
 
 class _DynamicTextFieldListState extends State<DynamicTextFieldList> {
   final List<String?> _values = [];
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -24,7 +25,10 @@ class _DynamicTextFieldListState extends State<DynamicTextFieldList> {
 
   @override
   Widget build(BuildContext context) {
+    _values.length = widget.count;
+
     return Form(
+      key: _formKey,
       child: Column(
         children: [
           ListView.builder(
@@ -48,7 +52,10 @@ class _DynamicTextFieldListState extends State<DynamicTextFieldList> {
                   onChanged: (value) {
                     setState(() {
                       _values[index] = value;
-                      print(_values);
+                      widget.onChange?.call(
+                          _values,
+                          _formKey.currentState?.validate() ?? false,
+                          widget.count);
                     });
                   },
                   decoration: InputDecoration(
@@ -57,7 +64,10 @@ class _DynamicTextFieldListState extends State<DynamicTextFieldList> {
                         onPressed: () {
                           setState(() {
                             _values.removeAt(index);
-                            print(_values);
+                            widget.onChange?.call(
+                                _values,
+                                _formKey.currentState?.validate() ?? false,
+                                widget.count - 1);
                           });
                         },
                         icon: const Icon(
@@ -66,15 +76,7 @@ class _DynamicTextFieldListState extends State<DynamicTextFieldList> {
                         ),
                       )),
                 );
-              }),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                _values.add(null);
-              });
-            },
-            icon: const Icon(Icons.add),
-          )
+              })
         ],
       ),
     );
