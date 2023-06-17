@@ -175,7 +175,29 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                               style: Theme.of(context).textTheme.headlineSmall,
                             ),
                     ),
-                  )
+                  ),
+                  !isFormValid
+                      ? const Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 15.0),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.warning_amber),
+                                  SizedBox(width: 10),
+                                  AutoSizeText(
+                                      "Please ensure all numbers are filled and valid.",
+                                      maxLines: 2,
+                                      textAlign: TextAlign.justify),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container()
                 ],
               ))),
     );
