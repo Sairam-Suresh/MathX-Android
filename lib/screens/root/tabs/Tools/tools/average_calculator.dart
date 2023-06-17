@@ -1,8 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mathx_android/logic/tools/AverageLogic.dart';
-import 'package:mathx_android/widgets/textfieldlist.dart';
+import 'package:mathx_android/widgets/dynamictextfieldlist.dart';
 
 class AverageCalculatorPage extends StatefulWidget {
   const AverageCalculatorPage({Key? key}) : super(key: key);
@@ -15,21 +14,11 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
   String modeText = "";
   bool isVisible = true;
   ScrollController scrollController = ScrollController();
-
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
-
-  Widget? textFields;
   int index = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    textFields = TextFieldList(
-      controller: controller,
-      formKey: formKey,
-    );
-  }
+  int numberOfFields = 2;
+  List<String?> values = ["", ""];
+  bool isFormValid = false;
 
   @override
   void dispose() {
@@ -39,22 +28,13 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
 
   @override
   Widget build(BuildContext context) {
-    modeText = calculateMode(controller.textFieldValues
-            .map((e) => num.tryParse(e) ?? 0)
-            .toList())
-        .entries
-        .map((e) => "${e.key}: ${e.value}")
-        .join(", ")
-        .toString();
-
-    textFields = TextFieldList(
-      controller: controller,
-      formKey: formKey,
-      onChange: (_) {
-        setState(() {});
-        // formKey.currentState?.validate();
-      },
-    );
+    modeText = isFormValid
+        ? calculateMode(values.map((e) => num.tryParse(e!) ?? 0).toList())
+            .entries
+            .map((e) => "${e.key}: ${e.value}")
+            .join(", ")
+            .toString()
+        : "";
 
     return Scaffold(
         appBar: AppBar(
@@ -63,7 +43,7 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
             IconButton(
                 onPressed: () {
                   setState(() {
-                    controller.addNewField();
+                    numberOfFields += 1;
                   });
                 },
                 icon: const Icon(Icons.add))
@@ -82,7 +62,16 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                           SingleChildScrollView(
                               child: Column(
                             children: [
-                              textFields!,
+                              DynamicTextFieldList(
+                                count: numberOfFields,
+                                onChange: (newValues, isValid, count) {
+                                  setState(() {
+                                    values = newValues;
+                                    isFormValid = isValid;
+                                    numberOfFields = count;
+                                  });
+                                },
+                              )
                             ],
                           )),
                         ],
@@ -109,10 +98,10 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                         "Mean",
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                      trailing: (formKey.currentState?.isValid ?? false)
+                      trailing: isFormValid
                           ? Text(
-                              calculateMean(controller.textFieldValues
-                                      .map((e) => num.tryParse(e) ?? 0)
+                              calculateMean(values
+                                      .map((e) => num.tryParse(e!) ?? 0)
                                       .toList())
                                   .toString(),
                               style: Theme.of(context).textTheme.bodyLarge,
@@ -129,10 +118,10 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                         "Median",
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                      trailing: (formKey.currentState?.isValid ?? false)
+                      trailing: isFormValid
                           ? Text(
-                              calculateMedian(controller.textFieldValues
-                                      .map((e) => num.tryParse(e) ?? 0)
+                              calculateMedian(values
+                                      .map((e) => num.tryParse(e!) ?? 0)
                                       .toList())
                                   .toString(),
                               style: Theme.of(context).textTheme.bodyLarge,
@@ -149,7 +138,7 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                         "Mode",
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                      trailing: (formKey.currentState?.isValid ?? false)
+                      trailing: isFormValid
                           ? SizedBox(
                               width: MediaQuery.of(context).size.width * 0.6,
                               child: AutoSizeText(
@@ -173,11 +162,10 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                         "Standard Deviation",
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                      trailing: (formKey.currentState?.isValid ?? false)
+                      trailing: isFormValid
                           ? Text(
-                              calculateStandardDeviation(controller
-                                      .textFieldValues
-                                      .map((e) => num.tryParse(e) ?? 0)
+                              calculateStandardDeviation(values
+                                      .map((e) => num.tryParse(e!) ?? 0)
                                       .toList())
                                   .toString(),
                               style: Theme.of(context).textTheme.bodyLarge,
