@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mathx_android/logic/tools/TrigonometryCalculatorLogic.dart';
-import 'package:mathx_android/widgets/textfieldlist.dart';
+import 'package:mathx_android/widgets/fixedtextfieldlist.dart';
 
 class TrigonometryCalculatorPage extends StatefulWidget {
   @override
@@ -13,9 +12,9 @@ class TrigonometryCalculatorPage extends StatefulWidget {
 
 class _TrigonometryCalculatorPageState
     extends State<TrigonometryCalculatorPage> {
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   AngleUnit selectedUnit = AngleUnit.degrees;
+  List<String?> values = [];
+  bool isFormValid = false;
 
   @override
   void initState() {
@@ -63,24 +62,21 @@ class _TrigonometryCalculatorPageState
                   }),
             ),
           ),
-          TextFieldList(
-            controller: controller,
-            formKey: formKey,
-            limitEntries: const [
-              "Side A (Opposite)",
-              "Side B (Adjacent)",
-              "Side C (Hypotenuse)"
-            ],
-            onChange: (_) {
-              setState(() {});
-            },
-            validators: FormBuilderValidators.compose([
-              FormBuilderValidators.numeric(
-                  errorText: "Please enter a valid number."),
-              FormBuilderValidators.min(1,
-                  errorText: "Please enter a number greater than 0")
-            ]),
-          )
+          FixedTextFieldList(
+              entries: [
+                "Side A (Opposite)",
+                "Side B (Adjacent)",
+                "Side C (Hypotenuse)"
+              ],
+              onChange: (newValues, valid) {
+                setState(() {
+                  values = newValues;
+                  isFormValid = valid;
+                });
+              },
+              validators: FormBuilderValidators.compose([
+                FormBuilderValidators.numeric(),
+              ]))
         ]),
       ),
     );
@@ -90,8 +86,8 @@ class _TrigonometryCalculatorPageState
     int _noOfFieldsFilled = 0;
     bool moreThan2FieldsFilled = false;
 
-    for (String i in controller.textFieldValues) {
-      _noOfFieldsFilled += (i == "") ? 0 : 1;
+    for (String? i in values) {
+      _noOfFieldsFilled += (i == "" || i == null) ? 0 : 1;
     }
 
     if (_noOfFieldsFilled >= 2) {
@@ -101,15 +97,9 @@ class _TrigonometryCalculatorPageState
     }
 
     Map<TrigonometryResultKey, String> result = calculateAngleX(
-        sideA: double.tryParse(
-                controller.textFieldValues.elementAtOrNull(0) ?? "") ??
-            0,
-        sideB: double.tryParse(
-                (controller.textFieldValues.elementAtOrNull(1) ?? "")) ??
-            0,
-        sideC: double.tryParse(
-                (controller.textFieldValues.elementAtOrNull(2) ?? "")) ??
-            0,
+        sideA: double.tryParse(values.elementAtOrNull(0) ?? "") ?? 0,
+        sideB: double.tryParse((values.elementAtOrNull(1) ?? "")) ?? 0,
+        sideC: double.tryParse((values.elementAtOrNull(2) ?? "")) ?? 0,
         angleUnitSelection: selectedUnit);
 
     return Card(
@@ -117,7 +107,7 @@ class _TrigonometryCalculatorPageState
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            (formKey.currentState?.validate() ?? false) && moreThan2FieldsFilled
+            isFormValid && moreThan2FieldsFilled
                 ? Center(
                     child: Math.tex(
                         "x° = ${result[TrigonometryResultKey.equation]} = ${result[TrigonometryResultKey.answer]}",
