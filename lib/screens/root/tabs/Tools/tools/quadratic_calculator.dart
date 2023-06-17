@@ -37,7 +37,7 @@ class _QuadraticCalculatorPageState extends State<QuadraticCalculatorPage> {
     return Scaffold(
         appBar: AppBar(title: const Text("Quadratic Equation Solver")),
         body: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Column(
             children: [
               Expanded(
