@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/logic/tools/BinaryCalculatorLogic.dart';
 
 class BinaryConverterPage extends StatefulWidget {
@@ -17,7 +18,6 @@ class _BinaryConverterPageState extends State<BinaryConverterPage> {
   String decimalResults = "0";
   String binaryResults = "0";
   String bcdResults = "0";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +35,9 @@ class _BinaryConverterPageState extends State<BinaryConverterPage> {
               items: NumberCases.values.map((numberCase) {
                 return DropdownMenuItem<NumberCases>(
                   value: numberCase,
-                  child: Text(numberCase.name),
+                  child: Text(numberCase.name != "bcd"
+                      ? numberCase.name.capitalize()
+                      : numberCase.name.toUpperCase()),
                 );
               }).toList(),
               onChanged: (value) {
@@ -49,7 +51,8 @@ class _BinaryConverterPageState extends State<BinaryConverterPage> {
             const SizedBox(height: 10.0),
             TextField(
               decoration: InputDecoration(
-                labelText: "${inputNumberCase.name} number",
+                labelText:
+                    "${inputNumberCase.name != "bcd" ? inputNumberCase.name.capitalize() : inputNumberCase.name.toUpperCase()} number",
               ),
               keyboardType: TextInputType.number,
               onChanged: (value) {
