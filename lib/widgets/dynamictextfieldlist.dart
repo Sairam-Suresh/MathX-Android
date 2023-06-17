@@ -3,11 +3,16 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 
 class DynamicTextFieldList extends StatefulWidget {
   const DynamicTextFieldList(
-      {super.key, required this.count, this.onChange, this.validators});
+      {super.key,
+      required this.count,
+      this.onChange,
+      this.validators,
+      this.nameBuilder});
 
   final int count;
   final void Function(List<String?> values, bool isValid, int count)? onChange;
   final String? Function(String?)? validators;
+  final String Function(int length, int index)? nameBuilder;
 
   @override
   State<DynamicTextFieldList> createState() => _DynamicTextFieldListState();
@@ -59,7 +64,9 @@ class _DynamicTextFieldListState extends State<DynamicTextFieldList> {
                     });
                   },
                   decoration: InputDecoration(
-                      labelText: "Number ${index + 1}",
+                      labelText: widget.nameBuilder == null
+                          ? "Number ${index + 1}"
+                          : widget.nameBuilder?.call(_values.length, index),
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
