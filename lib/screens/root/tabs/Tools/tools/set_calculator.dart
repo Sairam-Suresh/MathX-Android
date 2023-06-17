@@ -1,10 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/logic/tools/SetCalculatorLogic.dart';
-import 'package:mathx_android/widgets/textfieldlist.dart';
+import 'package:mathx_android/widgets/dynamictextfieldlist.dart';
 
 class SetCalculatorPage extends StatefulWidget {
   @override
@@ -13,8 +12,9 @@ class SetCalculatorPage extends StatefulWidget {
 
 class _SetCalculatorPageState extends State<SetCalculatorPage> {
   setEvalType calculator = setEvalType.union;
-  TextFieldListController controller = TextFieldListController();
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  int numberOfFields = 2;
+  List<String?> values = ["", ""];
+  bool isFormValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,8 @@ class _SetCalculatorPageState extends State<SetCalculatorPage> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  controller.addNewField();
+                  numberOfFields += 1;
                 });
-                formKey.currentState?.validate();
               },
               icon: const Icon(Icons.add),
             )
@@ -56,17 +55,20 @@ class _SetCalculatorPageState extends State<SetCalculatorPage> {
                   width: MediaQuery.of(context).size.width,
                   child: _buildResult(calculateResult()),
                 ),
-                TextFieldList(
-                  controller: controller,
-                  formKey: formKey,
+                DynamicTextFieldList(
+                  count: numberOfFields,
                   nameBuilder: (total, index) {
                     return "Set ${index + 1}";
                   },
                   validators: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                   ]),
-                  onChange: (_) {
-                    setState(() {});
+                  onChange: (newValues, isValid, count) {
+                    setState(() {
+                      values = newValues;
+                      isFormValid = isValid;
+                      numberOfFields = count;
+                    });
                   },
                 ),
               ],
@@ -78,8 +80,8 @@ class _SetCalculatorPageState extends State<SetCalculatorPage> {
   }
 
   Widget _buildResult(String result) {
-    final isValid = formKey.currentState?.isValid ?? false;
-    final hasEnoughSets = controller.textFieldValues.length >= 2;
+    final isValid = isFormValid;
+    final hasEnoughSets = values.length >= 2;
 
     return Card(
       child: Padding(
@@ -141,12 +143,15 @@ class _SetCalculatorPageState extends State<SetCalculatorPage> {
   }
 
   String calculateResult() {
-    final values = controller.textFieldValues;
     if (values.length < 2) {
       return '';
     }
 
-    final setList = values.map((value) => value.split(', ')).toList();
+    if (!isFormValid) {
+      return '--';
+    }
+
+    final setList = values.map((value) => value!.split(', ')).toList();
     final resultSet = calculator == setEvalType.union
         ? calculateUnion(setList)
         : calculateIntersection(setList);
