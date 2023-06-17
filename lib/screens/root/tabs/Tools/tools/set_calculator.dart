@@ -92,7 +92,6 @@ class _SetCalculatorPageState extends State<SetCalculatorPage> {
               calculator == setEvalType.union ? "Union" : "Intersection",
               style: const TextStyle(
                 fontSize: 24,
-                fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 10),
