@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 class DynamicTextFieldList extends StatefulWidget {
-  const DynamicTextFieldList({super.key, required this.count, this.onChange});
+  const DynamicTextFieldList(
+      {super.key, required this.count, this.onChange, this.validators});
 
   final int count;
   final void Function(List<String?> values, bool isValid, int count)? onChange;
+  final String? Function(String?)? validators;
 
   @override
   State<DynamicTextFieldList> createState() => _DynamicTextFieldListState();
@@ -35,6 +38,11 @@ class _DynamicTextFieldListState extends State<DynamicTextFieldList> {
                 controller.text = _values[index] ?? "";
 
                 return TextFormField(
+                  validator: widget.validators ??
+                      FormBuilderValidators.compose([
+                        FormBuilderValidators.numeric(),
+                        FormBuilderValidators.required()
+                      ]),
                   controller: controller,
                   onChanged: (value) {
                     setState(() {
