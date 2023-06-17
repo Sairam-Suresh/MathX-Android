@@ -36,6 +36,8 @@ class _DynamicTextFieldListState extends State<DynamicTextFieldList> {
                     TextEditingController();
 
                 controller.text = _values[index] ?? "";
+                controller.selection = TextSelection.fromPosition(
+                    TextPosition(offset: controller.text.length));
 
                 return TextFormField(
                   validator: widget.validators ??
