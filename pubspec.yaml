@@ -53,6 +53,7 @@ dependencies:
   flutter_hooks: ^0.18.6
   pdf_viewer_plugin: ^2.0.1
   flutter_slidable: ^3.0.0
+  flutter_layout_grid: ^2.0.3
 
 dev_dependencies:
   flutter_test:
