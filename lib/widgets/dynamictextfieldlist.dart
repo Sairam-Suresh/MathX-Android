@@ -14,11 +14,10 @@ class DynamicTextFieldList extends StatefulWidget {
 }
 
 class _DynamicTextFieldListState extends State<DynamicTextFieldList> {
-  List<String?> _values = [];
+  final List<String?> _values = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _values.length = widget.count;
   }
