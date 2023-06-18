@@ -100,3 +100,5 @@ class CheatsheetDetails {
 }
 
 enum SecondaryLevel { one, two, three, four }
+
+const calculatorURLAccessor = "mathx:///calculator?source=";
