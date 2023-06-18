@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:mathx_android/logic/tools/CalculatorLogic.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/inline_equation_sharing_view.dart';
 
 enum Mode { normal, sharing }
 
@@ -17,6 +18,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
   Mode mode = Mode.normal;
   bool gotResult = false;
   double? results;
+  bool gotError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,30 +34,69 @@ class _CalculatorPageState extends State<CalculatorPage> {
               child: Center(
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.25,
+                  width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.green),
                   child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Column(children: [
-                      Row(
-                        children: [
-                          Text(expressionText,
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 30)),
-                          const Spacer()
-                        ],
-                      ),
-                      const Spacer(),
-                      Row(
-                        children: [
-                          const Spacer(),
-                          Text((results ?? "").toString(),
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 30))
-                        ],
-                      )
-                    ]),
+                    child: mode == Mode.normal
+                        ? !gotError
+                            ? Column(children: [
+                                Row(
+                                  children: [
+                                    Text(expressionText,
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 30)),
+                                    const Spacer()
+                                  ],
+                                ),
+                                const Spacer(),
+                                Row(
+                                  children: [
+                                    const Spacer(),
+                                    Text((results ?? "").toString(),
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 30))
+                                  ],
+                                )
+                              ])
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "ERROR: The Operation could not be completed",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(color: Colors.white),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "[AC]: Clear",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium
+                                            ?.copyWith(color: Colors.white),
+                                      ),
+                                      Text(
+                                        "[DEL]: Go Back",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium
+                                            ?.copyWith(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                        : InlineEquationSharingView(
+                            equation: instance.history.last),
                   ),
                 ),
               ),
@@ -90,15 +131,17 @@ class _CalculatorPageState extends State<CalculatorPage> {
                       onPressed: () {})
                   .withGridPlacement(rowStart: 0, columnStart: 0),
               CalculatorButton(
-                      content: Icon(
-                        Icons.share,
-                        size: Theme.of(context)
-                            .textTheme
-                            .headlineMedium
-                            ?.fontSize,
-                      ),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 0, columnStart: 1),
+                  content: Icon(
+                    Icons.share,
+                    size: Theme.of(context).textTheme.headlineMedium?.fontSize,
+                  ),
+                  onPressed: () {
+                    if (gotResult) {
+                      setState(() {
+                        mode = Mode.sharing;
+                      });
+                    }
+                  }).withGridPlacement(rowStart: 0, columnStart: 1),
               CalculatorButton(
                   content: Text("√",
                       style: Theme.of(context)
@@ -111,11 +154,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     setState(() {
                       if (mode == Mode.normal) {
                         expressionText = instance.sqrt(expressionText);
-                        results = instance.evaluate(expressionText
-                            .replaceAll("×", "*")
-                            .replaceAll("÷", "/"));
-
-                        gotResult = true;
+                        performCalc();
                       }
                     });
                   }).withGridPlacement(rowStart: 0, columnStart: 2),
@@ -131,8 +170,12 @@ class _CalculatorPageState extends State<CalculatorPage> {
                           results = null;
                           gotResult = false;
                         }
-                        expressionText =
-                            instance.backspaceExpression(expressionText);
+                        if (gotError) {
+                          gotError = false;
+                        } else {
+                          expressionText =
+                              instance.backspaceExpression(expressionText);
+                        }
                       }
                     }
                   });
@@ -149,6 +192,9 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     if (mode == Mode.normal) {
                       expressionText = "";
                       results = null;
+                      gotError = false;
+                    } else {
+                      mode = Mode.normal;
                     }
                   });
                 },
@@ -367,15 +413,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                               color: Colors.white)),
                   onPressed: () {
                     setState(() {
-                      setState(() {
-                        if (mode == Mode.normal) {
-                          results = instance.evaluate(expressionText
-                              .replaceAll("×", "*")
-                              .replaceAll("÷", "/"));
-
-                          gotResult = true;
-                        }
-                      });
+                      performCalc();
                     });
                   }).withGridPlacement(rowStart: 4, columnStart: 4),
             ]),
@@ -383,6 +421,21 @@ class _CalculatorPageState extends State<CalculatorPage> {
         ],
       ),
     ));
+  }
+
+  void performCalc() {
+    if (mode == Mode.normal) {
+      results = instance
+          .evaluate(expressionText.replaceAll("×", "*").replaceAll("÷", "/"));
+      gotResult = true;
+      if (results.toString() != "NaN") {
+        gotError = false;
+      } else {
+        gotError = true;
+      }
+
+      print(gotError);
+    }
   }
 
   void calculatorActionNumeric(String action) {
