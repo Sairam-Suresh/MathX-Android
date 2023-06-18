@@ -1,4 +1,3 @@
-import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/HCF_LCM_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/average_calculator.dart';
@@ -14,12 +13,9 @@ import 'package:mathx_android/screens/root/tabs/Tools/tools/trigonometry_calcula
 import 'package:mathx_android/screens/root/tabs/Tools/tools/unit_converter.dart';
 
 class ToolsPage extends StatefulWidget {
-  const ToolsPage(
-      {Key? key, required this.hideBottomBar, required this.appLinkInstance})
-      : super(key: key);
+  const ToolsPage({Key? key, required this.hideBottomBar}) : super(key: key);
 
   final void Function(bool hide) hideBottomBar;
-  final AppLinks appLinkInstance;
 
   @override
   State<ToolsPage> createState() => _ToolsPageState();
@@ -143,8 +139,6 @@ class _ToolsPageState extends State<ToolsPage> {
             })
           ],
         ),
-        body: CalculatorPage(
-          appLinksInstance: widget.appLinkInstance,
-        ));
+        body: CalculatorPage());
   }
 }
