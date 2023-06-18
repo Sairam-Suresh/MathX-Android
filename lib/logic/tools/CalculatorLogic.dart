@@ -1,10 +1,13 @@
+import 'dart:convert';
+
 import 'package:math_parser/math_parser.dart';
 
 class Calculation {
   String expression;
   double result;
+  String base64Encoded;
 
-  Calculation(this.expression, this.result);
+  Calculation(this.expression, this.result, this.base64Encoded);
 }
 
 class Calculator {
@@ -33,10 +36,11 @@ class Calculator {
 
   double evaluate(String expression) {
     try {
-      final calculation = Calculation(expression, 0);
-      history.add(calculation);
+      final calculation =
+          Calculation(expression, 0, base64.encode(utf8.encode(expression)));
       calculation.result = evaluateExpression(expression);
       ans = calculation.result;
+      history.add(calculation);
       return ans;
     } catch (e) {
       print('Error: $e');
