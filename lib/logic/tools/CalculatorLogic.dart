@@ -7,13 +7,14 @@ import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/inline_eq
 class Calculation {
   String expression;
   double result;
+  double? answerBefore;
 
-  Calculation(this.expression, this.result);
+  Calculation(this.expression, this.result, this.answerBefore);
 
   String get base64EncodedLink =>
       calculatorURLAccessor +
       base64Encode(utf8.encode(
-          "ET:${expression.replaceAll("*", "×").replaceAll("/", "÷")} -,- RT:${result.isIntValue() ? result.toInt() : result}"));
+          "ET:${expression.replaceAll("*", "×").replaceAll("/", "÷").replaceAll("Ans", (answerBefore == null) ? "Ans" : (answerBefore!.isIntValue()) ? answerBefore!.toInt().toString() : answerBefore!.toString())} -,- RT:${result.isIntValue() ? result.toInt() : result}"));
 }
 
 class Calculator {
@@ -42,7 +43,7 @@ class Calculator {
 
   double evaluate(String expression) {
     try {
-      final calculation = Calculation(expression, 0);
+      final calculation = Calculation(expression, 0, ans);
       calculation.result = evaluateExpression(expression);
       ans = calculation.result;
       history.add(calculation);
