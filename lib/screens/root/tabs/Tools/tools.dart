@@ -143,6 +143,8 @@ class _ToolsPageState extends State<ToolsPage> {
             })
           ],
         ),
-        body: const CalculatorPage());
+        body: CalculatorPage(
+          appLinksInstance: widget.appLinkInstance,
+        ));
   }
 }

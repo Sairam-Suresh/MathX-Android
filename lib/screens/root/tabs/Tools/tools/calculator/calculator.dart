@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/logic/tools/CalculatorLogic.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/calculator_history.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/inline_equation_sharing_view.dart';
@@ -9,7 +13,9 @@ import 'package:share_plus/share_plus.dart';
 enum Mode { normal, sharing }
 
 class CalculatorPage extends StatefulWidget {
-  const CalculatorPage({super.key});
+  const CalculatorPage({super.key, required this.appLinksInstance});
+
+  final AppLinks appLinksInstance;
 
   @override
   State<CalculatorPage> createState() => _CalculatorPageState();
@@ -17,13 +23,35 @@ class CalculatorPage extends StatefulWidget {
 
 class _CalculatorPageState extends State<CalculatorPage> {
   Calculator instance = Calculator();
-  String expressionText = "";
   Mode mode = Mode.normal;
+
+  String expressionText = "";
   bool gotResult = false;
   double? results;
   bool gotError = false;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    widget.appLinksInstance.stringLinkStream.listen((receivedDeepLink) {
+      List<String> parsed = utf8
+          .decode(base64Decode(
+              receivedDeepLink.replaceAll(calculatorURLAccessor, "")))
+          .replaceAll(" -,- ", " ")
+          .replaceAll("ET:", "")
+          .replaceAll("RT:", "")
+          .split(" ");
+      setState(() {
+        expressionText = parsed[0];
+        instance.evaluate(expressionText);
+        results = num.tryParse(parsed[1])?.toDouble();
+        gotError = false;
+        gotResult = true;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
