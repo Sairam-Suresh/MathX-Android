@@ -1,13 +1,19 @@
 import 'dart:convert';
 
 import 'package:math_parser/math_parser.dart';
+import 'package:mathx_android/constants.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/inline_equation_sharing_view.dart';
 
 class Calculation {
   String expression;
   double result;
-  String base64Encoded;
 
-  Calculation(this.expression, this.result, this.base64Encoded);
+  Calculation(this.expression, this.result);
+
+  String get base64EncodedLink =>
+      calculatorURLAccessor +
+      base64Encode(utf8.encode(
+          "ET:${expression.replaceAll("*", "×").replaceAll("/", "÷")} -,- RT:${result.isIntValue() ? result.toInt() : result}"));
 }
 
 class Calculator {
@@ -36,8 +42,7 @@ class Calculator {
 
   double evaluate(String expression) {
     try {
-      final calculation =
-          Calculation(expression, 0, base64.encode(utf8.encode(expression)));
+      final calculation = Calculation(expression, 0);
       calculation.result = evaluateExpression(expression);
       ans = calculation.result;
       history.add(calculation);
