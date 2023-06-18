@@ -13,9 +13,56 @@ class InlineEquationSharingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return QrImageView(
-      data: equation.base64EncodedLink,
-      size: 300,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        QrImageView(
+          backgroundColor: Colors.white,
+          data: equation.base64EncodedLink,
+        ),
+        Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "[AC]: Go Back",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(color: Colors.white),
+              ),
+              Text(
+                "[DEL]: Copy to Clipboard",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(color: Colors.white),
+              ),
+              Row(
+                children: [
+                  Text(
+                    "[",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(color: Colors.white),
+                  ),
+                  Icon(
+                    Icons.share,
+                    size: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    "]: Open Share Dialog",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(color: Colors.white),
+                  )
+                ],
+              )
+            ])
+      ],
     );
   }
 }
