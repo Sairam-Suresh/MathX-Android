@@ -15,7 +15,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
   Calculator instance = Calculator();
   String expressionText = "";
   Mode mode = Mode.normal;
-  bool gotResult = true;
+  bool gotResult = false;
   double? results;
 
   @override
@@ -100,15 +100,25 @@ class _CalculatorPageState extends State<CalculatorPage> {
                       onPressed: () {})
                   .withGridPlacement(rowStart: 0, columnStart: 1),
               CalculatorButton(
-                      content: Text("√",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 0, columnStart: 2),
+                  content: Text("√",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                  onPressed: () {
+                    setState(() {
+                      if (mode == Mode.normal) {
+                        expressionText = instance.sqrt(expressionText);
+                        results = instance.evaluate(expressionText
+                            .replaceAll("×", "*")
+                            .replaceAll("÷", "/"));
+
+                        gotResult = true;
+                      }
+                    });
+                  }).withGridPlacement(rowStart: 0, columnStart: 2),
               CalculatorButton(
                 content: Text("DEL",
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -117,8 +127,12 @@ class _CalculatorPageState extends State<CalculatorPage> {
                   setState(() {
                     if (mode == Mode.normal) {
                       if (expressionText.isNotEmpty) {
-                        expressionText = expressionText.substring(
-                            0, expressionText.length - 1);
+                        if (gotResult) {
+                          results = null;
+                          gotResult = false;
+                        }
+                        expressionText =
+                            instance.backspaceExpression(expressionText);
                       }
                     }
                   });
@@ -134,6 +148,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                   setState(() {
                     if (mode == Mode.normal) {
                       expressionText = "";
+                      results = null;
                     }
                   });
                 },
@@ -151,11 +166,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                   onPressed: () {
-                    setState(() {
-                      if (mode == Mode.normal) {
-                        expressionText += "7";
-                      }
-                    });
+                    calculatorActionNumeric("7");
                   }).withGridPlacement(rowStart: 1, columnStart: 0),
               CalculatorButton(
                   content: Text("8",
@@ -166,11 +177,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                   onPressed: () {
-                    setState(() {
-                      if (mode == Mode.normal) {
-                        expressionText += "8";
-                      }
-                    });
+                    calculatorActionNumeric("8");
                   }).withGridPlacement(rowStart: 1, columnStart: 1),
               CalculatorButton(
                   content: Text("9",
@@ -181,11 +188,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                   onPressed: () {
-                    setState(() {
-                      if (mode == Mode.normal) {
-                        expressionText += "9";
-                      }
-                    });
+                    calculatorActionNumeric("9");
                   }).withGridPlacement(rowStart: 1, columnStart: 2),
               CalculatorButton(
                   content: Text("(",
@@ -196,11 +199,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                   onPressed: () {
-                    setState(() {
-                      if (mode == Mode.normal) {
-                        expressionText += "(";
-                      }
-                    });
+                    calculatorActionRelevantOperations("(");
                   }).withGridPlacement(rowStart: 1, columnStart: 3),
               CalculatorButton(
                   content: Text(")",
@@ -211,115 +210,121 @@ class _CalculatorPageState extends State<CalculatorPage> {
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                   onPressed: () {
-                    setState(() {
-                      if (mode == Mode.normal) {
-                        expressionText += ")";
-                      }
-                    });
+                    calculatorActionNumeric(")");
                   }).withGridPlacement(rowStart: 1, columnStart: 4),
 
               // Row 3
               CalculatorButton(
-                      content: Text("4",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 2, columnStart: 0),
+                  content: Text("4",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                  onPressed: () {
+                    calculatorActionNumeric("4");
+                  }).withGridPlacement(rowStart: 2, columnStart: 0),
               CalculatorButton(
-                      content: Text("5",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 2, columnStart: 1),
+                  content: Text("5",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                  onPressed: () {
+                    calculatorActionNumeric("5");
+                  }).withGridPlacement(rowStart: 2, columnStart: 1),
               CalculatorButton(
-                      content: Text("6",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 2, columnStart: 2),
+                  content: Text("6",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                  onPressed: () {
+                    calculatorActionNumeric("6");
+                  }).withGridPlacement(rowStart: 2, columnStart: 2),
               CalculatorButton(
-                      content: Text("×",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 2, columnStart: 3),
+                  content: Text("×",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                  onPressed: () {
+                    calculatorActionRelevantOperations("×");
+                  }).withGridPlacement(rowStart: 2, columnStart: 3),
               CalculatorButton(
-                      content: Text("÷",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 2, columnStart: 4),
+                  content: Text("÷",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                  onPressed: () {
+                    calculatorActionRelevantOperations("÷");
+                  }).withGridPlacement(rowStart: 2, columnStart: 4),
               // Row 4
               CalculatorButton(
-                      content: Text("1",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 3, columnStart: 0),
+                  content: Text("1",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                  onPressed: () {
+                    calculatorActionNumeric("1");
+                  }).withGridPlacement(rowStart: 3, columnStart: 0),
               CalculatorButton(
-                      content: Text("2",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 3, columnStart: 1),
+                  content: Text("2",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                  onPressed: () {
+                    calculatorActionNumeric("2");
+                  }).withGridPlacement(rowStart: 3, columnStart: 1),
               CalculatorButton(
-                      content: Text("3",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 3, columnStart: 2),
+                  content: Text("3",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                  onPressed: () {
+                    calculatorActionNumeric("3");
+                  }).withGridPlacement(rowStart: 3, columnStart: 2),
               CalculatorButton(
-                      content: Text("+",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 3, columnStart: 3),
+                  content: Text("+",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                  onPressed: () {
+                    calculatorActionRelevantOperations("+");
+                  }).withGridPlacement(rowStart: 3, columnStart: 3),
               CalculatorButton(
-                      content: Text("-",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 3, columnStart: 4),
+                  content: Text("-",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                  onPressed: () {
+                    calculatorActionRelevantOperations("-");
+                  }).withGridPlacement(rowStart: 3, columnStart: 4),
               // Row 5
               CalculatorButton(
                       content: Text("0",
@@ -329,29 +334,29 @@ class _CalculatorPageState extends State<CalculatorPage> {
                               ?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white)),
-                      onPressed: () {})
+                      onPressed: () {
+                        calculatorActionNumeric("0");
+                      })
                   .withGridPlacement(
                       rowStart: 4, columnStart: 0, columnSpan: 2),
               CalculatorButton(
-                      content: Text(".",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 4, columnStart: 2),
+                  content: Text(".",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                  onPressed: () {
+                    calculatorActionNumeric(".");
+                  }).withGridPlacement(rowStart: 4, columnStart: 2),
               CalculatorButton(
-                      content: Text("Ans",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                      onPressed: () {})
-                  .withGridPlacement(rowStart: 4, columnStart: 3),
+                  content: Text("Ans",
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.white)),
+                  onPressed: () {
+                    calculatorActionNumeric("Ans");
+                  }).withGridPlacement(rowStart: 4, columnStart: 3),
               CalculatorButton(
                   content: Text("=",
                       style: Theme.of(context)
@@ -364,7 +369,11 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     setState(() {
                       setState(() {
                         if (mode == Mode.normal) {
-                          print(instance.evaluate(expressionText));
+                          results = instance.evaluate(expressionText
+                              .replaceAll("×", "*")
+                              .replaceAll("÷", "/"));
+
+                          gotResult = true;
                         }
                       });
                     });
@@ -374,6 +383,33 @@ class _CalculatorPageState extends State<CalculatorPage> {
         ],
       ),
     ));
+  }
+
+  void calculatorActionNumeric(String action) {
+    setState(() {
+      if (mode == Mode.normal) {
+        if (gotResult) {
+          results = null;
+          gotResult = false;
+          expressionText = "";
+        }
+        expressionText += action;
+      }
+    });
+  }
+
+  void calculatorActionRelevantOperations(String action) {
+    // in this case we cant use ")"
+    setState(() {
+      if (mode == Mode.normal) {
+        if (gotResult) {
+          expressionText = "Ans";
+          results = null;
+          gotResult = false;
+        }
+        expressionText += action;
+      }
+    });
   }
 }
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/HCF_LCM_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/average_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/binary_calculator.dart';
-import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/grapher.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/pythagoras_theorem_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/quadratic_calculator.dart';
