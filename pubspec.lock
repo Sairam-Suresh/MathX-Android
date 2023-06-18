@@ -113,14 +113,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
-  expressions:
-    dependency: "direct main"
-    description:
-      name: expressions
-      sha256: "75ca4343f9f8a38087bea130cf51395d737d87c6947cc19cbb8fb2732cae1a27"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.5"
   fake_async:
     dependency: transitive
     description:
@@ -309,6 +301,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
+  math_parser:
+    dependency: "direct main"
+    description:
+      name: math_parser
+      sha256: "8e21a9b8679f0c3dd1d77dd9b49d536d38cda0dc68906c1b94e383145381ce32"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.1"
   meta:
     dependency: transitive
     description:
@@ -461,14 +461,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.1"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.27.7"
   shared_preferences:
     dependency: "direct main"
     description:

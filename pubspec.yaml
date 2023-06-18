@@ -54,7 +54,7 @@ dependencies:
   pdf_viewer_plugin: ^2.0.1
   flutter_slidable: ^3.0.0
   flutter_layout_grid: ^2.0.3
-  expressions: ^0.2.5
+  math_parser: ^1.5.1
 
 dev_dependencies:
   flutter_test:
