@@ -55,6 +55,7 @@ dependencies:
   flutter_slidable: ^3.0.0
   flutter_layout_grid: ^2.0.3
   math_parser: ^1.5.1
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:
