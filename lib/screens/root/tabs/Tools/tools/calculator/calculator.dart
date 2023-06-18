@@ -136,7 +136,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     size: Theme.of(context).textTheme.headlineMedium?.fontSize,
                   ),
                   onPressed: () {
-                    if (gotResult) {
+                    if (gotResult && !gotError) {
                       setState(() {
                         mode = Mode.sharing;
                       });
