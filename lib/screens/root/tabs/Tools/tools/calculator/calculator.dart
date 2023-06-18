@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:mathx_android/logic/tools/CalculatorLogic.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/calculator_history.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/inline_equation_sharing_view.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -129,15 +130,21 @@ class _CalculatorPageState extends State<CalculatorPage> {
                   // Row 1
 
                   CalculatorButton(
-                          content: Icon(
-                            Icons.history,
-                            size: Theme.of(context)
-                                .textTheme
-                                .headlineMedium
-                                ?.fontSize,
-                          ),
-                          onPressed: () {})
-                      .withGridPlacement(rowStart: 0, columnStart: 0),
+                      content: Icon(
+                        Icons.history,
+                        size: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.fontSize,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CalculatorHistory(
+                                    history: instance.history),
+                                fullscreenDialog: true));
+                      }).withGridPlacement(rowStart: 0, columnStart: 0),
                   CalculatorButton(
                       content: Icon(
                         Icons.share,
