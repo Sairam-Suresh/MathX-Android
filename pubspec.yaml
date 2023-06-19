@@ -43,8 +43,8 @@ dependencies:
   sqflite: ^2.2.8+4
   sqflite_common_ffi: ^2.2.5
   sqlite3_flutter_libs: ^0.5.15
-  uni_links: ^3.4.3
-  shared_preferences: ^2.1.1
+  uni_links: ^0.5.1
+  shared_preferences: ^2.1.2
   units_converter: ^2.1.0
   path_provider: ^2.0.15
   archive: ^3.3.7

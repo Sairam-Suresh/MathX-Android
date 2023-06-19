@@ -9,7 +9,9 @@ import 'package:share_plus/share_plus.dart';
 enum Mode { normal, sharing }
 
 class CalculatorPage extends StatefulWidget {
-  const CalculatorPage({super.key});
+  const CalculatorPage({super.key, this.deepLinkParsed});
+
+  final List<String>? deepLinkParsed;
 
   @override
   State<CalculatorPage> createState() => _CalculatorPageState();
@@ -24,6 +26,8 @@ class _CalculatorPageState extends State<CalculatorPage> {
   double? results;
   bool gotError = false;
 
+  bool alreadyLooked = false;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -32,7 +36,21 @@ class _CalculatorPageState extends State<CalculatorPage> {
   }
 
   @override
+  void didUpdateWidget(covariant CalculatorPage oldWidget) {
+    alreadyLooked = false;
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (widget.deepLinkParsed != null && !alreadyLooked) {
+      expressionText = widget.deepLinkParsed!.first;
+      instance.evaluate(expressionText);
+      results = num.parse(widget.deepLinkParsed!.last).toDouble();
+      gotResult = true;
+      alreadyLooked = true;
+    }
+
     return Scaffold(
         key: scaffoldKey,
         body: SafeArea(

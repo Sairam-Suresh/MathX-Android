@@ -32,10 +32,12 @@ class _NotesPageState extends State<NotesPage> {
 
     final List<Note> notes = (await databaseHelper.loadNotesFromPersistence())
       ..sort((a, b) => b.date.compareTo(a.date));
-    setState(() {
-      listOfNotes = notes;
-      isLoading = false;
-    });
+    if (this.mounted) {
+      setState(() {
+        listOfNotes = notes;
+        isLoading = false;
+      });
+    }
   }
 
   Future<void> saveNotes() async {
@@ -209,8 +211,8 @@ class _NotesPageState extends State<NotesPage> {
                           },
                         )
                       : Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Center(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Center(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -227,7 +229,7 @@ class _NotesPageState extends State<NotesPage> {
                               ],
                             ),
                           ),
-                      ),
+                        ),
             ),
           ],
         ),

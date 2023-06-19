@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mathx_android/screens/root/tabs/Cheatsheet/cheatsheet.dart';
@@ -25,15 +26,6 @@ class _rootState extends State<root> {
   void initState() {
     super.initState();
 
-    uriLinkStream.listen((uri) {
-      print("uri: ${uri.toString().startsWith("mathx:///calculator")}");
-      if (uri.toString().startsWith("mathx:///calculator")) {
-        setState(() {
-          selectedTab = 2;
-        });
-      }
-    });
-
     setState(() {
       tabs = [
         const NotesPage(),
@@ -45,26 +37,62 @@ class _rootState extends State<root> {
               hideBottomBar = tohideBottomBar;
             });
           },
+          deepLinkParsed: null,
         )
       ];
     });
+
+    (() async {
+      final firstLink = await getInitialUri();
+      if (firstLink != null) {
+        updateWhenDeepLinkUpdate(firstLink);
+      }
+    })();
+
+    _sub = uriLinkStream.listen((uri) {
+      print("uri: ${uri.toString().startsWith("mathx:///calculator")}");
+      updateWhenDeepLinkUpdate(uri);
+    });
+  }
+
+  void updateWhenDeepLinkUpdate(Uri? uri) {
+    if (uri.toString().startsWith("mathx:///calculator")) {
+      setState(() {
+        selectedTab = 0;
+        selectedTab = 2;
+        tabs = [const NotesPage(), const CheatsheetPage(), Container()];
+        tabs = List.of([
+          const NotesPage(),
+          const CheatsheetPage(),
+          ToolsPage(
+            hideBottomBar: (tohideBottomBar) {
+              setState(() {
+                print("a");
+                hideBottomBar = tohideBottomBar;
+              });
+            },
+            deepLinkParsed: utf8
+                .decode(base64Decode(uri
+                    .toString()
+                    .replaceAll("mathx:///calculator?source=", "")))
+                .replaceAll(" -,- ", " ")
+                .replaceAll("ET:", "")
+                .replaceAll("RT:", "")
+                .split(" "),
+          )
+        ]);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _sub?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    tabs = [
-      const NotesPage(),
-      const CheatsheetPage(),
-      ToolsPage(
-        hideBottomBar: (tohideBottomBar) {
-          setState(() {
-            print("a");
-            hideBottomBar = tohideBottomBar;
-          });
-        },
-      )
-    ];
-
     return Scaffold(
       bottomNavigationBar: !hideBottomBar
           ? NavigationBar(

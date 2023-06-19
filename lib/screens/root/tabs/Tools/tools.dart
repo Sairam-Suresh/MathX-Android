@@ -13,9 +13,11 @@ import 'package:mathx_android/screens/root/tabs/Tools/tools/trigonometry_calcula
 import 'package:mathx_android/screens/root/tabs/Tools/tools/unit_converter.dart';
 
 class ToolsPage extends StatefulWidget {
-  const ToolsPage({Key? key, required this.hideBottomBar}) : super(key: key);
+  const ToolsPage({Key? key, required this.hideBottomBar, this.deepLinkParsed})
+      : super(key: key);
 
   final void Function(bool hide) hideBottomBar;
+  final List<String>? deepLinkParsed;
 
   @override
   State<ToolsPage> createState() => _ToolsPageState();
@@ -139,6 +141,8 @@ class _ToolsPageState extends State<ToolsPage> {
             })
           ],
         ),
-        body: CalculatorPage());
+        body: CalculatorPage(
+          deepLinkParsed: widget.deepLinkParsed,
+        ));
   }
 }
