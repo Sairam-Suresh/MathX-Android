@@ -47,7 +47,7 @@ class Note {
 
     return Note(
         name: data[0],
-        content: data[1],
+        content: data[1].replaceAll("~", "~~"),
         renderMath: data[2] == "true" ? true : false,
         date: DateTime.now());
   }
