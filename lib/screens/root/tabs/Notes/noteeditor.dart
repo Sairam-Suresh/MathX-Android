@@ -221,6 +221,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                             onChanged: (value) {
                               setState(() {
                                 newContent = value;
+                                lastModified = DateTime.now();
                               });
                             },
                             style: const TextStyle(),
