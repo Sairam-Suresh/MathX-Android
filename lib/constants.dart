@@ -28,7 +28,7 @@ class Note {
   String get base64EncodedLink {
     return notesURLAccessor +
         base64Encode(utf8
-            .encode("$name ␢␆␝⎠⎡⍰⎀ $content ␢␆␝⎠⎡⍰⎀ ${renderMath ?? false}"));
+            .encode("$name ␢␆␝⎠⎡⍰⎀ $content ␢␆␝⎠⎡⍰⎀ ${renderMath ?? true}"));
   }
 
   Map<String, dynamic> toMap() {
