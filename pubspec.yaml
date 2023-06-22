@@ -43,7 +43,6 @@ dependencies:
   sqflite: ^2.2.8+4
   sqflite_common_ffi: ^2.2.5
   sqlite3_flutter_libs: ^0.5.15
-  uni_links: ^0.5.1
   shared_preferences: ^2.1.2
   units_converter: ^2.1.0
   path_provider: ^2.0.15
@@ -55,6 +54,7 @@ dependencies:
   math_parser: ^1.5.1
   qr_flutter: ^4.1.0
   share_plus: ^7.0.2
+  app_links: ^3.4.3
 
 dev_dependencies:
   flutter_test:
