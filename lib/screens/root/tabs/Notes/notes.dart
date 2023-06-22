@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/logic/NotesDatabaseHelper.dart';
+import 'package:mathx_android/logic/sharenote.dart';
 import 'package:mathx_android/widgets/notecard.dart';
 
 import 'noteeditor.dart';
@@ -93,6 +94,7 @@ class _NotesPageState extends State<NotesPage> {
                     ));
                   });
                 },
+                onShare: shareNote,
               );
             }));
           });
@@ -159,7 +161,9 @@ class _NotesPageState extends State<NotesPage> {
                                       extentRatio: 0.3,
                                       children: [
                                         SlidableAction(
-                                            onPressed: (_) {},
+                                            onPressed: (_) {
+                                              shareNote(listOfNotes[index]);
+                                            },
                                             icon: Icons.share,
                                             backgroundColor: Colors.blue,
                                             label: "Share"),
@@ -178,6 +182,7 @@ class _NotesPageState extends State<NotesPage> {
                                               onDelete: (note) {
                                                 onDeleteHandler(index, context);
                                               },
+                                              onShare: shareNote,
                                             ),
                                           ),
                                         );

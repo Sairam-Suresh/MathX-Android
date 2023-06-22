@@ -10,12 +10,14 @@ class NoteEditorPage extends StatefulWidget {
     this.isinEditMode,
     required this.onChange,
     required this.onDelete,
+    required this.onShare,
   }) : super(key: key);
 
   final Note note;
   final bool? isinEditMode;
   final void Function(Note note) onChange;
   final void Function(Note note) onDelete;
+  final void Function(Note note) onShare;
 
   @override
   _NoteEditorPageState createState() => _NoteEditorPageState();
@@ -148,7 +150,13 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                       icon: const Icon(Icons.check),
                     ),
                   ]
-                : [IconButton(onPressed: () {}, icon: const Icon(Icons.share))],
+                : [
+                    IconButton(
+                        onPressed: () {
+                          widget.onShare(widget.note);
+                        },
+                        icon: const Icon(Icons.share))
+                  ],
           ),
           SliverToBoxAdapter(
             child: Padding(
