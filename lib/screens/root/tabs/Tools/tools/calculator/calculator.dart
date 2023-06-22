@@ -6,6 +6,7 @@ import 'package:mathx_android/logic/tools/CalculatorLogic.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/calculator_history.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/inline_equation_sharing_view.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:vibration/vibration.dart';
 
 enum Mode { normal, sharing }
 
@@ -237,6 +238,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                               mode = Mode.sharing;
                             });
                           }
+                          calculatorActionVibrate();
                         }).withGridPlacement(rowStart: 0, columnStart: 1),
                     CalculatorButton(
                         content: Text("√",
@@ -257,6 +259,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                               performCalc();
                             }
                           });
+                          calculatorActionVibrate();
                         }).withGridPlacement(rowStart: 0, columnStart: 2),
                     CalculatorButton(
                       content: Text("DEL",
@@ -294,6 +297,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                                         Text("Link copied to clipboard!")));
                           }
                         });
+                        calculatorActionVibrate();
                       },
                       foregroundColor: Colors.black,
                       backgroundColor: Colors.yellow,
@@ -316,6 +320,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                             mode = Mode.normal;
                           }
                         });
+                        calculatorActionVibrate();
                       },
                       foregroundColor: Colors.black,
                       backgroundColor: Colors.yellow,
@@ -538,6 +543,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                           setState(() {
                             performCalc();
                           });
+                          calculatorActionVibrate();
                         }).withGridPlacement(rowStart: 4, columnStart: 4),
                   ]),
                 ),
@@ -575,6 +581,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
         }
       }
     });
+    calculatorActionVibrate();
   }
 
   void calculatorActionRelevantOperations(String action) {
@@ -591,6 +598,13 @@ class _CalculatorPageState extends State<CalculatorPage> {
         }
       }
     });
+    calculatorActionVibrate();
+  }
+
+  Future<void> calculatorActionVibrate() async {
+    if (await Vibration.hasVibrator() ?? false) {
+      Vibration.vibrate(duration: 50, amplitude: 30);
+    }
   }
 }
 
