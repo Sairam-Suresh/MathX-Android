@@ -5,15 +5,25 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
 class CalculatorHistory extends StatelessWidget {
-  const CalculatorHistory({super.key, required this.history});
+  const CalculatorHistory(
+      {super.key, required this.history, required this.onClearHistory});
 
   final List<Calculation> history;
+  final VoidCallback onClearHistory;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("History"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              onClearHistory();
+            },
+            icon: const Icon(Icons.delete_forever),
+          )
+        ],
       ),
       body: ListView.separated(
           itemCount: history.length,

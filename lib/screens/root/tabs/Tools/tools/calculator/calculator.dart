@@ -166,7 +166,18 @@ class _CalculatorPageState extends State<CalculatorPage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => CalculatorHistory(
-                                    history: instance.history),
+                                      history: instance.history,
+                                      onClearHistory: () {
+                                        setState(() {
+                                          instance.clearHistory();
+                                          expressionText = "";
+                                          gotResult = false;
+                                          results = null;
+                                          gotError = false;
+                                          Navigator.pop(context);
+                                        });
+                                      },
+                                    ),
                                 fullscreenDialog: true));
                       }).withGridPlacement(rowStart: 0, columnStart: 0),
                   CalculatorButton(
