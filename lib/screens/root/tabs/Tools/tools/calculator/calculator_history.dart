@@ -18,43 +18,65 @@ class CalculatorHistory extends StatelessWidget {
         title: const Text("History"),
         actions: [
           IconButton(
-            onPressed: () {
-              onClearHistory();
-            },
+            onPressed: history.isNotEmpty
+                ? () {
+                    onClearHistory();
+                  }
+                : null,
             icon: const Icon(Icons.delete_forever),
           )
         ],
       ),
-      body: ListView.separated(
-          itemCount: history.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-                title: Text(
-                  history[index]
-                      .expression
-                      .replaceAll("*", "×")
-                      .replaceAll("/", "÷"),
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge
-                      ?.copyWith(fontWeight: FontWeight.bold),
+      body: history.isNotEmpty
+          ? ListView.separated(
+              itemCount: history.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                    title: Text(
+                      history[index]
+                          .expression
+                          .replaceAll("*", "×")
+                          .replaceAll("/", "÷"),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(history[index].result.toString()),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CalculationDetailView(
+                                  calculation: history[index])));
+                    });
+              },
+              separatorBuilder: (context, index) {
+                return const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Divider(),
+                );
+              })
+          : Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Hmmmm...",
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
+                    const Text(
+                      "You do not seem to have any calculator history. Create some by using the calculator!",
+                      textAlign: TextAlign.center,
+                    )
+                  ],
                 ),
-                subtitle: Text(history[index].result.toString()),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CalculationDetailView(
-                              calculation: history[index])));
-                });
-          },
-          separatorBuilder: (context, index) {
-            return const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Divider(),
-            );
-          }),
+              ),
+            ),
     );
   }
 }
