@@ -8,9 +8,9 @@ import 'package:mathx_android/widgets/notecard.dart';
 import 'noteeditor.dart';
 
 class NotesPage extends StatefulWidget {
-  const NotesPage({Key? key, this.needRefresh}) : super(key: key);
+  const NotesPage({Key? key, this.deepLinkNote}) : super(key: key);
 
-  final bool? needRefresh;
+  final Note? deepLinkNote;
 
   @override
   State<NotesPage> createState() => _NotesPageState();

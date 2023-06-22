@@ -68,8 +68,11 @@ class _rootState extends State<root> {
                   note: Note.fromDeepLink(uri.toString()),
                   onChange: () {
                     setState(() {
+                      selectedTab = 2;
                       tabs = List.of([
-                        const NotesPage(needRefresh: true),
+                        NotesPage(
+                          deepLinkNote: Note.fromDeepLink(uri.toString()),
+                        ),
                         const CheatsheetPage(),
                         ToolsPage(
                           hideTopAndBottom: (tohideBottomBar) {
@@ -81,20 +84,8 @@ class _rootState extends State<root> {
                         )
                       ]);
                     });
-
                     setState(() {
-                      tabs = List.of([
-                        const NotesPage(),
-                        const CheatsheetPage(),
-                        ToolsPage(
-                          hideTopAndBottom: (tohideBottomBar) {
-                            setState(() {
-                              print("a");
-                              hideBottomBar = tohideBottomBar;
-                            });
-                          },
-                        )
-                      ]);
+                      selectedTab = 0;
                     });
                   },
                 ),
