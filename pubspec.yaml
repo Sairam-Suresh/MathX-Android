@@ -57,6 +57,7 @@ dependencies:
   app_links: ^3.4.3
   flutter_markdown: ^0.6.15
   markdown_widget: ^2.2.0
+  vibration: ^1.8.1
 
 dev_dependencies:
   flutter_test:
