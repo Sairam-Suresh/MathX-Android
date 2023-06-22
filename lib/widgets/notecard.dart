@@ -2,8 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mathx_android/constants.dart';
 
-// TODO: Make notecard redirect to editor view with required data
-
 class NoteCard extends StatelessWidget {
   NoteCard({Key? key, required this.note}) : super(key: key);
 
