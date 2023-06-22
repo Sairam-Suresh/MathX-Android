@@ -60,19 +60,26 @@ class _NotePreviewState extends State<NotePreview> {
     return SafeArea(
       child: loadedDatabase
           ? Scaffold(
-              appBar: AppBar(title: const Text("Note Preview")),
+              appBar: AppBar(
+                title: const Text("Note Preview"),
+                centerTitle: true,
+              ),
               body: Column(
                 children: [
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Text(
+                            newTitle,
+                            style: Theme.of(context).textTheme.headlineLarge,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                         SwitchListTile(
                           value: renderMath,
-                          onChanged: (value) {
-                            setState(() {
-                              renderMath = value;
-                            });
-                          },
+                          onChanged: (value) {},
                           title: Row(
                             children: [
                               const Text("Math Rendering"),
@@ -95,11 +102,14 @@ class _NotePreviewState extends State<NotePreview> {
                         Padding(
                           padding: const EdgeInsets.only(
                               left: 10.0, right: 10, bottom: 10),
-                          child: Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: TextWithEquations(
-                                text: newContent,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: TextWithEquations(
+                                  text: newContent,
+                                ),
                               ),
                             ),
                           ),
@@ -111,6 +121,27 @@ class _NotePreviewState extends State<NotePreview> {
                     padding: const EdgeInsets.only(bottom: 10, top: 15),
                     child: Row(
                       children: [
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: FilledButton(
+                                style: FilledButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                    foregroundColor: Colors.white),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("Delete note"),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Icon(Icons.delete),
+                                  ],
+                                ))),
                         const SizedBox(
                           width: 10,
                         ),
@@ -129,16 +160,16 @@ class _NotePreviewState extends State<NotePreview> {
                                   });
                                   widget.onChange();
                                 },
-                                child: const Text("Add note"))),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: FilledButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("Delete note"))),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("Add note"),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Icon(Icons.add),
+                                  ],
+                                ))),
                         const SizedBox(
                           width: 10,
                         ),
