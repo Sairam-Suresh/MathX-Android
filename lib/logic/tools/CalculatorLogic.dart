@@ -68,4 +68,8 @@ class Calculator {
         .calc(const MathVariableValues({}))
         .toDouble();
   }
+
+  void clearHistory() {
+    history = [];
+  }
 }
