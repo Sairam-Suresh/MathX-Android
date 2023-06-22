@@ -36,7 +36,7 @@ class _rootState extends State<root> {
         const NotesPage(),
         const CheatsheetPage(),
         ToolsPage(
-          hideBottomBar: (tohideBottomBar) {
+          hideTopAndBottom: (tohideBottomBar) {
             setState(() {
               print("a");
               hideBottomBar = tohideBottomBar;
@@ -72,7 +72,7 @@ class _rootState extends State<root> {
                         const NotesPage(needRefresh: true),
                         const CheatsheetPage(),
                         ToolsPage(
-                          hideBottomBar: (tohideBottomBar) {
+                          hideTopAndBottom: (tohideBottomBar) {
                             setState(() {
                               print("a");
                               hideBottomBar = tohideBottomBar;
@@ -87,7 +87,7 @@ class _rootState extends State<root> {
                         const NotesPage(),
                         const CheatsheetPage(),
                         ToolsPage(
-                          hideBottomBar: (tohideBottomBar) {
+                          hideTopAndBottom: (tohideBottomBar) {
                             setState(() {
                               print("a");
                               hideBottomBar = tohideBottomBar;
@@ -110,7 +110,7 @@ class _rootState extends State<root> {
         const NotesPage(),
         const CheatsheetPage(),
         ToolsPage(
-          hideBottomBar: (tohideBottomBar) {
+          hideTopAndBottom: (tohideBottomBar) {
             setState(() {
               print("a");
               hideBottomBar = tohideBottomBar;
