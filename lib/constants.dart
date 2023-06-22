@@ -1,5 +1,7 @@
 // Tools View
 
+import 'dart:convert';
+
 const double PADDING_BETWEEN_SQUARES = 10;
 
 const double PADDING_FOR_MODAL_BOTTOM_SHEET = 15;
@@ -23,7 +25,11 @@ class Note {
   late String content;
   late bool? renderMath;
 
-  String get base64EncodedLink => "";
+  String get base64EncodedLink {
+    return notesURLAccessor +
+        base64Encode(utf8
+            .encode("$name ␢␆␝⎠⎡⍰⎀ $content ␢␆␝⎠⎡⍰⎀ ${renderMath ?? false}"));
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -104,3 +110,4 @@ class CheatsheetDetails {
 enum SecondaryLevel { one, two, three, four }
 
 const calculatorURLAccessor = "mathx:///calculator?source=";
+const notesURLAccessor = "mathx:///notes?source=";
