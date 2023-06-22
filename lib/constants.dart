@@ -23,6 +23,8 @@ class Note {
   late String content;
   late bool? renderMath;
 
+  String get base64EncodedLink => "";
+
   Map<String, dynamic> toMap() {
     return {
       'name': name,
