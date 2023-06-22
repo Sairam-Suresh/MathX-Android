@@ -91,22 +91,39 @@ class _CalculatorPageState extends State<CalculatorPage> {
                                             child: AutoSizeText(
                                               expressionText,
                                               style: const TextStyle(
-                                                color: Colors.white,
-                                              ),
+                                                  color: Colors.white,
+                                                  fontSize: 30),
                                               maxFontSize: 30,
-                                              maxLines: 3,
+                                              maxLines: 1,
                                             ),
                                           ),
+                                          if (widget.hidingTopAndBottom)
+                                            IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    widget.hideTopAndBottom(
+                                                        false);
+                                                  });
+                                                },
+                                                iconSize: 20,
+                                                color: Colors.white,
+                                                icon: const Icon(
+                                                  Icons.zoom_in_map,
+                                                ))
                                         ],
                                       ),
                                       const Spacer(),
                                       Row(
                                         children: [
                                           const Spacer(),
-                                          Text((results ?? "").toString(),
-                                              style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 30))
+                                          AutoSizeText(
+                                            (results ?? "").toString(),
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 30),
+                                            maxFontSize: 30,
+                                            maxLines: 1,
+                                          ),
                                         ],
                                       )
                                     ])
@@ -155,30 +172,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
                   ),
                 ),
               ),
-              widget.hidingTopAndBottom
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      maximumSize: Size(
-                                    MediaQuery.of(context).size.width,
-                                    40,
-                                  )),
-                                  onPressed: () {
-                                    setState(() {
-                                      widget.hideTopAndBottom(false);
-                                    });
-                                  },
-                                  child: Text("Zoom out")),
-                            )
-                          ]),
-                    )
-                  : Container(),
               Flexible(
                 fit: FlexFit.tight,
                 flex: 4,
@@ -256,7 +249,11 @@ class _CalculatorPageState extends State<CalculatorPage> {
                         onPressed: () {
                           setState(() {
                             if (mode == Mode.normal) {
-                              expressionText = instance.sqrt(expressionText);
+                              if (expressionText.contains("sqrt(")) {
+                                expressionText = "sqrt(Ans)";
+                              } else {
+                                expressionText = instance.sqrt(expressionText);
+                              }
                               performCalc();
                             }
                           });
