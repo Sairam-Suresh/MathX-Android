@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:mathx_android/screens/root/tabs/Cheatsheet/cheatsheet.dart';
 import 'package:mathx_android/screens/root/tabs/Notes/notes.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools.dart';
-import 'package:uni_links/uni_links.dart';
 
 class root extends StatefulWidget {
   root({Key? key}) : super(key: key);
@@ -21,6 +21,7 @@ class _rootState extends State<root> {
   bool hideBottomBar = false;
 
   StreamSubscription? _sub;
+  AppLinks appLinks = AppLinks();
 
   @override
   void initState() {
@@ -42,21 +43,19 @@ class _rootState extends State<root> {
       ];
     });
 
-    (() async {
-      final firstLink = await getInitialUri();
-      if (firstLink != null) {
-        updateWhenDeepLinkUpdate(firstLink);
-      }
-    })();
+    _sub = appLinks.allUriLinkStream.listen((uri) {
+      print("uri: ${uri.toString()}");
 
-    _sub = uriLinkStream.listen((uri) {
-      print("uri: ${uri.toString().startsWith("mathx:///calculator")}");
       updateWhenDeepLinkUpdate(uri);
     });
   }
 
   void updateWhenDeepLinkUpdate(Uri? uri) {
     if (uri.toString().startsWith("mathx:///calculator")) {
+      while (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      }
+
       setState(() {
         selectedTab = 0;
         selectedTab = 2;
