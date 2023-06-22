@@ -19,7 +19,7 @@ class TextWithEquations extends StatelessWidget {
 
     if (equationIndices.isEmpty) {
       children.add(
-        buildMarkdownBody(text),
+        buildMarkdownBody(text, isDarkMode),
       );
     } else {
       int currentIndex = 0;
@@ -27,7 +27,7 @@ class TextWithEquations extends StatelessWidget {
       for (final equationIndex in equationIndices) {
         if (currentIndex != equationIndex) {
           final regularText = text.substring(currentIndex, equationIndex);
-          children.add(buildMarkdownBody(regularText));
+          children.add(buildMarkdownBody(regularText, isDarkMode));
         }
 
         final equationMatch =
@@ -40,7 +40,7 @@ class TextWithEquations extends StatelessWidget {
 
       if (currentIndex < text.length) {
         final remainingText = text.substring(currentIndex);
-        children.add(buildMarkdownBody(remainingText));
+        children.add(buildMarkdownBody(remainingText, isDarkMode));
       }
     }
 
@@ -60,7 +60,7 @@ class TextWithEquations extends StatelessWidget {
           ),
         ),
         blockquotePadding: const EdgeInsets.all(8.0),
-        checkbox: TextStyle(color: isDarkMode ? Colors.white),
+        checkbox: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
       ),
     );
   }
