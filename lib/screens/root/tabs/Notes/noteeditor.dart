@@ -153,7 +153,12 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                 : [
                     IconButton(
                         onPressed: () {
-                          widget.onShare(widget.note);
+                          widget.onShare(Note(
+                            name: newTitle,
+                            content: newContent,
+                            date: lastModified,
+                            renderMath: renderMath,
+                          ));
                         },
                         icon: const Icon(Icons.share))
                   ],
