@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 
 class TextWithEquations extends StatelessWidget {
@@ -8,6 +9,7 @@ class TextWithEquations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final pattern = RegExp(r'\\\[([\s\S]*?)\\\]');
 
     final matches = pattern.allMatches(text);
@@ -16,14 +18,16 @@ class TextWithEquations extends StatelessWidget {
     final List<Widget> children = [];
 
     if (equationIndices.isEmpty) {
-      children.add(Text(text));
+      children.add(
+        buildMarkdownBody(text),
+      );
     } else {
       int currentIndex = 0;
 
       for (final equationIndex in equationIndices) {
         if (currentIndex != equationIndex) {
           final regularText = text.substring(currentIndex, equationIndex);
-          children.add(Text(regularText));
+          children.add(buildMarkdownBody(regularText));
         }
 
         final equationMatch =
@@ -36,12 +40,28 @@ class TextWithEquations extends StatelessWidget {
 
       if (currentIndex < text.length) {
         final remainingText = text.substring(currentIndex);
-        children.add(Text(remainingText));
+        children.add(buildMarkdownBody(remainingText));
       }
     }
 
     return Wrap(
       children: children,
+    );
+  }
+
+  MarkdownBody buildMarkdownBody(String text, bool isDarkMode) {
+    return MarkdownBody(
+      data: text,
+      shrinkWrap: true,
+      styleSheet: MarkdownStyleSheet(
+        blockquoteDecoration: BoxDecoration(
+          border: Border(
+            left: BorderSide(color: Colors.grey.shade300, width: 2.0),
+          ),
+        ),
+        blockquotePadding: const EdgeInsets.all(8.0),
+        checkbox: TextStyle(color: isDarkMode ? Colors.white),
+      ),
     );
   }
 }
