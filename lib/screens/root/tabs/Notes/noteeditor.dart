@@ -148,7 +148,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                       icon: const Icon(Icons.check),
                     ),
                   ]
-                : [],
+                : [IconButton(onPressed: () {}, icon: const Icon(Icons.share))],
           ),
           SliverToBoxAdapter(
             child: Padding(
