@@ -40,6 +40,18 @@ class Note {
     };
   }
 
+  factory Note.fromDeepLink(String link) {
+    String encodedText = link.replaceAll(notesURLAccessor, "");
+    String decodedData = utf8.decode(base64Decode(encodedText));
+    List<String> data = decodedData.split(" ␢␆␝⎠⎡⍰⎀ ");
+
+    return Note(
+        name: data[0],
+        content: data[1],
+        renderMath: data[2] == "true" ? true : false,
+        date: DateTime.now());
+  }
+
   factory Note.fromMap(Map<String, dynamic> map) {
     return Note(
       name: map['name'],
