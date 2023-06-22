@@ -3,7 +3,9 @@ import 'dart:convert';
 
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
+import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/screens/root/tabs/Cheatsheet/cheatsheet.dart';
+import 'package:mathx_android/screens/root/tabs/Notes/notepreview.dart';
 import 'package:mathx_android/screens/root/tabs/Notes/notes.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools.dart';
 
@@ -22,6 +24,8 @@ class _rootState extends State<root> {
 
   StreamSubscription? _sub;
   AppLinks appLinks = AppLinks();
+
+  bool needNotesPageRebuild = false;
 
   @override
   void initState() {
@@ -45,49 +49,95 @@ class _rootState extends State<root> {
 
     _sub = appLinks.allUriLinkStream.listen((uri) {
       print("uri: ${uri.toString()}");
-
-      updateWhenDeepLinkUpdate(uri);
-    });
-  }
-
-  void updateWhenDeepLinkUpdate(Uri? uri) {
-    if (uri.toString().startsWith("mathx:///calculator")) {
       while (Navigator.canPop(context)) {
         Navigator.pop(context);
       }
+      if (uri.toString().startsWith(calculatorURLAccessor)) {
+        updateWhenDeepLinkUpdateCalculator(uri);
+      } else if (uri.toString().startsWith(notesURLAccessor)) {
+        updateWhenDeepLinkUpdateNote(uri);
+      }
+    });
+  }
 
-      setState(() {
-        selectedTab = 0;
-        selectedTab = 2;
-        tabs = [const NotesPage(), const CheatsheetPage(), Container()];
-        tabs = List.of([
-          const NotesPage(),
-          const CheatsheetPage(),
-          ToolsPage(
-            hideBottomBar: (tohideBottomBar) {
-              setState(() {
-                print("a");
-                hideBottomBar = tohideBottomBar;
-              });
-            },
-            deepLinkParsed: utf8
-                .decode(base64Decode(uri
-                    .toString()
-                    .replaceAll("mathx:///calculator?source=", "")))
-                .replaceAll(" -,- ", " ")
-                .replaceAll("ET:", "")
-                .replaceAll("RT:", "")
-                .split(" "),
-          )
-        ]);
-      });
-    }
+  void updateWhenDeepLinkUpdateNote(uri) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => NotePreview(
+                  note: Note.fromDeepLink(uri.toString()),
+                  onChange: () {
+                    setState(() {
+                      tabs = List.of([
+                        const NotesPage(needRefresh: true),
+                        const CheatsheetPage(),
+                        ToolsPage(
+                          hideBottomBar: (tohideBottomBar) {
+                            setState(() {
+                              print("a");
+                              hideBottomBar = tohideBottomBar;
+                            });
+                          },
+                        )
+                      ]);
+                    });
+
+                    setState(() {
+                      tabs = List.of([
+                        const NotesPage(),
+                        const CheatsheetPage(),
+                        ToolsPage(
+                          hideBottomBar: (tohideBottomBar) {
+                            setState(() {
+                              print("a");
+                              hideBottomBar = tohideBottomBar;
+                            });
+                          },
+                        )
+                      ]);
+                    });
+                  },
+                ),
+            fullscreenDialog: true));
+  }
+
+  void updateWhenDeepLinkUpdateCalculator(Uri? uri) {
+    setState(() {
+      selectedTab = 0;
+      selectedTab = 2;
+      tabs = [const NotesPage(), const CheatsheetPage(), Container()];
+      tabs = List.of([
+        const NotesPage(),
+        const CheatsheetPage(),
+        ToolsPage(
+          hideBottomBar: (tohideBottomBar) {
+            setState(() {
+              print("a");
+              hideBottomBar = tohideBottomBar;
+            });
+          },
+          deepLinkParsed: utf8
+              .decode(base64Decode(
+                  uri.toString().replaceAll("mathx:///calculator?source=", "")))
+              .replaceAll(" -,- ", " ")
+              .replaceAll("ET:", "")
+              .replaceAll("RT:", "")
+              .split(" "),
+        )
+      ]);
+    });
   }
 
   @override
   void dispose() {
     _sub?.cancel();
     super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant root oldWidget) {
+    build(context);
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

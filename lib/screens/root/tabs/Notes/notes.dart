@@ -8,7 +8,9 @@ import 'package:mathx_android/widgets/notecard.dart';
 import 'noteeditor.dart';
 
 class NotesPage extends StatefulWidget {
-  const NotesPage({Key? key}) : super(key: key);
+  const NotesPage({Key? key, this.needRefresh}) : super(key: key);
+
+  final bool? needRefresh;
 
   @override
   State<NotesPage> createState() => _NotesPageState();
@@ -18,8 +20,8 @@ class _NotesPageState extends State<NotesPage> {
   List<Note> listOfNotes = [];
   final TextEditingController _searchController = TextEditingController();
   List<Widget> noteCards = [];
-  final NotesDatabaseHelper databaseHelper = NotesDatabaseHelper.instance;
   bool isLoading = true;
+  final NotesDatabaseHelper databaseHelper = NotesDatabaseHelper.instance;
 
   @override
   void initState() {
@@ -45,6 +47,12 @@ class _NotesPageState extends State<NotesPage> {
   Future<void> saveNotes() async {
     listOfNotes.sort((a, b) => b.date.compareTo(a.date));
     await databaseHelper.saveNotesToPersistence(listOfNotes);
+  }
+
+  @override
+  void didUpdateWidget(covariant NotesPage oldWidget) {
+    loadNotes();
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
