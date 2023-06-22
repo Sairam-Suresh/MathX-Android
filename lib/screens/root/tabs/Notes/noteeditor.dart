@@ -200,7 +200,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                             ListTile(
                               title: const Text("Last Modified"),
                               trailing: AutoSizeText(
-                                "${lastModified.day}/${lastModified.month}/${lastModified.year} at ${lastModified.hour}:${lastModified.minute}:${lastModified.second}",
+                                "${lastModified.day.toString().padLeft(2, '0')}/${lastModified.month.toString().padLeft(2, '0')}/${lastModified.year.toString().padLeft(2, '0')} at ${lastModified.hour.toString().padLeft(2, '0')}:${lastModified.minute.toString().padLeft(2, '0')}:${lastModified.second.toString().padLeft(2, '0')}",
                                 minFontSize: 15,
                                 maxLines: 1,
                               ),

@@ -19,6 +19,6 @@ class NoteCard extends StatelessWidget {
         ),
         trailing: const Icon(Icons.chevron_right),
         subtitle: AutoSizeText(
-            "${note.date.day}/${note.date.month}/${note.date.year} at ${note.date.hour}:${note.date.minute}:${note.date.second}"));
+            "${note.date.day.toString().padLeft(2, '0')}/${note.date.month.toString().padLeft(2, '0')}/${note.date.year.toString().padLeft(2, '0')} at ${note.date.hour.toString().padLeft(2, '0')}:${note.date.minute.toString().padLeft(2, '0')}:${note.date.second.toString().padLeft(2, '0')}"));
   }
 }
