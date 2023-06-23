@@ -106,12 +106,14 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
               values.length >= 2 && (isFormValid)
                   ? index == 0
                       ? (calculateHCFForMultiple(values
-                                  .map((e) => int.tryParse(e!) ?? 0)
+                                  .map((e) =>
+                                      int.tryParse((e ?? 0).toString()) ?? 0)
                                   .toList()) ??
                               "ERROR")
                           .toString()
                       : (calculateLCMForMultiple(values
-                                  .map((e) => int.tryParse(e!) ?? 0)
+                                  .map((e) =>
+                                      int.tryParse((e ?? 0).toString()) ?? 0)
                                   .toList()) ??
                               "ERROR")
                           .toString()
