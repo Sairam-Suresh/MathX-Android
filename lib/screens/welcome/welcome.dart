@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:mathx_android/logic/CheatsheetsDatabaseHelper.dart';
+import 'package:mathx_android/logic/CheatsheetsExtractionHelper.dart';
+import 'package:mathx_android/logic/NotesDatabaseHelper.dart';
 import 'package:mathx_android/screens/root/root.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -10,6 +13,8 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  bool? isLoaded;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,39 +105,56 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         duration: Duration(milliseconds: 1000),
                       )
                     ],
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: FilledButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color.fromARGB(255, 169, 100, 255)),
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              "Get Started",
-                              style: TextStyle(
-                                color: Colors.white,
+                    child: isLoaded == null
+                        ? Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: FilledButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<
+                                        Color>(
+                                    const Color.fromARGB(255, 169, 100, 255)),
                               ),
-                            ),
-                            Icon(
-                              Icons.chevron_right_rounded,
-                              color: Colors.white,
-                            )
-                          ],
-                        ),
-                        onPressed: () {
-                          // TODO: Make the other tab view the permanent view once this view has been dismissed
-                          // WARN: During the merge into main make sure that this gets changed to "pushReplacement" during the merge conflict
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => root()),
-                          );
-                        },
-                      ),
-                    ),
+                              child: const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Get Started",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.chevron_right_rounded,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
+                              onPressed: () {
+                                // TODO: Make the other tab view the permanent view once this view has been dismissed
+                                // WARN: During the merge into main make sure that this gets changed to "pushReplacement" during the merge conflict
+                                setState(() {
+                                  isLoaded = false;
+                                });
+                                NotesDatabaseHelper.instance.database
+                                    .then((value) {
+                                  CheatsheetsDatabaseHelper.instance.database
+                                      .then((value) {
+                                    extractCheatsheets().then((value) {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => root()),
+                                      );
+                                    });
+                                  });
+                                }); // Initialise DB and all cheatsheets before the app fully gets loaded
+                              },
+                            ))
+                        : const Center(
+                            child: CircularProgressIndicator(
+                                color: Color.fromARGB(255, 169, 100, 255)),
+                          ),
                   )),
               const Spacer(flex: 2),
             ]),
