@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
+import 'package:mathx_android/widgets/custommarkdownbody.dart';
 
 class TextWithEquations extends StatelessWidget {
   final String text;
@@ -46,22 +46,6 @@ class TextWithEquations extends StatelessWidget {
 
     return Wrap(
       children: children,
-    );
-  }
-
-  MarkdownBody buildMarkdownBody(String text, bool isDarkMode) {
-    return MarkdownBody(
-      data: text,
-      shrinkWrap: true,
-      styleSheet: MarkdownStyleSheet(
-        blockquoteDecoration: BoxDecoration(
-          border: Border(
-            left: BorderSide(color: Colors.grey.shade300, width: 2.0),
-          ),
-        ),
-        blockquotePadding: const EdgeInsets.all(8.0),
-        checkbox: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
-      ),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/screens/root/tabs/Notes/mathequationfaq.dart';
+import 'package:mathx_android/widgets/custommarkdownbody.dart';
 import 'package:mathx_android/widgets/textwithequations.dart';
 
 class NoteEditorPage extends StatefulWidget {
@@ -225,7 +226,8 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                   !isEditMode
                       ? renderMath
                           ? TextWithEquations(text: newContent)
-                          : Text(newContent)
+                          : buildMarkdownBody(newContent,
+                              Theme.of(context).brightness == Brightness.dark)
                       : Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: TextField(
