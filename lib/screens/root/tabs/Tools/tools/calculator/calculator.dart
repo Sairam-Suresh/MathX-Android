@@ -115,15 +115,18 @@ class _CalculatorPageState extends State<CalculatorPage> {
                                       ),
                                       const Spacer(),
                                       Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
-                                          const Spacer(),
-                                          AutoSizeText(
-                                            (results ?? "").toString(),
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 30),
-                                            maxFontSize: 30,
-                                            maxLines: 1,
+                                          Expanded(
+                                            child: AutoSizeText(
+                                              (results ?? "").toString(),
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 30),
+                                              maxFontSize: 30,
+                                              maxLines: 1,
+                                            ),
                                           ),
                                         ],
                                       )
