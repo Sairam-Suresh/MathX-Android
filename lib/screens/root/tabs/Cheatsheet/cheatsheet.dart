@@ -216,7 +216,7 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
               child: ListTile(
                 title: AutoSizeText(
                   element.title,
-                  maxLines: 1,
+                  maxLines: 2,
                 ),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
