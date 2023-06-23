@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:mathx_android/constants.dart';
-import 'package:mathx_android/logic/tools/CheatsheetsDatabaseHelper.dart';
+import 'package:mathx_android/logic/CheatsheetsDatabaseHelper.dart';
 import 'package:mathx_android/screens/root/tabs/Cheatsheet/cheatsheetviewer.dart';
 
 class CheatsheetPage extends StatefulWidget {
