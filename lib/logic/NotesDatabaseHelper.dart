@@ -2,8 +2,6 @@ import 'package:mathx_android/constants.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'CheatsheetsExtractionHelper.dart';
-
 // TODO: Fix markdown message
 
 class NotesDatabaseHelper {
@@ -32,8 +30,6 @@ class NotesDatabaseHelper {
       fullPath,
       version: 1,
       onCreate: (db, version) async {
-        await extractCheatsheets();
-
         await db.execute('''
           CREATE TABLE $_tableName (
             id INTEGER PRIMARY KEY,
