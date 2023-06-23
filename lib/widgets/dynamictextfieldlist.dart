@@ -51,6 +51,7 @@ class _DynamicTextFieldListState extends State<DynamicTextFieldList> {
                     FormBuilderValidators.numeric(),
                     FormBuilderValidators.required()
                   ]),
+              keyboardType: TextInputType.number,
               controller: controller,
               onChanged: (value) {
                 setState(() {

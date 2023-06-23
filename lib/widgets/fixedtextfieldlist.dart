@@ -45,6 +45,7 @@ class _FixedTextFieldListState extends State<FixedTextFieldList> {
                   decoration: InputDecoration(
                     labelText: widget.entries[e.$1],
                   ),
+                  keyboardType: TextInputType.number,
                   validator: widget.validators ??
                       FormBuilderValidators.compose([
                         FormBuilderValidators.numeric(),
