@@ -115,8 +115,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
                                       ),
                                       const Spacer(),
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
                                         children: [
                                           Expanded(
                                             child: AutoSizeText(
@@ -126,6 +124,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                                                   fontSize: 30),
                                               maxFontSize: 30,
                                               maxLines: 1,
+                                              textAlign: TextAlign.end,
                                             ),
                                           ),
                                         ],
