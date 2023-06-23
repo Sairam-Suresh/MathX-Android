@@ -59,21 +59,16 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                       child: Column(
                         children: [
                           buildResults(),
-                          SingleChildScrollView(
-                              child: Column(
-                            children: [
-                              DynamicTextFieldList(
-                                count: numberOfFields,
-                                onChange: (newValues, isValid, count) {
-                                  setState(() {
-                                    values = newValues;
-                                    isFormValid = isValid;
-                                    numberOfFields = count;
-                                  });
-                                },
-                              )
-                            ],
-                          )),
+                          DynamicTextFieldList(
+                            count: numberOfFields,
+                            onChange: (newValues, isValid, count) {
+                              setState(() {
+                                values = newValues;
+                                isFormValid = isValid;
+                                numberOfFields = count;
+                              });
+                            },
+                          ),
                         ],
                       ))),
             ],

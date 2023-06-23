@@ -34,58 +34,52 @@ class _DynamicTextFieldListState extends State<DynamicTextFieldList> {
 
     return Form(
       key: _formKey,
-      child: Column(
-        children: [
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: _values.length,
-              itemBuilder: (context, index) {
-                final TextEditingController controller =
-                    TextEditingController();
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: _values.length,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            final TextEditingController controller = TextEditingController();
 
-                controller.text = _values[index] ?? "";
-                controller.selection = TextSelection.fromPosition(
-                    TextPosition(offset: controller.text.length));
+            controller.text = _values[index] ?? "";
+            controller.selection = TextSelection.fromPosition(
+                TextPosition(offset: controller.text.length));
 
-                return TextFormField(
-                  validator: widget.validators ??
-                      FormBuilderValidators.compose([
-                        FormBuilderValidators.numeric(),
-                        FormBuilderValidators.required()
-                      ]),
-                  controller: controller,
-                  onChanged: (value) {
-                    setState(() {
-                      _values[index] = value;
-                      widget.onChange?.call(
-                          _values,
-                          _formKey.currentState?.validate() ?? false,
-                          widget.count);
-                    });
-                  },
-                  decoration: InputDecoration(
-                      labelText: widget.nameBuilder == null
-                          ? "Number ${index + 1}"
-                          : widget.nameBuilder?.call(_values.length, index),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _values.removeAt(index);
-                            widget.onChange?.call(
-                                _values,
-                                _formKey.currentState?.validate() ?? false,
-                                widget.count - 1);
-                          });
-                        },
-                        icon: const Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        ),
-                      )),
-                );
-              })
-        ],
-      ),
+            return TextFormField(
+              validator: widget.validators ??
+                  FormBuilderValidators.compose([
+                    FormBuilderValidators.numeric(),
+                    FormBuilderValidators.required()
+                  ]),
+              controller: controller,
+              onChanged: (value) {
+                setState(() {
+                  _values[index] = value;
+                  widget.onChange?.call(_values,
+                      _formKey.currentState?.validate() ?? false, widget.count);
+                });
+              },
+              decoration: InputDecoration(
+                  labelText: widget.nameBuilder == null
+                      ? "Number ${index + 1}"
+                      : widget.nameBuilder?.call(_values.length, index),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _values.removeAt(index);
+                        widget.onChange?.call(
+                            _values,
+                            _formKey.currentState?.validate() ?? false,
+                            widget.count - 1);
+                      });
+                    },
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                  )),
+            );
+          }),
     );
   }
 }
