@@ -202,7 +202,7 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
                         onChange?.call();
                       });
                     },
-                    backgroundColor: Colors.yellow,
+                    backgroundColor: Colors.orange,
                     foregroundColor: Colors.white,
                     autoClose: true,
                     icon: element.isStarred ? Icons.star_outline : Icons.star,
