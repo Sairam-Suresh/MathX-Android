@@ -8,6 +8,8 @@ import 'package:mathx_android/screens/root/tabs/Cheatsheet/cheatsheet.dart';
 import 'package:mathx_android/screens/root/tabs/Notes/notepreview.dart';
 import 'package:mathx_android/screens/root/tabs/Notes/notes.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools.dart';
+import 'package:mathx_android/screens/welcome/welcome.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class root extends StatefulWidget {
   root({Key? key}) : super(key: key);
@@ -26,10 +28,23 @@ class _rootState extends State<root> {
   AppLinks appLinks = AppLinks();
 
   bool needNotesPageRebuild = false;
+  bool? hasConfirmedAlreadyShowingWelcome;
 
   @override
   void initState() {
     super.initState();
+
+    (() async {
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+        hasConfirmedAlreadyShowingWelcome = prefs.getBool('isLoaded') ?? false;
+
+        if (!(hasConfirmedAlreadyShowingWelcome ?? false)) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+        }
+      });
+    })();
 
     setState(() {
       tabs = [
