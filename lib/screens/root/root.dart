@@ -135,6 +135,23 @@ class _rootState extends State<root> {
         )
       ]);
     });
+
+    Future.delayed(Duration(milliseconds: 100)).then((value) {
+      setState(() {
+        tabs = List.of([
+          const NotesPage(),
+          const CheatsheetPage(),
+          ToolsPage(
+            hideTopAndBottom: (tohideBottomBar) {
+              setState(() {
+                print("a");
+                hideBottomBar = tohideBottomBar;
+              });
+            },
+          )
+        ]);
+      });
+    });
   }
 
   @override
