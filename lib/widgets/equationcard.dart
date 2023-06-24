@@ -14,9 +14,12 @@ class EquationCard extends StatelessWidget {
           child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Center(
-                child: Math.tex(
-                  text,
-                  textStyle: const TextStyle(fontSize: 20),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Math.tex(
+                    text,
+                    textStyle: const TextStyle(fontSize: 20),
+                  ),
                 ),
               ))),
     );
