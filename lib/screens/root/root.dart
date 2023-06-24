@@ -134,7 +134,7 @@ class _rootState extends State<root> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: selectedTab == 2 ? false : true,
       bottomNavigationBar: !hideBottomBar
           ? NavigationBar(
               destinations: const [
