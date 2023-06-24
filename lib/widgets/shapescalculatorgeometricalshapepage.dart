@@ -30,14 +30,18 @@ class _GeometricalShapeTabState extends State<GeometricalShapeTab> {
       padding: const EdgeInsets.all(10),
       child: Column(children: [
         widget.builder(values, isFormValid),
-        FixedTextFieldList(
-          entries: widget.entries,
-          onChange: (newValue, isValid) {
-            setState(() {
-              values = newValue;
-              isFormValid = isValid;
-            });
-          },
+        Expanded(
+          child: SingleChildScrollView(
+            child: FixedTextFieldList(
+              entries: widget.entries,
+              onChange: (newValue, isValid) {
+                setState(() {
+                  values = newValue;
+                  isFormValid = isValid;
+                });
+              },
+            ),
+          ),
         )
       ]),
     );
