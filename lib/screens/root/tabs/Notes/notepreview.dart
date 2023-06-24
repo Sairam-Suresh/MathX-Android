@@ -79,10 +79,13 @@ class _NotePreviewState extends State<NotePreview> {
                         ),
                         SwitchListTile(
                           value: renderMath,
-                          onChanged: (value) {},
+                          onChanged: null,
                           title: Row(
                             children: [
-                              const Text("Math Rendering"),
+                              const Text(
+                                "Math Rendering",
+                                style: TextStyle(color: Colors.white),
+                              ),
                               IconButton(
                                 onPressed: () {
                                   Navigator.push(
