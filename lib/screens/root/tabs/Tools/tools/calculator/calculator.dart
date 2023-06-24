@@ -36,8 +36,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
 
   bool alreadyLooked = false;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     super.initState();
@@ -60,7 +58,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
     }
 
     return Scaffold(
-        key: scaffoldKey,
+        resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Column(
             children: [

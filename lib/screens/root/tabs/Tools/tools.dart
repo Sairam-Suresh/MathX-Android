@@ -30,6 +30,7 @@ class _ToolsPageState extends State<ToolsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: !hideTopAndBottom
             ? AppBar(
                 title: const Text("Tools"),
