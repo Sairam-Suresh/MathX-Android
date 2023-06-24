@@ -311,7 +311,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                         calculatorActionVibrate();
                       },
                       foregroundColor: Colors.black,
-                      backgroundColor: Colors.yellow,
+                      backgroundColor: Colors.orange,
                     ).withGridPlacement(rowStart: 0, columnStart: 3),
                     CalculatorButton(
                       content: Text("AC",
@@ -334,7 +334,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                         calculatorActionVibrate();
                       },
                       foregroundColor: Colors.black,
-                      backgroundColor: Colors.yellow,
+                      backgroundColor: Colors.orange,
                     ).withGridPlacement(rowStart: 0, columnStart: 4),
 
                     // Row 2
