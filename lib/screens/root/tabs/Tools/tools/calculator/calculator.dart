@@ -27,6 +27,7 @@ class CalculatorPage extends StatefulWidget {
 
 class _CalculatorPageState extends State<CalculatorPage> {
   Calculator instance = Calculator();
+
   Mode mode = Mode.normal;
 
   String expressionText = "";
@@ -38,6 +39,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
 
   @override
   void initState() {
+    instance.loadHistoryFromPersistence();
     super.initState();
   }
 
@@ -48,6 +50,12 @@ class _CalculatorPageState extends State<CalculatorPage> {
   }
 
   @override
+  void dispose() {
+    instance.saveHistoryToPersistence();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (widget.deepLinkParsed != null && !alreadyLooked) {
       expressionText = widget.deepLinkParsed!.first;
@@ -55,6 +63,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
       results = num.parse(widget.deepLinkParsed!.last).toDouble();
       gotResult = true;
       alreadyLooked = true;
+      instance.saveHistoryToPersistence();
     }
 
     return Scaffold(
@@ -214,6 +223,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                                             gotResult = false;
                                             results = null;
                                             gotError = false;
+                                            instance.saveHistoryToPersistence();
                                             Navigator.pop(context);
                                           });
                                         },
