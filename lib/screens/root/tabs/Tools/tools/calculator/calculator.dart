@@ -215,7 +215,8 @@ class _CalculatorPageState extends State<CalculatorPage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => CalculatorHistory(
-                                        history: instance.history,
+                                        history:
+                                            instance.history.reversed.toList(),
                                         onClearHistory: () {
                                           setState(() {
                                             instance.clearHistory();
