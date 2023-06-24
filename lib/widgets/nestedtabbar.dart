@@ -14,6 +14,7 @@ class NestedTabBar extends StatefulWidget {
 class _NestedTabBarState extends State<NestedTabBar>
     with TickerProviderStateMixin {
   late final TabController _tabController;
+  final autoSizeGroup = AutoSizeGroup();
 
   @override
   void initState() {
@@ -40,6 +41,7 @@ class _NestedTabBarState extends State<NestedTabBar>
                     maxLines: 1,
                     minFontSize: 10,
                     overflow: TextOverflow.ellipsis,
+                    group: autoSizeGroup,
                   )))
               .toList(),
         ),
