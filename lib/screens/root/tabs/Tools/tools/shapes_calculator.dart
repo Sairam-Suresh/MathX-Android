@@ -2,8 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
+import 'package:mathx_android/widgets/equationcard.dart';
 import 'package:mathx_android/widgets/fixedtextfieldlist.dart';
 import 'package:mathx_android/widgets/nestedtabbar.dart';
+import 'package:mathx_android/widgets/shapescalculatorgeometricalshapepage.dart';
 
 class ShapesCalculatorPage extends StatefulWidget {
   ShapesCalculatorPage({Key? key}) : super(key: key);
@@ -59,220 +61,87 @@ class _ShapesCalculatorPageState extends State<ShapesCalculatorPage> {
   }
 }
 
-class buildRectangle extends StatefulWidget {
+class buildRectangle extends StatelessWidget {
   const buildRectangle({super.key});
 
   @override
-  State<buildRectangle> createState() => _buildRectangleState();
-}
-
-class _buildRectangleState extends State<buildRectangle> {
-  List<String?> values = ["", ""];
-  bool isFormValid = false;
-
-  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(children: [
-        Card(
-          child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Center(
-                    child: Math.tex(
-                      "A = ${values[0] == "" || values[0] == null ? "l" : values[0]} * ${values.last == "" || values.last == null ? "b" : values.last}${(values.length == 2 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element)}" : ""}",
-                      textStyle: const TextStyle(fontSize: 20),
-                    ),
-                  ))),
-        ),
-        FixedTextFieldList(
-          entries: const ["Length (l)", "Breadth (b)"],
-          onChange: (newValue, isValid) {
-            setState(() {
-              values = newValue;
-              isFormValid = isValid;
-            });
-          },
-        )
-      ]),
-    );
+    return GeometricalShapeTab(
+        entries: const ["Length (l)", "Breadth (b)"],
+        builder: (values, isFormValid) {
+          return EquationCard(
+              text:
+                  // add the result to the end of this string
+                  "A = ${values[0] == "" || values[0] == null ? "l" : values[0]} * ${values.last == "" || values.last == null ? "b" : values.last} ${(values.length == 2 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element)}" : ""}");
+        });
   }
 }
 
-class buildTriangle extends StatefulWidget {
+class buildTriangle extends StatelessWidget {
   const buildTriangle({super.key});
 
   @override
-  State<buildTriangle> createState() => _buildTriangleState();
-}
-
-class _buildTriangleState extends State<buildTriangle> {
-  List<String?> values = ["", ""];
-  bool isFormValid = false;
-
-  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(children: [
-        Card(
-          child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Center(
-                    child: Math.tex(
-                      r"A = \frac 1 2 * "
-                      "${values[0] == "" ? "l" : values[0]} * ${values.last == "" || values.length == 1 ? "b" : values.last}${(values.length == 2 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element) * 0.10}" : ""}",
-                      textStyle: const TextStyle(fontSize: 20),
-                    ),
-                  ))),
-        ),
-        FixedTextFieldList(
-          entries: const ["Length (l)", "Breadth (b)"],
-          onChange: (newValues, isValid) {
-            setState(() {
-              values = newValues.map((e) => e ?? "").toList();
-              isFormValid = isValid;
-            });
-          },
-        )
-      ]),
-    );
+    return GeometricalShapeTab(
+        entries: const ["Length (l)", "Breadth (b)"],
+        builder: (values, isFormValid) {
+          return EquationCard(
+            text: r"A = \frac 1 2 * "
+                "${(values[0] ?? "") == "" ? "l" : values[0]} * ${values.last == "" || values.length == 1 ? "b" : values.last}${(values.length == 2 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element) * 0.10}" : ""}",
+          );
+        });
   }
 }
 
-class buildCircle extends StatefulWidget {
+class buildCircle extends StatelessWidget {
   const buildCircle({super.key});
 
   @override
-  State<buildCircle> createState() => _buildCircleState();
-}
-
-class _buildCircleState extends State<buildCircle> {
-  List<String?> values = [""];
-  bool isFormValid = false;
-
-  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(children: [
-        Card(
-          child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Center(
-                    child: Math.tex(
-                      r"A = \pi * "
-                      "${values[0] == "" ? "r^2" : "${values[0]}^2"}"
-                      "${values[0] != "" ? int.tryParse(values[0]!) != null ? "= ${pow(int.tryParse(values[0]!)!, 2) * pi}" : "= ERROR" : ""}",
-                      textStyle: const TextStyle(fontSize: 20),
-                    ),
-                  ))),
-        ),
-        FixedTextFieldList(
-          entries: const ["Radius (r)"],
-          onChange: (newValues, isValid) {
-            setState(() {
-              values = newValues.map((e) => e ?? "").toList();
-              isFormValid = isValid;
-            });
-          },
-        )
-      ]),
-    );
+    return GeometricalShapeTab(
+        entries: const ["Radius (r)"],
+        builder: (values, isFormValid) {
+          return EquationCard(
+            text: r"A = \pi * "
+                "${values[0] == "" ? "r^2" : "${values[0]}^2"}"
+                "${values[0] != "" ? int.tryParse(values[0]!) != null ? "= ${pow(int.tryParse(values[0]!)!, 2) * pi}" : "= ERROR" : ""}",
+          );
+        });
   }
 }
 
-class buildTrapezium extends StatefulWidget {
+class buildTrapezium extends StatelessWidget {
   const buildTrapezium({super.key});
 
   @override
-  State<buildTrapezium> createState() => _buildTrapeziumState();
-}
-
-class _buildTrapeziumState extends State<buildTrapezium> {
-  List<String?> values = ["", "", ""];
-  bool isFormValid = false;
-
-  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(children: [
-        Card(
-          child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Center(
-                    child: Math.tex(
-                      r"A = \frac"
-                      " {${values[0] == "" ? "a" : values[0]}+${(values.elementAtOrNull(1) ?? "") == "" ? "b" : values[1]}}"
-                      "{2}*"
-                      "${(values.elementAtOrNull(2) ?? "") == "" ? "h" : values[2]}"
-                      "${(values.length == 3 && isFormValid) ? "= ${(int.parse(values[0]!) + int.parse(values[1]!)) / 2 * int.parse(values[2]!)}" : ""}",
-                      textStyle: const TextStyle(fontSize: 20),
-                    ),
-                  ))),
-        ),
-        FixedTextFieldList(
-          entries: const ["Base (a)", "Base (b)", "Height (h)"],
-          onChange: (newValues, isValid) {
-            setState(() {
-              values = newValues.map((e) => e ?? "").toList();
-              isFormValid = isValid;
-            });
-          },
-        )
-      ]),
-    );
+    return GeometricalShapeTab(
+        entries: const ["Base (a)", "Base (b)", "Height (h)"],
+        builder: (values, isFormValid) {
+          return EquationCard(
+            text: r"A = \frac"
+                " {${(values[0] ?? "") == "" ? "a" : values[0]}+${(values.elementAtOrNull(1) ?? "") == "" ? "b" : values[1]}}"
+                "{2}*"
+                "${(values.elementAtOrNull(2) ?? "") == "" ? "h" : values[2]}"
+                "${(values.length == 3 && isFormValid) ? "= ${(int.parse(values[0]!) + int.parse(values[1]!)) / 2 * int.parse(values[2]!)}" : ""}",
+          );
+        });
   }
 }
 
-class buildParallelogram extends StatefulWidget {
+class buildParallelogram extends StatelessWidget {
   const buildParallelogram({super.key});
 
   @override
-  State<buildParallelogram> createState() => _buildParallelogramState();
-}
-
-class _buildParallelogramState extends State<buildParallelogram> {
-  List<String?> values = ["", ""];
-  bool isFormValid = false;
-
-  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(children: [
-        Card(
-          child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Center(
-                    child: Math.tex(
-                      "A = ${values[0] == "" ? "l" : values[0]} * ${values.last == "" || values.length == 1 ? "b" : values.last}${(values.length == 2 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element)}" : ""}",
-                      textStyle: const TextStyle(fontSize: 20),
-                    ),
-                  ))),
-        ),
-        FixedTextFieldList(
-          entries: const ["Length (l)", "Breadth (b)"],
-          onChange: (newValues, isValid) {
-            setState(() {
-              values = newValues.map((e) => e ?? "").toList();
-              isFormValid = isValid;
-            });
-          },
-        )
-      ]),
-    );
+    return GeometricalShapeTab(
+        entries: const ["Length (a)", "Height (h)"],
+        builder: (values, isFormValid) {
+          return EquationCard(
+            text:
+                "A = ${(values[0] ?? "") == "" ? "l" : values[0]} * ${values.last == "" || values.length == 1 ? "b" : values.last}${(values.length == 2 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element)}" : ""}",
+          );
+        });
   }
 }
 
