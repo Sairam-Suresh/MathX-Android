@@ -5,6 +5,7 @@ import 'package:mathx_android/logic/CheatsheetsDatabaseHelper.dart';
 import 'package:mathx_android/logic/CheatsheetsExtractionHelper.dart';
 import 'package:mathx_android/logic/NotesDatabaseHelper.dart';
 import 'package:mathx_android/screens/root/root.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -144,11 +145,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     CalculationDatabaseHelper.instance.database
                                         .then((value) {
                                       extractCheatsheets().then((value) {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => root()),
-                                        );
+                                        SharedPreferences.getInstance()
+                                            .then((instance) {
+                                          instance.setBool("isLoaded", true);
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => root()),
+                                          );
+                                        });
                                       });
                                     });
                                   });
