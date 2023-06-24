@@ -40,8 +40,11 @@ class _rootState extends State<root> {
         hasConfirmedAlreadyShowingWelcome = prefs.getBool('isLoaded') ?? false;
 
         if (!(hasConfirmedAlreadyShowingWelcome ?? false)) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const WelcomeScreen(),
+                  fullscreenDialog: true));
         }
       });
     })();
