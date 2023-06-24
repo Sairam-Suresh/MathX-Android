@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:mathx_android/logic/CalculationsDatabaseHelper.dart';
 import 'package:mathx_android/logic/CheatsheetsDatabaseHelper.dart';
 import 'package:mathx_android/logic/CheatsheetsExtractionHelper.dart';
 import 'package:mathx_android/logic/NotesDatabaseHelper.dart';
@@ -140,12 +141,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     .then((value) {
                                   CheatsheetsDatabaseHelper.instance.database
                                       .then((value) {
-                                    extractCheatsheets().then((value) {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => root()),
-                                      );
+                                    CalculationDatabaseHelper.instance.database
+                                        .then((value) {
+                                      extractCheatsheets().then((value) {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => root()),
+                                        );
+                                      });
                                     });
                                   });
                                 }); // Initialise DB and all cheatsheets before the app fully gets loaded
