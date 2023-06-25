@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  material_design_icons_flutter: 7.0.7296
   flutter_pdfview: ^1.2.7
   # carousel_slider: ^4.2.1
   swipe_cards: ^2.0.0+1
@@ -65,9 +66,6 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - ./assets/my_documen.pdf
-    # - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -67,7 +67,7 @@ class _ToolsPageState extends State<ToolsPage> {
     ToolCard(
       name: "Unit Converter",
       category: ToolCategory.Unit_Converter,
-      child: const UnitConverterPage(),
+      child: UnitConverter(),
     ),
   ];
 
