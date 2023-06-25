@@ -200,15 +200,44 @@ class buildPyramid extends StatelessWidget {
               .map((e) => e ?? "")
               .toList(); // To aid conversion from null to ""
 
-          return EquationCard(
-            text: r"V = \frac{"
-                "${values[0] == "" ? "l" : values[0]}"
-                "*"
-                "${values.elementAtOrNull(1) == "" || values.length < 2 ? "b" : values.elementAt(1)} "
-                "*"
-                "${values.elementAtOrNull(2) == "" || values.length != 3 ? "h" : values.elementAt(2)} "
-                "}{3}"
-                "${(values.length == 3 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element) / 3}" : ""}",
+          final l = (values[0]) == "" ? "l" : values[0];
+          final b = (values[1]) == "" ? "b" : values[1];
+          final h = (values[2]) == "" ? "h" : values[2];
+
+          final intL = num.tryParse(values[0]!);
+          final intB = num.tryParse(values[
+              1]!); // Converts all the above values to numbers for calculation
+          final intH = num.tryParse(values[2]!);
+
+          final volume = isFormValid ? (intL! * intB! * intH!) / 3 : null;
+
+          // get the surface area of a right rectangular pyramid
+          final surfaceArea = isFormValid
+              ? (intL! * intB! +
+                  (intL * (sqrt(pow(intB / 2, 2) + pow(intH!, 2)))) +
+                  (intB * (sqrt(pow(intL / 2, 2) + pow(intH, 2)))))
+              : null;
+
+          return Column(
+            children: [
+              EquationCard(
+                labelText: "Volume",
+                text: r"V = \frac{"
+                    "$l"
+                    "*"
+                    "$b"
+                    "*"
+                    "$h"
+                    "}{3}"
+                    "${(volume != null) ? " = $volume" : ""}",
+              ),
+              EquationCard(
+                labelText: "Surface Area",
+                text:
+                    "A = $l($b)+$l(\\sqrt{(\\frac{$b}{2})^2 + $h^2} )+ $b(\\sqrt{(\\frac{$l}{2})^2+$h^2})"
+                    "${(surfaceArea != null) ? " = $surfaceArea" : ""}",
+              ),
+            ],
           );
         });
   }
