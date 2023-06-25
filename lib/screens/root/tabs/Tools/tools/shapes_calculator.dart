@@ -141,14 +141,14 @@ class buildCuboid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GeometricalShapeTab(
-        entries: const ["Length (l)", "Breadth (b)", "Height (h)"],
+        entries: const ["Length (l)", "Width (w)", "Height (h)"],
         builder: (values, isFormValid) {
           values = values
               .map((e) => e ?? "")
               .toList(); // To aid conversion from null to ""
 
           final l = (values[0]) == "" ? "l" : values[0];
-          final b = (values[1]) == "" ? "b" : values[1];
+          final w = (values[1]) == "" ? "w" : values[1];
           final h = (values[2]) == "" ? "h" : values[2];
           final volume = isFormValid
               ? int.parse(values[0]!) *
@@ -168,18 +168,18 @@ class buildCuboid extends StatelessWidget {
                   text: "V = "
                       "$l"
                       " * "
-                      "$b"
+                      "$w"
                       " * "
                       "$h "
                       "${(volume != null) ? " = $volume" : ""}"),
               EquationCard(
                 labelText: "Surface Area",
                 text: "A = "
-                    "2($l)($b)"
+                    "2($l)($w)"
                     " + "
                     "2($l)($h)"
                     " + "
-                    "2($b)($h)"
+                    "2($w)($h)"
                     "${(surfaceArea != null) ? " = $surfaceArea" : ""}",
               ),
             ],
@@ -194,28 +194,28 @@ class buildPyramid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GeometricalShapeTab(
-        entries: const ["Base Length (l)", "Base Breadth (b)", "Height (h)"],
+        entries: const ["Base Length (l)", "Base Width (w)", "Height (h)"],
         builder: (values, isFormValid) {
           values = values
               .map((e) => e ?? "")
               .toList(); // To aid conversion from null to ""
 
           final l = (values[0]) == "" ? "l" : values[0];
-          final b = (values[1]) == "" ? "b" : values[1];
+          final w = (values[1]) == "" ? "w" : values[1];
           final h = (values[2]) == "" ? "h" : values[2];
 
           final intL = num.tryParse(values[0]!);
-          final intB = num.tryParse(values[
+          final intW = num.tryParse(values[
               1]!); // Converts all the above values to numbers for calculation
           final intH = num.tryParse(values[2]!);
 
-          final volume = isFormValid ? (intL! * intB! * intH!) / 3 : null;
+          final volume = isFormValid ? (intL! * intW! * intH!) / 3 : null;
 
           // get the surface area of a right rectangular pyramid
           final surfaceArea = isFormValid
-              ? (intL! * intB! +
-                  (intL * (sqrt(pow(intB / 2, 2) + pow(intH!, 2)))) +
-                  (intB * (sqrt(pow(intL / 2, 2) + pow(intH, 2)))))
+              ? (intL! * intW! +
+                  (intL * (sqrt(pow(intW / 2, 2) + pow(intH!, 2)))) +
+                  (intW * (sqrt(pow(intL / 2, 2) + pow(intH, 2)))))
               : null;
 
           return Column(
@@ -225,7 +225,7 @@ class buildPyramid extends StatelessWidget {
                 text: r"V = \frac{"
                     "$l"
                     "*"
-                    "$b"
+                    "$w"
                     "*"
                     "$h"
                     "}{3}"
@@ -234,7 +234,7 @@ class buildPyramid extends StatelessWidget {
               EquationCard(
                 labelText: "Surface Area",
                 text:
-                    "A = $l($b)+$l(\\sqrt{(\\frac{$b}{2})^2 + $h^2} )+ $b(\\sqrt{(\\frac{$l}{2})^2+$h^2})"
+                    "A = $l($w)+$l(\\sqrt{(\\frac{$w}{2})^2 + $h^2} )+ $w(\\sqrt{(\\frac{$l}{2})^2+$h^2})"
                     "${(surfaceArea != null) ? " = $surfaceArea" : ""}",
               ),
             ],
