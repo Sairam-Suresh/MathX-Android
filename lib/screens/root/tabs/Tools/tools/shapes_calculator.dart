@@ -148,7 +148,7 @@ class buildCuboid extends StatelessWidget {
               .toList(); // To aid conversion from null to ""
 
           final l = (values[0]) == "" ? "l" : values[0];
-          final w = (values[1]) == "" ? "b" : values[1];
+          final b = (values[1]) == "" ? "b" : values[1];
           final h = (values[2]) == "" ? "h" : values[2];
           final volume = isFormValid
               ? int.parse(values[0]!) *
@@ -168,18 +168,18 @@ class buildCuboid extends StatelessWidget {
                   text: "V = "
                       "$l"
                       " * "
-                      "$w"
+                      "$b"
                       " * "
                       "$h "
                       "${(volume != null) ? " = $volume" : ""}"),
               EquationCard(
                 labelText: "Surface Area",
                 text: "A = "
-                    "2($l)($w)"
+                    "2($l)($b)"
                     " + "
                     "2($l)($h)"
                     " + "
-                    "2($w)($h)"
+                    "2($b)($h)"
                     "${(surfaceArea != null) ? " = $surfaceArea" : ""}",
               ),
             ],
