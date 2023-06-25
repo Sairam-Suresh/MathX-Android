@@ -147,14 +147,42 @@ class buildCuboid extends StatelessWidget {
               .map((e) => e ?? "")
               .toList(); // To aid conversion from null to ""
 
-          return EquationCard(
-            text: "V = "
-                "${(values[0]) == "" ? "l" : values[0]}"
-                " * "
-                "${values.elementAtOrNull(1) == "" || values.length < 2 ? "b" : values.elementAt(1)} "
-                " * "
-                "${values.elementAtOrNull(2) == "" || values.length != 3 ? "h" : values.elementAt(2)} "
-                "${(values.length == 3 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element)}" : ""}",
+          final l = (values[0]) == "" ? "l" : values[0];
+          final w = (values[1]) == "" ? "b" : values[1];
+          final h = (values[2]) == "" ? "h" : values[2];
+          final volume = isFormValid
+              ? int.parse(values[0]!) *
+                  int.parse(values[1]!) *
+                  int.parse(values[2]!)
+              : null;
+          final surfaceArea = isFormValid
+              ? 2 * int.parse(values[0]!) * int.parse(values[1]!) +
+                  2 * int.parse(values[1]!) * int.parse(values[2]!) +
+                  2 * int.parse(values[0]!) * int.parse(values[2]!)
+              : null;
+
+          return Column(
+            children: [
+              EquationCard(
+                  labelText: "Volume",
+                  text: "V = "
+                      "$l"
+                      " * "
+                      "$w"
+                      " * "
+                      "$h "
+                      "${(volume != null) ? " = $volume" : ""}"),
+              EquationCard(
+                labelText: "Surface Area",
+                text: "A = "
+                    "2($l)($w)"
+                    " + "
+                    "2($l)($h)"
+                    " + "
+                    "2($w)($h)"
+                    "${(surfaceArea != null) ? " = $surfaceArea" : ""}",
+              ),
+            ],
           );
         });
   }
