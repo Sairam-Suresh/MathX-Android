@@ -147,18 +147,26 @@ class buildCuboid extends StatelessWidget {
               .map((e) => e ?? "")
               .toList(); // To aid conversion from null to ""
 
-          final l = (values[0]) == "" ? "l" : values[0];
-          final w = (values[1]) == "" ? "w" : values[1];
-          final h = (values[2]) == "" ? "h" : values[2];
-          final volume = isFormValid
-              ? int.parse(values[0]!) *
-                  int.parse(values[1]!) *
-                  int.parse(values[2]!)
-              : null;
+          final l = (values[0]) == ""
+              ? "l"
+              : values[0]; // String values to be shown to user
+          final w = (values[1]) == ""
+              ? "w"
+              : values[1]; // String values to be shown to user
+          final h = (values[2]) == ""
+              ? "h"
+              : values[2]; // String values to be shown to user
+
+          final intL = int.tryParse(values[
+              0]!); // Integer values from user converted here (null if we get "")
+          final intW = int.tryParse(values[
+              1]!); // Integer values from user converted here (null if we get "")
+          final intH = int.tryParse(values[
+              2]!); // Integer values from user converted here (null if we get "")
+
+          final volume = isFormValid ? intL! * intW! * intH! : null;
           final surfaceArea = isFormValid
-              ? 2 * int.parse(values[0]!) * int.parse(values[1]!) +
-                  2 * int.parse(values[1]!) * int.parse(values[2]!) +
-                  2 * int.parse(values[0]!) * int.parse(values[2]!)
+              ? 2 * intL! * intW! + 2 * intW * intH! + 2 * intL * intH
               : null;
 
           return Column(
@@ -200,18 +208,25 @@ class buildPyramid extends StatelessWidget {
               .map((e) => e ?? "")
               .toList(); // To aid conversion from null to ""
 
-          final l = (values[0]) == "" ? "l" : values[0];
-          final w = (values[1]) == "" ? "w" : values[1];
-          final h = (values[2]) == "" ? "h" : values[2];
+          final l = (values[0]) == ""
+              ? "l"
+              : values[0]; // String values to be shown to user
+          final w = (values[1]) == ""
+              ? "w"
+              : values[1]; // String values to be shown to user
+          final h = (values[2]) == ""
+              ? "h"
+              : values[2]; // String values to be shown to user
 
-          final intL = num.tryParse(values[0]!);
+          final intL = num.tryParse(values[
+              0]!); // Integer values from user converted here (null if we get "")
           final intW = num.tryParse(values[
-              1]!); // Converts all the above values to numbers for calculation
-          final intH = num.tryParse(values[2]!);
+              1]!); // Integer values from user converted here (null if we get "")
+          final intH = num.tryParse(values[
+              2]!); // Integer values from user converted here (null if we get "")
 
           final volume = isFormValid ? (intL! * intW! * intH!) / 3 : null;
 
-          // get the surface area of a right rectangular pyramid
           final surfaceArea = isFormValid
               ? (intL! * intW! +
                   (intL * (sqrt(pow(intW / 2, 2) + pow(intH!, 2)))) +
