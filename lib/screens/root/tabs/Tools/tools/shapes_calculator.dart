@@ -8,7 +8,7 @@ import 'package:mathx_android/widgets/shapescalculatorgeometricalshapepage.dart'
 // TODO: Fix and clean up all null-safety ternary operator expressions in the cards
 
 class ShapesCalculatorPage extends StatelessWidget {
-  ShapesCalculatorPage({Key? key}) : super(key: key);
+  const ShapesCalculatorPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -270,10 +270,33 @@ class buildSphere extends StatelessWidget {
               .map((e) => e ?? "")
               .toList(); // To aid conversion from null to ""
 
-          return EquationCard(
-            text: r"V = \frac{4}{3} * \pi * "
-                "${values[0] == "" ? "r^3" : "${values[0]}^2"}"
-                "${values[0] != "" ? int.tryParse(values[0]!) != null ? "= ${pow(int.tryParse(values[0]!)!, 3) * pi * 4 / 3}" : "= ERROR" : ""}",
+          final r = (values[0]) == ""
+              ? "r"
+              : values[0]; // String values to be shown to user
+
+          final intR = int.tryParse(values[
+              0]!); // Integer values from user converted here (null if we get "")
+
+          final volume =
+              isFormValid ? (4 / 3) * pi * (intR! * intR * intR) : null;
+
+          final surfaceArea = isFormValid ? (4 * pi * (intR! * intR)) : null;
+
+          return Column(
+            children: [
+              EquationCard(
+                labelText: "Volume",
+                text: r"V = \frac{4}{3} * \pi * "
+                    "$r^3"
+                    "${volume != null ? "= $volume" : ""}",
+              ),
+              EquationCard(
+                labelText: "Surface Area",
+                text: r"A = 4 * \pi * "
+                    "$r^2"
+                    "${surfaceArea != null ? "= $surfaceArea" : ""}",
+              ),
+            ],
           );
         });
   }
