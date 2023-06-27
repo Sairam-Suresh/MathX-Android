@@ -314,12 +314,39 @@ class buildCylinder extends StatelessWidget {
               .map((e) => e ?? "")
               .toList(); // To aid conversion from null to ""
 
-          return EquationCard(
-            text: r"V = \pi * "
-                "${values[0] == "" ? "r^2" : "${values[0]}^2"}"
-                "*"
-                "${values.elementAtOrNull(1) == "" || values.length < 2 ? "h" : values.elementAt(1)}"
-                "${values[0] != "" && values.elementAtOrNull(1) != "" ? int.tryParse(values[0]!) != null ? "= ${pow(int.tryParse(values[0]!)!, 2) * pi}" : "= ERROR" : ""}",
+          final r = (values[0]) == ""
+              ? "r"
+              : values[0]; // String values to be shown to user
+          final h = (values[1]) == ""
+              ? "h"
+              : values[1]; // String values to be shown to user
+
+          final intR = int.tryParse(values[
+              0]!); // Integer values from user converted here (null if we get "")
+          final intH = int.tryParse(values[
+              1]!); // Integer values from user converted here (null if we get "")
+
+          final volume = isFormValid ? pi * (intR! * intR) * intH! : null;
+          final surfaceArea = isFormValid
+              ? 2 * pi * intR! * intR + 2 * pi * intR * intH!
+              : null;
+
+          return Column(
+            children: [
+              EquationCard(
+                labelText: "Volume",
+                text: r"V = \pi * "
+                    "$r^2"
+                    "*"
+                    "$h"
+                    "${volume != null ? " = $volume" : ""}",
+              ),
+              EquationCard(
+                labelText: "Surface Area",
+                text: "A = 2\\pi ($r)^2 + 2\\pi ($r)($h)"
+                    "${surfaceArea != null ? " = $surfaceArea" : ""}",
+              ),
+            ],
           );
         });
   }
