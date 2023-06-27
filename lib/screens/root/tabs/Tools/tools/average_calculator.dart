@@ -183,10 +183,12 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
                                 children: [
                                   Icon(Icons.warning_amber),
                                   SizedBox(width: 10),
-                                  AutoSizeText(
-                                      "Please ensure all numbers are filled and valid.",
-                                      maxLines: 2,
-                                      textAlign: TextAlign.justify),
+                                  Expanded(
+                                    child: AutoSizeText(
+                                        "Please ensure all numbers are filled and valid.",
+                                        maxLines: 2,
+                                        textAlign: TextAlign.justify),
+                                  ),
                                 ],
                               ),
                             ),
