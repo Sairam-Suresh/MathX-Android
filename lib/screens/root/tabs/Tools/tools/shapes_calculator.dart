@@ -364,13 +364,40 @@ class buildCone extends StatelessWidget {
               .map((e) => e ?? "")
               .toList(); // To aid conversion from null to ""
 
-          return EquationCard(
-            text: r"V = \pi * "
-                "${values[0] == "" ? "r^2" : "${values[0]}^2"}"
-                "* "
-                r"\frac"
-                "{${values.elementAtOrNull(1) == "" || values.length < 2 ? "h" : values.elementAt(1)}}{3}"
-                "${values[0] != "" && values.elementAtOrNull(1) != "" && values.elementAtOrNull(1) != null ? int.tryParse(values[0]!) != null ? "= ${pow(int.tryParse(values[0]!)!, 2) * pi * (int.tryParse(values[1]!)! / 3)}" : "= ERROR" : ""}",
+          final r = (values[0]) == ""
+              ? "r"
+              : values[0]; // String values to be shown to user
+          final h = (values[1]) == ""
+              ? "h"
+              : values[1]; // String values to be shown to user
+
+          final intR = int.tryParse(values[
+              0]!); // Integer values from user converted here (null if we get "")
+          final intH = int.tryParse(values[
+              1]!); // Integer values from user converted here (null if we get "")
+
+          final volume = isFormValid ? pi * (intR! * intR) * (intH! / 3) : null;
+          final surfaceArea = isFormValid
+              ? pi * (intR!) * (intR + sqrt(intH! * intH + intR * intR))
+              : null;
+
+          return Column(
+            children: [
+              EquationCard(
+                labelText: "Volume",
+                text: r"V = \pi * "
+                    "$r^2"
+                    "* "
+                    r"\frac"
+                    "{$h}{3}"
+                    "${(volume != null) ? "= $volume" : ""}",
+              ),
+              EquationCard(
+                labelText: "Surface Area",
+                text: "A = \\pi ($r)($r + \\sqrt{$h^2+$r^2})"
+                    "${(surfaceArea != null) ? "= $surfaceArea" : ""}",
+              ),
+            ],
           );
         });
   }
