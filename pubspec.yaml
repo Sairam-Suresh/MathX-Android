@@ -58,6 +58,7 @@ dependencies:
   vibration: ^1.8.1
   url_launcher: ^6.1.11
   flutter_archive: ^5.0.0
+  animations: ^2.0.7
 
 dev_dependencies:
   flutter_test:
