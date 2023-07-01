@@ -125,7 +125,12 @@ class _CalculatorPageState extends State<CalculatorPage> {
                                         children: [
                                           Expanded(
                                             child: AutoSizeText(
-                                              (results ?? "").toString(),
+                                              (results == null
+                                                      ? ""
+                                                      : results!.isIntValue()
+                                                          ? results!.toInt()
+                                                          : results!)
+                                                  .toString(),
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 30),
@@ -568,6 +573,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
     if (mode == Mode.normal) {
       results = instance
           .evaluate(expressionText.replaceAll("×", "*").replaceAll("÷", "/"));
+
       gotResult = true;
       if (results.toString() != "NaN") {
         gotError = false;

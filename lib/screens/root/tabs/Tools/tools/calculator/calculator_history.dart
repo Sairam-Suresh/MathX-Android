@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mathx_android/logic/tools/CalculatorLogic.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/inline_equation_sharing_view.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -42,7 +43,9 @@ class CalculatorHistory extends StatelessWidget {
                           .titleLarge
                           ?.copyWith(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text(history[index].result.toString()),
+                    subtitle: Text(history[index].result.isIntValue()
+                        ? history[index].result.toInt().toString()
+                        : history[index].result.toString()),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
                       Navigator.push(
@@ -103,7 +106,7 @@ class CalculationDetailView extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   child: Center(
                       child: Text(
-                    "${calculation.expression} = ${calculation.result}",
+                    "${calculation.expression} = ${calculation.result.isIntValue() ? calculation.result.toInt() : calculation.result}",
                     style: Theme.of(context).textTheme.headlineSmall,
                     textAlign: TextAlign.center,
                   )),

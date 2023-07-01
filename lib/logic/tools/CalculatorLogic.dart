@@ -9,7 +9,7 @@ import 'package:sqflite/sqflite.dart';
 class Calculation {
   String expression;
   double result;
-  double? answerBefore;
+  num? answerBefore;
 
   Calculation(this.expression, this.result, this.answerBefore);
 
@@ -61,7 +61,8 @@ class Calculator {
 
   double evaluate(String expression) {
     try {
-      final calculation = Calculation(expression, 0, ans);
+      final calculation =
+          Calculation(expression, 0, ans.isIntValue() ? ans.toInt() : ans);
       calculation.result = evaluateExpression(expression);
       ans = calculation.result;
       history.add(calculation);
