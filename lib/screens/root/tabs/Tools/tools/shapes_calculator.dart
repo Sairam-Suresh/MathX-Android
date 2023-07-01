@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/inline_equation_sharing_view.dart';
 import 'package:mathx_android/widgets/equationcard.dart';
 import 'package:mathx_android/widgets/nestedtabbar.dart';
 import 'package:mathx_android/widgets/shapescalculatorgeometricalshapepage.dart';
@@ -68,13 +69,14 @@ class buildRectangle extends StatelessWidget {
           final l = (values[0]) == "" || values[0] == null ? "l" : values[0];
           final w = (values[1]) == "" || values[1] == null ? "w" : values[1];
 
-          final intL = int.tryParse(l!);
-          final intW = int.tryParse(w!);
+          final intL = num.tryParse(l!);
+          final intW = num.tryParse(w!);
 
           final area = isFormValid ? intL! * intW! : null;
 
           return EquationCard(
-            text: "A = $l * $w" "${area != null ? "= $area" : ""}",
+            text: "A = $l * $w"
+                "${area != null ? "= ${area.isIntValue() ? area.toInt() : area}" : ""}",
           );
         });
   }
@@ -95,14 +97,14 @@ class buildTriangle extends StatelessWidget {
           final l = (values[0]) == "" || values[0] == null ? "l" : values[0];
           final w = (values[1]) == "" || values[1] == null ? "w" : values[1];
 
-          final intL = int.tryParse(l!);
-          final intW = int.tryParse(w!);
+          final intL = num.tryParse(l!);
+          final intW = num.tryParse(w!);
           final area = isFormValid ? intL! * intW! * 0.5 : null;
 
           return EquationCard(
             text: r"A = \frac 1 2 * "
                 "$l * $w"
-                "${area != null ? "= $area" : ""}",
+                "${area != null ? "= ${area.isIntValue() ? area.toInt() : area}" : ""}",
           );
         });
   }
@@ -121,13 +123,13 @@ class buildCircle extends StatelessWidget {
               .toList(); // To aid conversion from null to ""
 
           final r = (values[0]) == "" || values[0] == null ? "r" : values[0];
-          final intR = int.tryParse(r!);
+          final intR = num.tryParse(r!);
           final area = isFormValid ? intR! * intR * pi : null;
 
           return EquationCard(
             text: r"A = \pi * "
                 "$r^2"
-                "${area != null ? "= $area" : ""}",
+                "${area != null ? "= ${area.isIntValue() ? area.toInt() : area}" : ""}",
           );
         });
   }
@@ -148,9 +150,9 @@ class buildTrapezium extends StatelessWidget {
           final b = (values[1]) == "" || values[1] == null ? "b" : values[1];
           final h = (values[2]) == "" || values[2] == null ? "h" : values[2];
 
-          final intA = int.tryParse(a!);
-          final intB = int.tryParse(b!);
-          final intH = int.tryParse(h!);
+          final intA = num.tryParse(a!);
+          final intB = num.tryParse(b!);
+          final intH = num.tryParse(h!);
 
           final area = isFormValid ? ((intA! + intB!) / 2) * intH! : null;
 
@@ -159,7 +161,7 @@ class buildTrapezium extends StatelessWidget {
                 "{$a+$b}"
                 "{2}*"
                 "$h"
-                "${area != null ? "= $area" : ""}",
+                "${area != null ? "= ${area.isIntValue() ? area.toInt() : area}" : ""}",
           );
         });
   }
@@ -184,15 +186,16 @@ class buildParallelogram extends StatelessWidget {
               ? "h"
               : values[1]; // String values to be shown to user
 
-          final intL = int.tryParse(
+          final intL = num.tryParse(
               l!); // Integer values from user converted here (null if we get "")
-          final intW = int.tryParse(
+          final intW = num.tryParse(
               h!); // Integer values from user converted here (null if we get "")
 
           final area = isFormValid ? intL! * intW! : null;
 
           return EquationCard(
-            text: "A = $l * $h${area != null ? "= $area" : ""}",
+            text:
+                "A = $l * $h${area != null ? "= ${area.isIntValue() ? area.toInt() : area}" : ""}",
           );
         });
   }
@@ -220,11 +223,11 @@ class buildCuboid extends StatelessWidget {
               ? "h"
               : values[2]; // String values to be shown to user
 
-          final intL = int.tryParse(values[
+          final intL = num.tryParse(values[
               0]!); // Integer values from user converted here (null if we get "")
-          final intW = int.tryParse(values[
+          final intW = num.tryParse(values[
               1]!); // Integer values from user converted here (null if we get "")
-          final intH = int.tryParse(values[
+          final intH = num.tryParse(values[
               2]!); // Integer values from user converted here (null if we get "")
 
           final volume = isFormValid ? intL! * intW! * intH! : null;
@@ -242,7 +245,7 @@ class buildCuboid extends StatelessWidget {
                       "$w"
                       " * "
                       "$h "
-                      "${(volume != null) ? " = $volume" : ""}"),
+                      "${(volume != null) ? " = ${volume.isIntValue() ? volume.toInt() : volume}" : ""}"),
               EquationCard(
                 labelText: "Surface Area",
                 text: "A = "
@@ -251,7 +254,7 @@ class buildCuboid extends StatelessWidget {
                     "2($l)($h)"
                     " + "
                     "2($w)($h)"
-                    "${(surfaceArea != null) ? " = $surfaceArea" : ""}",
+                    "${(surfaceArea != null) ? " = ${surfaceArea.isIntValue() ? surfaceArea.toInt() : surfaceArea}" : ""}",
               ),
             ],
           );
@@ -307,13 +310,13 @@ class buildPyramid extends StatelessWidget {
                     "*"
                     "$h"
                     "}{3}"
-                    "${(volume != null) ? " = $volume" : ""}",
+                    "${(volume != null) ? " = ${volume.isIntValue() ? volume.toInt() : volume}" : ""}",
               ),
               EquationCard(
                 labelText: "Surface Area",
                 text:
                     "A = $l($w)+$l(\\sqrt{(\\frac{$w}{2})^2 + $h^2} )+ $w(\\sqrt{(\\frac{$l}{2})^2+$h^2})"
-                    "${(surfaceArea != null) ? " = $surfaceArea" : ""}",
+                    "${(surfaceArea != null) ? " = ${surfaceArea.isIntValue() ? surfaceArea.toInt() : surfaceArea}" : ""}",
               ),
             ],
           );
@@ -337,13 +340,13 @@ class buildSphere extends StatelessWidget {
               ? "r"
               : values[0]; // String values to be shown to user
 
-          final intR = int.tryParse(values[
-              0]!); // Integer values from user converted here (null if we get "")
+          final intR = num.tryParse(values[0]!) ??
+              0; // Integer values from user converted here (null if we get "")
 
           final volume =
-              isFormValid ? (4 / 3) * pi * (intR! * intR * intR) : null;
+              isFormValid ? (4 / 3) * pi * (intR * intR * intR) : null;
 
-          final surfaceArea = isFormValid ? (4 * pi * (intR! * intR)) : null;
+          final surfaceArea = isFormValid ? (4 * pi * (intR * intR)) : null;
 
           return Column(
             children: [
@@ -351,13 +354,13 @@ class buildSphere extends StatelessWidget {
                 labelText: "Volume",
                 text: r"V = \frac{4}{3} * \pi * "
                     "$r^3"
-                    "${volume != null ? "= $volume" : ""}",
+                    "${volume != null ? "= ${volume.isIntValue() ? volume.toInt() : volume}" : ""}",
               ),
               EquationCard(
                 labelText: "Surface Area",
                 text: r"A = 4 * \pi * "
                     "$r^2"
-                    "${surfaceArea != null ? "= $surfaceArea" : ""}",
+                    "${surfaceArea != null ? "= ${surfaceArea.isIntValue() ? surfaceArea.toInt() : surfaceArea}" : ""}",
               ),
             ],
           );
@@ -384,9 +387,9 @@ class buildCylinder extends StatelessWidget {
               ? "h"
               : values[1]; // String values to be shown to user
 
-          final intR = int.tryParse(values[
+          final intR = num.tryParse(values[
               0]!); // Integer values from user converted here (null if we get "")
-          final intH = int.tryParse(values[
+          final intH = num.tryParse(values[
               1]!); // Integer values from user converted here (null if we get "")
 
           final volume = isFormValid ? pi * (intR! * intR) * intH! : null;
@@ -402,12 +405,12 @@ class buildCylinder extends StatelessWidget {
                     "$r^2"
                     "*"
                     "$h"
-                    "${volume != null ? " = $volume" : ""}",
+                    "${volume != null ? " = ${volume.isIntValue() ? volume.toInt() : volume}" : ""}",
               ),
               EquationCard(
                 labelText: "Surface Area",
                 text: "A = 2\\pi ($r)^2 + 2\\pi ($r)($h)"
-                    "${surfaceArea != null ? " = $surfaceArea" : ""}",
+                    "${surfaceArea != null ? " = ${surfaceArea.isIntValue() ? surfaceArea.toInt() : surfaceArea}" : ""}",
               ),
             ],
           );
@@ -434,9 +437,9 @@ class buildCone extends StatelessWidget {
               ? "h"
               : values[1]; // String values to be shown to user
 
-          final intR = int.tryParse(values[
+          final intR = num.tryParse(values[
               0]!); // Integer values from user converted here (null if we get "")
-          final intH = int.tryParse(values[
+          final intH = num.tryParse(values[
               1]!); // Integer values from user converted here (null if we get "")
 
           final volume = isFormValid ? pi * (intR! * intR) * (intH! / 3) : null;
@@ -453,12 +456,12 @@ class buildCone extends StatelessWidget {
                     "* "
                     r"\frac"
                     "{$h}{3}"
-                    "${(volume != null) ? "= $volume" : ""}",
+                    "${(volume != null) ? "= ${volume.isIntValue() ? volume.toInt() : volume}" : ""}",
               ),
               EquationCard(
                 labelText: "Surface Area",
                 text: "A = \\pi ($r)($r + \\sqrt{$h^2+$r^2})"
-                    "${(surfaceArea != null) ? "= $surfaceArea" : ""}",
+                    "${(surfaceArea != null) ? "= ${surfaceArea.isIntValue() ? surfaceArea.toInt() : surfaceArea}" : ""}",
               ),
             ],
           );
