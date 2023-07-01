@@ -48,8 +48,8 @@ class _FixedTextFieldListState extends State<FixedTextFieldList> {
                   keyboardType: TextInputType.number,
                   validator: widget.validators ??
                       FormBuilderValidators.compose([
-                        FormBuilderValidators.numeric(),
-                        FormBuilderValidators.required()
+                        FormBuilderValidators.numeric(errorText: ""),
+                        FormBuilderValidators.required(errorText: "")
                       ]),
                 ))
             .toList(),

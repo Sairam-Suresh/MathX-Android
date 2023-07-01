@@ -50,8 +50,8 @@ class _DynamicTextFieldListState extends State<DynamicTextFieldList> {
               child: TextFormField(
                 validator: widget.validators ??
                     FormBuilderValidators.compose([
-                      FormBuilderValidators.numeric(),
-                      FormBuilderValidators.required()
+                      FormBuilderValidators.numeric(errorText: ""),
+                      FormBuilderValidators.required(errorText: "")
                     ]),
                 keyboardType: TextInputType.number,
                 controller: controller,
