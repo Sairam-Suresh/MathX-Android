@@ -15,11 +15,13 @@ class CalculatorPage extends StatefulWidget {
       {super.key,
       this.deepLinkParsed,
       required this.hidingTopAndBottom,
-      required this.hideTopAndBottom});
+      required this.hideTopAndBottom,
+      this.icons});
 
   final bool hidingTopAndBottom;
   final void Function(bool hide) hideTopAndBottom;
   final List<String>? deepLinkParsed;
+  final List<Widget>? icons;
 
   @override
   State<CalculatorPage> createState() => _CalculatorPageState();
@@ -105,19 +107,8 @@ class _CalculatorPageState extends State<CalculatorPage> {
                                               maxLines: 1,
                                             ),
                                           ),
-                                          if (widget.hidingTopAndBottom)
-                                            IconButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    widget.hideTopAndBottom(
-                                                        false);
-                                                  });
-                                                },
-                                                iconSize: 20,
-                                                color: Colors.white,
-                                                icon: const Icon(
-                                                  Icons.zoom_in_map,
-                                                ))
+                                          if (widget.icons != null)
+                                            ...widget.icons!
                                         ],
                                       ),
                                       const Spacer(),
