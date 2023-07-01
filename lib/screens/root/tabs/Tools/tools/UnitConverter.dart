@@ -128,108 +128,121 @@ class _UnitConverterPageState extends State<UnitConverterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Unit Converter")),
-      body: Column(
-        children: [
-          SegmentedButton<ConversionType>(
-            segments: ConversionType.values.map((type) {
-              return ButtonSegment<ConversionType>(
-                value: type,
-                label: Icon(unitsIcons[type]),
-              );
-            }).toList(),
-            selected: <ConversionType>{_currentConversionType},
-            onSelectionChanged: (newSelection) {
+    return DefaultTabController(
+      length: 6,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Unit Converter"),
+          bottom: TabBar(
+            tabs: ConversionType.values
+                .map((type) => Tab(
+                      icon: Icon(unitsIcons[type]),
+                    ))
+                .toList(),
+            onTap: (index) {
               setState(() {
-                _inputController.text = "";
-                _outputController.text = "";
-                _inputValue = 0.0;
-                _outputValue = 0.0;
-                inputType = units[newSelection.first]!.entries.first.key;
-                outputType =
-                    units[newSelection.first]!.entries.elementAt(1).key;
-                _currentConversionType = newSelection.first;
+                setState(() {
+                  _inputController.text = "";
+                  _outputController.text = "";
+                  _inputValue = 0.0;
+                  _outputValue = 0.0;
+                  inputType =
+                      units[ConversionType.values[index]]!.entries.first.key;
+                  outputType = units[ConversionType.values[index]]!
+                      .entries
+                      .elementAt(1)
+                      .key;
+                  _currentConversionType = ConversionType.values[index];
+                });
               });
             },
           ),
-          SizedBox(height: 16.0),
-          // INPUT
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              const Padding(padding: EdgeInsets.all(10)),
-              Expanded(
-                child: TextField(
-                  controller: _inputController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Input',
-                  ),
-                  onChanged: (value) {
-                    _inputValue = double.parse(value);
-                    _outputController.text = convertValue(inputType, outputType,
-                        _currentConversionType, double.parse(value));
-                  },
-                ),
-              ),
-              const Padding(padding: EdgeInsets.all(10)),
-              Expanded(
-                child: DropdownButtonFormField<String>(
-                  value: units[_currentConversionType]?.entries.first.key,
-                  onChanged: (String? newValue) {
-                    inputType = newValue!;
-                    _outputController.text = convertValue(newValue, outputType,
-                        _currentConversionType, _inputValue);
-                  },
-                  items: units[_currentConversionType]!.entries.map((unit) {
-                    return DropdownMenuItem<String>(
-                      value: unit.key,
-                      child: Text(unit.key, style: TextStyle(fontSize: 14)),
-                    );
-                  }).toList(),
-                ),
-              ),
-              const Padding(padding: EdgeInsets.all(10)),
-            ],
-          ),
-          Padding(padding: EdgeInsets.all(10)),
-          // OUTPUT
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              const Padding(padding: EdgeInsets.all(10)),
-              Expanded(
-                child: TextField(
-                  controller: _outputController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Output',
+        ),
+        body: Column(
+          children: [
+            const SizedBox(height: 16.0),
+            // INPUT
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                const Padding(padding: EdgeInsets.all(10)),
+                Expanded(
+                  child: TextField(
+                    controller: _inputController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: 'Input',
+                    ),
+                    onChanged: (value) {
+                      _inputValue = double.parse(value);
+                      _outputController.text = convertValue(
+                          inputType,
+                          outputType,
+                          _currentConversionType,
+                          double.parse(value));
+                    },
                   ),
                 ),
-              ),
-              const Padding(padding: EdgeInsets.all(10)),
-              Expanded(
-                child: DropdownButtonFormField<String>(
-                  value:
-                      units[_currentConversionType]?.entries.elementAt(1).key,
-                  onChanged: (String? newValue) {
-                    outputType = newValue!;
-                    _outputController.text = convertValue(inputType, newValue,
-                        _currentConversionType, _inputValue);
-                  },
-                  items: units[_currentConversionType]!.entries.map((unit) {
-                    return DropdownMenuItem<String>(
-                      value: unit.key,
-                      child: Text(unit.key, style: TextStyle(fontSize: 14)),
-                    );
-                  }).toList(),
+                const Padding(padding: EdgeInsets.all(10)),
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: units[_currentConversionType]?.entries.first.key,
+                    onChanged: (String? newValue) {
+                      inputType = newValue!;
+                      _outputController.text = convertValue(newValue,
+                          outputType, _currentConversionType, _inputValue);
+                    },
+                    items: units[_currentConversionType]!.entries.map((unit) {
+                      return DropdownMenuItem<String>(
+                        value: unit.key,
+                        child: Text(unit.key,
+                            style: const TextStyle(fontSize: 14)),
+                      );
+                    }).toList(),
+                  ),
                 ),
-              ),
-              const Padding(padding: EdgeInsets.all(10)),
-            ],
-          )
-        ],
+                const Padding(padding: EdgeInsets.all(10)),
+              ],
+            ),
+            const Padding(padding: EdgeInsets.all(10)),
+            // OUTPUT
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                const Padding(padding: EdgeInsets.all(10)),
+                Expanded(
+                  child: TextField(
+                    controller: _outputController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: 'Output',
+                    ),
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.all(10)),
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value:
+                        units[_currentConversionType]?.entries.elementAt(1).key,
+                    onChanged: (String? newValue) {
+                      outputType = newValue!;
+                      _outputController.text = convertValue(inputType, newValue,
+                          _currentConversionType, _inputValue);
+                    },
+                    items: units[_currentConversionType]!.entries.map((unit) {
+                      return DropdownMenuItem<String>(
+                        value: unit.key,
+                        child: Text(unit.key,
+                            style: const TextStyle(fontSize: 14)),
+                      );
+                    }).toList(),
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.all(10)),
+              ],
+            )
+          ],
+        ),
       ),
     );
     ;
