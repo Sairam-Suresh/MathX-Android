@@ -86,7 +86,6 @@ class _rootState extends State<root> {
                   note: Note.fromDeepLink(uri.toString()),
                   onChange: () {
                     setState(() {
-                      selectedTab = 0;
                       tabs = [
                         NotesPage(
                           deepLinkNote: Note.fromDeepLink(uri.toString()),
@@ -112,7 +111,6 @@ class _rootState extends State<root> {
 
   void updateWhenDeepLinkUpdateCalculator(Uri? uri) {
     setState(() {
-      selectedTab = 2;
       tabs = [
         const NotesPage(),
         const CheatsheetPage(),
@@ -132,6 +130,7 @@ class _rootState extends State<root> {
               .split(" "),
         )
       ];
+      selectedTab = 2;
     });
   }
 
