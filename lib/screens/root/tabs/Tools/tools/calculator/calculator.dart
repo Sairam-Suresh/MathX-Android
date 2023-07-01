@@ -73,6 +73,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
         body: SafeArea(
           child: Column(
             children: [
+              const SizedBox(height: 5),
               Flexible(
                 fit: FlexFit.tight,
                 flex: 1,
