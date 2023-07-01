@@ -108,12 +108,26 @@ class buildTrapezium extends StatelessWidget {
     return GeometricalShapeTab(
         entries: const ["Base (a)", "Base (b)", "Height (h)"],
         builder: (values, isFormValid) {
+          values = values
+              .map((e) => e ?? "")
+              .toList(); // To aid conversion from null to ""
+
+          final a = (values[0]) == "" || values[0] == null ? "a" : values[0];
+          final b = (values[1]) == "" || values[1] == null ? "b" : values[1];
+          final h = (values[2]) == "" || values[2] == null ? "h" : values[2];
+
+          final intA = int.tryParse(a!);
+          final intB = int.tryParse(b!);
+          final intH = int.tryParse(h!);
+
+          final area = isFormValid ? ((intA! + intB!) / 2) * intH! : null;
+
           return EquationCard(
             text: r"A = \frac"
-                " {${(values[0] ?? "") == "" ? "a" : values[0]}+${(values.elementAtOrNull(1) ?? "") == "" ? "b" : values[1]}}"
+                "{$a+$b}"
                 "{2}*"
-                "${(values.elementAtOrNull(2) ?? "") == "" ? "h" : values[2]}"
-                "${(values.length == 3 && isFormValid) ? "= ${(int.parse(values[0]!) + int.parse(values[1]!)) / 2 * int.parse(values[2]!)}" : ""}",
+                "$h"
+                "${area != null ? "= $area" : ""}",
           );
         });
   }
