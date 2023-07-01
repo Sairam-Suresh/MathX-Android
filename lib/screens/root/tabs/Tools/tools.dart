@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/HCF_LCM_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/UnitConverter.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/average_calculator.dart';
@@ -25,7 +26,16 @@ class ToolsPage extends StatefulWidget {
 }
 
 class _ToolsPageState extends State<ToolsPage> {
-  bool hideTopAndBottom = false;
+  bool hideTopAndBottom = true;
+
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.endOfFrame.then((_) {
+      // Use this to make sure we only hide it once the widget tree is already built to prevent calling setState during a rebuild
+      widget.hideTopAndBottom(hideTopAndBottom);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
