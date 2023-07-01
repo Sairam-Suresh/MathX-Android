@@ -54,10 +54,10 @@ class _rootState extends State<root> {
         const NotesPage(),
         const CheatsheetPage(),
         ToolsPage(
-          hideTopAndBottom: (tohideBottomBar) {
+          hideTopAndBottom: (toHideBottomBar) {
             setState(() {
               print("a");
-              hideBottomBar = tohideBottomBar;
+              hideBottomBar = toHideBottomBar;
             });
           },
           deepLinkParsed: null,
@@ -86,8 +86,8 @@ class _rootState extends State<root> {
                   note: Note.fromDeepLink(uri.toString()),
                   onChange: () {
                     setState(() {
-                      selectedTab = 2;
-                      tabs = List.of([
+                      selectedTab = 0;
+                      tabs = [
                         NotesPage(
                           deepLinkNote: Note.fromDeepLink(uri.toString()),
                         ),
@@ -100,7 +100,7 @@ class _rootState extends State<root> {
                             });
                           },
                         )
-                      ]);
+                      ];
                     });
                     setState(() {
                       selectedTab = 0;
@@ -112,10 +112,8 @@ class _rootState extends State<root> {
 
   void updateWhenDeepLinkUpdateCalculator(Uri? uri) {
     setState(() {
-      selectedTab = 0;
       selectedTab = 2;
-      tabs = [const NotesPage(), const CheatsheetPage(), Container()];
-      tabs = List.of([
+      tabs = [
         const NotesPage(),
         const CheatsheetPage(),
         ToolsPage(
@@ -133,24 +131,7 @@ class _rootState extends State<root> {
               .replaceAll("RT:", "")
               .split(" "),
         )
-      ]);
-    });
-
-    Future.delayed(Duration(milliseconds: 100)).then((value) {
-      setState(() {
-        tabs = List.of([
-          const NotesPage(),
-          const CheatsheetPage(),
-          ToolsPage(
-            hideTopAndBottom: (tohideBottomBar) {
-              setState(() {
-                print("a");
-                hideBottomBar = tohideBottomBar;
-              });
-            },
-          )
-        ]);
-      });
+      ];
     });
   }
 
@@ -158,12 +139,6 @@ class _rootState extends State<root> {
   void dispose() {
     _sub?.cancel();
     super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(covariant root oldWidget) {
-    build(context);
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
