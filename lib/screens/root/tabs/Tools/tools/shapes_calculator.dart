@@ -92,10 +92,18 @@ class buildCircle extends StatelessWidget {
     return GeometricalShapeTab(
         entries: const ["Radius (r)"],
         builder: (values, isFormValid) {
+          values = values
+              .map((e) => e ?? "")
+              .toList(); // To aid conversion from null to ""
+
+          final r = (values[0]) == "" || values[0] == null ? "r" : values[0];
+          final intR = int.tryParse(r!);
+          final area = isFormValid ? intR! * intR * pi : null;
+
           return EquationCard(
             text: r"A = \pi * "
-                "${values[0] == "" ? "r^2" : "${values[0]}^2"}"
-                "${values[0] != "" ? int.tryParse(values[0]!) != null ? "= ${pow(int.tryParse(values[0]!)!, 2) * pi}" : "= ERROR" : ""}",
+                "$r^2"
+                "${area != null ? "= $area" : ""}",
           );
         });
   }
