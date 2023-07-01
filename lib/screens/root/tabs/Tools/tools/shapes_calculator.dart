@@ -59,11 +59,23 @@ class buildRectangle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GeometricalShapeTab(
-        entries: const ["Length (l)", "Breadth (b)"],
+        entries: const ["Length (l)", "Breadth (w)"],
         builder: (values, isFormValid) {
+          values = values
+              .map((e) => e ?? "")
+              .toList(); // To aid conversion from null to ""
+
+          final l = (values[0]) == "" || values[0] == null ? "l" : values[0];
+          final w = (values[1]) == "" || values[1] == null ? "w" : values[1];
+
+          final intL = int.tryParse(l!);
+          final intW = int.tryParse(w!);
+
+          final area = isFormValid ? intL! * intW! : null;
+
           return EquationCard(
-              text:
-                  "A = ${values[0] == "" || values[0] == null ? "l" : values[0]} * ${values.last == "" || values.last == null ? "b" : values.last} ${(values.length == 2 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element)}" : ""}");
+            text: "A = $l * $w" "${area != null ? "= $area" : ""}",
+          );
         });
   }
 }
