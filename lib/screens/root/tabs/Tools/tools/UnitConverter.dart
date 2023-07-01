@@ -70,14 +70,14 @@ var unitsIcons = {
   ConversionType.temperature: Icons.thermostat,
 };
 
-class UnitConverter extends StatefulWidget {
-  const UnitConverter({super.key});
+class UnitConverterPage extends StatefulWidget {
+  const UnitConverterPage({super.key});
 
   @override
-  State<UnitConverter> createState() => _UnitConverterState();
+  State<UnitConverterPage> createState() => _UnitConverterPageState();
 }
 
-class _UnitConverterState extends State<UnitConverter> {
+class _UnitConverterPageState extends State<UnitConverterPage> {
   ConversionType _currentConversionType = ConversionType.length;
   TextEditingController _inputController = TextEditingController();
   TextEditingController _outputController = TextEditingController();
@@ -86,7 +86,8 @@ class _UnitConverterState extends State<UnitConverter> {
   String inputType = "centimeters";
   String outputType = "meters";
 
-  String convertValue(String from, String to, ConversionType type, double value) {
+  String convertValue(
+      String from, String to, ConversionType type, double value) {
     var typeUnits = units[type]!;
     debugPrint(type.toString());
     debugPrint(from);
@@ -97,22 +98,26 @@ class _UnitConverterState extends State<UnitConverter> {
       if (from == to) {
         res = value;
       } else {
-        if (from == "Kelvin") { // from kelvin
-          res = to == "Celsius" ? value - 273.15 : (value - 273.15) * 9/5 + 32;
-        } else if (from == "Fahrenheit") { // from fahrenheit
-          res = to == "Celsius" ? (value - 32) * 5/9 : (value - 32) * 5/9 + 273.15;
-        } else { // from celsius
-          res = to == "Fahrenheit" ? (value * 9/5) + 32 : value+273.15;
+        if (from == "Kelvin") {
+          // from kelvin
+          res =
+              to == "Celsius" ? value - 273.15 : (value - 273.15) * 9 / 5 + 32;
+        } else if (from == "Fahrenheit") {
+          // from fahrenheit
+          res = to == "Celsius"
+              ? (value - 32) * 5 / 9
+              : (value - 32) * 5 / 9 + 273.15;
+        } else {
+          // from celsius
+          res = to == "Fahrenheit" ? (value * 9 / 5) + 32 : value + 273.15;
         }
       }
     } else {
-      res = value*typeUnits[from]!/typeUnits[to]!;
+      res = value * typeUnits[from]! / typeUnits[to]!;
     }
     _outputValue = res;
     return res.toString();
   }
-
-
 
   @override
   void dispose() {
@@ -142,7 +147,8 @@ class _UnitConverterState extends State<UnitConverter> {
                 _inputValue = 0.0;
                 _outputValue = 0.0;
                 inputType = units[newSelection.first]!.entries.first.key;
-                outputType = units[newSelection.first]!.entries.elementAt(1).key;
+                outputType =
+                    units[newSelection.first]!.entries.elementAt(1).key;
                 _currentConversionType = newSelection.first;
               });
             },
@@ -162,7 +168,8 @@ class _UnitConverterState extends State<UnitConverter> {
                   ),
                   onChanged: (value) {
                     _inputValue = double.parse(value);
-                    _outputController.text = convertValue(inputType, outputType, _currentConversionType, double.parse(value));
+                    _outputController.text = convertValue(inputType, outputType,
+                        _currentConversionType, double.parse(value));
                   },
                 ),
               ),
@@ -172,7 +179,8 @@ class _UnitConverterState extends State<UnitConverter> {
                   value: units[_currentConversionType]?.entries.first.key,
                   onChanged: (String? newValue) {
                     inputType = newValue!;
-                    _outputController.text = convertValue(newValue, outputType, _currentConversionType, _inputValue);
+                    _outputController.text = convertValue(newValue, outputType,
+                        _currentConversionType, _inputValue);
                   },
                   items: units[_currentConversionType]!.entries.map((unit) {
                     return DropdownMenuItem<String>(
@@ -203,10 +211,12 @@ class _UnitConverterState extends State<UnitConverter> {
               const Padding(padding: EdgeInsets.all(10)),
               Expanded(
                 child: DropdownButtonFormField<String>(
-                  value: units[_currentConversionType]?.entries.elementAt(1).key,
+                  value:
+                      units[_currentConversionType]?.entries.elementAt(1).key,
                   onChanged: (String? newValue) {
                     outputType = newValue!;
-                    _outputController.text = convertValue(inputType, newValue, _currentConversionType, _inputValue);
+                    _outputController.text = convertValue(inputType, newValue,
+                        _currentConversionType, _inputValue);
                   },
                   items: units[_currentConversionType]!.entries.map((unit) {
                     return DropdownMenuItem<String>(
@@ -275,7 +285,6 @@ enum ConversionType {
 //   });
 // }
 
-
 // import 'package:flutter/material.dart';
 // import 'package:mathx_android/screens/root/tabs/Tools/tools/UnitConverters/AreaConverter.dart';
 // import 'package:mathx_android/screens/root/tabs/Tools/tools/UnitConverters/LengthConverter.dart';
@@ -328,7 +337,6 @@ enum ConversionType {
 //     );
 //   }
 // }
-
 
 // import 'package:flutter/material.dart';
 
@@ -431,7 +439,6 @@ enum ConversionType {
 //   'Kelvin-Fahrenheit': -457.87,
 // };
 
-
 //   @override
 //   void dispose() {
 //     _inputController.dispose();
@@ -474,7 +481,7 @@ enum ConversionType {
 //                 child: Text('Convert'),
 //               ),
 //               SizedBox(height: 16.0),
-              
+
 //             ],
 //           ),
 //         ),

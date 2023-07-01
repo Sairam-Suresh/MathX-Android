@@ -59,6 +59,7 @@ dependencies:
   url_launcher: ^6.1.11
   flutter_archive: ^5.0.0
   animations: ^2.0.7
+  material_design_icons_flutter: ^7.0.7296
 
 dev_dependencies:
   flutter_test:
