@@ -125,11 +125,28 @@ class buildParallelogram extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GeometricalShapeTab(
-        entries: const ["Length (a)", "Height (h)"],
+        entries: const ["Length (l)", "Height (h)"],
         builder: (values, isFormValid) {
+          values = values
+              .map((e) => e ?? "")
+              .toList(); // To aid conversion from null to ""
+
+          final l = (values[0]) == ""
+              ? "l"
+              : values[0]; // String values to be shown to user
+          final h = (values[1]) == ""
+              ? "h"
+              : values[1]; // String values to be shown to user
+
+          final intL = int.tryParse(values[
+              0]!); // Integer values from user converted here (null if we get "")
+          final intW = int.tryParse(values[
+              1]!); // Integer values from user converted here (null if we get "")
+
+          final area = isFormValid ? intL! * intW! : null;
+
           return EquationCard(
-            text:
-                "A = ${(values[0] ?? "") == "" ? "l" : values[0]} * ${values.last == "" || values.length == 1 ? "b" : values.last}${(values.length == 2 && isFormValid) ? "= ${values.map((e) => int.parse(e!)).reduce((value, element) => value * element)}" : ""}",
+            text: "A = $l * $h${area != null ? "= $area" : ""}",
           );
         });
   }
