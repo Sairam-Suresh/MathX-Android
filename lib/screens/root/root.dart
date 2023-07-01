@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mathx_android/constants.dart';
 import 'package:mathx_android/screens/root/tabs/Cheatsheet/cheatsheet.dart';
 import 'package:mathx_android/screens/root/tabs/Notes/notepreview.dart';
@@ -150,12 +151,13 @@ class _rootState extends State<root> {
       resizeToAvoidBottomInset: selectedTab == 2 ? false : true,
       bottomNavigationBar: !hideBottomBar
           ? NavigationBar(
-              destinations: const [
-                NavigationDestination(icon: Icon(Icons.note), label: "Notes"),
-                NavigationDestination(
+              destinations: [
+                const NavigationDestination(
+                    icon: Icon(Icons.note), label: "Notes"),
+                const NavigationDestination(
                     icon: Icon(Icons.book), label: "Cheatsheet"),
                 NavigationDestination(
-                    icon: Icon(Icons.pan_tool), label: "Tools")
+                    icon: Icon(MdiIcons.calculator), label: "Calculators")
               ],
               selectedIndex: selectedTab,
               onDestinationSelected: (index) {
