@@ -4,7 +4,6 @@ import 'package:mathx_android/logic/CalculationsDatabaseHelper.dart';
 import 'package:mathx_android/logic/CheatsheetsDatabaseHelper.dart';
 import 'package:mathx_android/logic/CheatsheetsExtractionHelper.dart';
 import 'package:mathx_android/logic/NotesDatabaseHelper.dart';
-import 'package:mathx_android/screens/root/root.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -148,11 +147,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                         SharedPreferences.getInstance()
                                             .then((instance) {
                                           instance.setBool("isLoaded", true);
-                                          Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => root()),
-                                          );
+                                          Navigator.pop(context);
                                         });
                                       });
                                     });
