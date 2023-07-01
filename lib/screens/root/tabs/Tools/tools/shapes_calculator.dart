@@ -138,10 +138,10 @@ class buildParallelogram extends StatelessWidget {
               ? "h"
               : values[1]; // String values to be shown to user
 
-          final intL = int.tryParse(values[
-              0]!); // Integer values from user converted here (null if we get "")
-          final intW = int.tryParse(values[
-              1]!); // Integer values from user converted here (null if we get "")
+          final intL = int.tryParse(
+              l!); // Integer values from user converted here (null if we get "")
+          final intW = int.tryParse(
+              h!); // Integer values from user converted here (null if we get "")
 
           final area = isFormValid ? intL! * intW! : null;
 
