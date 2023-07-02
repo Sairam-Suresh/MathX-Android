@@ -35,6 +35,7 @@ class _ToolsPageState extends State<ToolsPage> {
     SchedulerBinding.instance.endOfFrame.then((_) {
       // Use this to make sure we only hide it once the widget tree is already built to prevent calling setState during a rebuild
       widget.hideTopAndBottom(hideTopAndBottom);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
     });
   }
 
