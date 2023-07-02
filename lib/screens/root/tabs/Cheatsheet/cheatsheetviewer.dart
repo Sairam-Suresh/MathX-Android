@@ -49,7 +49,7 @@ class CheatSheetViewer extends HookWidget {
                   PdfView(
                       gestureNavigationEnabled: true,
                       path:
-                          "${(getAppDir.data!).toString().replaceAll("Directory: '", "").replaceAll("'", "")}/cheatsheets/${cheatsheet.title}.pdf"),
+                          "${getAppDir.data!.path}//cheatsheets//pdfs//${cheatsheet.title}.pdf"),
                 ],
               )
             : const Center(child: CircularProgressIndicator()),
