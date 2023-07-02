@@ -58,15 +58,15 @@ class Note {
   }
 }
 
-enum HCFLCM { HCF, LCM }
+enum HCFLCM { hcf, lcm }
 
 enum HCFOptions { primeNumberOnly }
 
 enum Averages { mean, median, mode, standardDeviation }
 
-enum RandomiserPages { recent, occurences }
+enum RandomizerPages { recent, occurences }
 
-enum setEvalType { union, intersection }
+enum SetEvalType { union, intersection }
 
 class CheatsheetDetails {
   String title;

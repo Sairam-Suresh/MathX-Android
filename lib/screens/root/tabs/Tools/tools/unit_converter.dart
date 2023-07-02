@@ -82,7 +82,6 @@ class _UnitConverterPageState extends State<UnitConverterPage> {
   final TextEditingController _inputController = TextEditingController();
   final TextEditingController _outputController = TextEditingController();
   double _inputValue = 0.0;
-  double _outputValue = 0.0;
   String inputType = "centimeters";
   String outputType = "meters";
 
@@ -115,7 +114,6 @@ class _UnitConverterPageState extends State<UnitConverterPage> {
     } else {
       res = value * typeUnits[from]! / typeUnits[to]!;
     }
-    _outputValue = res;
     return res.toString();
   }
 
@@ -145,7 +143,6 @@ class _UnitConverterPageState extends State<UnitConverterPage> {
                   _inputController.text = "";
                   _outputController.text = "";
                   _inputValue = 0.0;
-                  _outputValue = 0.0;
                   inputType =
                       units[ConversionType.values[index]]!.entries.first.key;
                   outputType = units[ConversionType.values[index]]!

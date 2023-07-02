@@ -7,7 +7,7 @@ class BinaryConverterPage extends StatefulWidget {
   const BinaryConverterPage({super.key});
 
   @override
-  _BinaryConverterPageState createState() => _BinaryConverterPageState();
+  State<BinaryConverterPage> createState() => _BinaryConverterPageState();
 }
 
 class _BinaryConverterPageState extends State<BinaryConverterPage> {

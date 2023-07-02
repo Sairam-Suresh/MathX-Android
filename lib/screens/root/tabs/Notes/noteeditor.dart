@@ -22,7 +22,7 @@ class NoteEditorPage extends StatefulWidget {
   final void Function(Note note) onShare;
 
   @override
-  _NoteEditorPageState createState() => _NoteEditorPageState();
+  State<NoteEditorPage> createState() => _NoteEditorPageState();
 }
 
 class _NoteEditorPageState extends State<NoteEditorPage> {

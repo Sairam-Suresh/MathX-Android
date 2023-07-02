@@ -15,7 +15,7 @@ class RandomiserPage extends StatefulWidget {
 class _RandomiserPageState extends State<RandomiserPage> {
   RandomiserData randomiserData = RandomiserData();
   int? newValue;
-  RandomiserPages page = RandomiserPages.recent;
+  RandomizerPages page = RandomizerPages.recent;
   final _formKey = GlobalKey<FormBuilderState>();
 
   final FocusNode _textFieldFocusNodeMin = FocusNode();
@@ -64,7 +64,7 @@ class _RandomiserPageState extends State<RandomiserPage> {
             ],
             onTap: (index) {
               setState(() {
-                page = RandomiserPages.values[index];
+                page = RandomizerPages.values[index];
               });
             },
           ),
@@ -119,7 +119,7 @@ class _RandomiserPageState extends State<RandomiserPage> {
                       ),
                     ))),
                 Expanded(
-                  child: page == RandomiserPages.recent
+                  child: page == RandomizerPages.recent
                       ? ListView.separated(
                           itemCount: randomiserData.getHistory().length,
                           itemBuilder: (BuildContext context, int index) {

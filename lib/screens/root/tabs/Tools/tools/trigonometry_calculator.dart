@@ -8,7 +8,7 @@ class TrigonometryCalculatorPage extends StatefulWidget {
   const TrigonometryCalculatorPage({super.key});
 
   @override
-  _TrigonometryCalculatorPageState createState() =>
+  State<TrigonometryCalculatorPage> createState() =>
       _TrigonometryCalculatorPageState();
 }
 

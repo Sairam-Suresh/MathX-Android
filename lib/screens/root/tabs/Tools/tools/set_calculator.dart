@@ -9,11 +9,11 @@ class SetCalculatorPage extends StatefulWidget {
   const SetCalculatorPage({super.key});
 
   @override
-  _SetCalculatorPageState createState() => _SetCalculatorPageState();
+  State<SetCalculatorPage> createState() => _SetCalculatorPageState();
 }
 
 class _SetCalculatorPageState extends State<SetCalculatorPage> {
-  setEvalType calculator = setEvalType.union;
+  SetEvalType calculator = SetEvalType.union;
   int numberOfFields = 2;
   List<String?> values = ["", ""];
   bool isFormValid = false;
@@ -43,7 +43,7 @@ class _SetCalculatorPageState extends State<SetCalculatorPage> {
             onTap: (val) {
               setState(() {
                 calculator =
-                    val == 0 ? setEvalType.union : setEvalType.intersection;
+                    val == 0 ? SetEvalType.union : SetEvalType.intersection;
               });
             },
           ),
@@ -91,7 +91,7 @@ class _SetCalculatorPageState extends State<SetCalculatorPage> {
         child: Column(
           children: [
             Text(
-              calculator == setEvalType.union ? "Union" : "Intersection",
+              calculator == SetEvalType.union ? "Union" : "Intersection",
               style: const TextStyle(
                 fontSize: 24,
               ),
@@ -153,7 +153,7 @@ class _SetCalculatorPageState extends State<SetCalculatorPage> {
     }
 
     final setList = values.map((value) => value!.split(', ')).toList();
-    final resultSet = calculator == setEvalType.union
+    final resultSet = calculator == SetEvalType.union
         ? calculateUnion(setList)
         : calculateIntersection(setList);
 
