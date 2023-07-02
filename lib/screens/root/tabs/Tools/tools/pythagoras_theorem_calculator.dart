@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:mathx_android/logic/tools/PythagorasTheoremLogic.dart';
+import 'package:mathx_android/logic/tools/pythagoras_theorem_logic.dart';
 import 'package:mathx_android/widgets/fixedtextfieldlist.dart';
 
 class PythagorasTheoremCalculatorPage extends StatefulWidget {

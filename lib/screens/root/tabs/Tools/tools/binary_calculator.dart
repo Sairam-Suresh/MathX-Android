@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mathx_android/constants.dart';
-import 'package:mathx_android/logic/tools/BinaryCalculatorLogic.dart';
+import 'package:mathx_android/logic/tools/binary_calculator_logic.dart';
 
 class BinaryConverterPage extends StatefulWidget {
   const BinaryConverterPage({super.key});

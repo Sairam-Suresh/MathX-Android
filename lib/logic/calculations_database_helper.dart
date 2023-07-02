@@ -1,4 +1,4 @@
-import 'package:mathx_android/logic/tools/CalculatorLogic.dart';
+import 'package:mathx_android/logic/tools/calculator_logic.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

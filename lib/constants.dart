@@ -2,13 +2,9 @@
 
 import 'dart:convert';
 
-const double PADDING_BETWEEN_SQUARES = 10;
-
-const double PADDING_FOR_MODAL_BOTTOM_SHEET = 15;
-
 extension Capitalise on String {
   String capitalize() {
-    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
   }
 }
 

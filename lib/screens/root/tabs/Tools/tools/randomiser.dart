@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mathx_android/constants.dart';
-import 'package:mathx_android/logic/tools/RandomiserLogic.dart';
+import 'package:mathx_android/logic/tools/randomiser_logic.dart';
 
 class RandomiserPage extends StatefulWidget {
   const RandomiserPage({Key? key}) : super(key: key);

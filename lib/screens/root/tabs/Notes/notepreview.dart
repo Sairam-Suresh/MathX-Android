@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mathx_android/constants.dart';
-import 'package:mathx_android/logic/NotesDatabaseHelper.dart';
+import 'package:mathx_android/logic/notes_database_helper.dart';
 import 'package:mathx_android/screens/root/tabs/Notes/mathequationfaq.dart';
 import 'package:mathx_android/widgets/textwithequations.dart';
 

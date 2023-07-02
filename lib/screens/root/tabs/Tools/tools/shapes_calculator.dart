@@ -32,21 +32,21 @@ class ShapesCalculatorPage extends StatelessWidget {
             NestedTabBar(
               "2D",
               children: {
-                "Rectangle": buildRectangle(),
-                "Triangle": buildTriangle(),
-                "Circle": buildCircle(),
-                "Trapezium": buildTrapezium(),
-                "Parallelogram": buildParallelogram(),
+                "Rectangle": BuildRectangle(),
+                "Triangle": BuildTriangle(),
+                "Circle": BuildCircle(),
+                "Trapezium": BuildTrapezium(),
+                "Parallelogram": BuildParallelogram(),
               },
             ),
             NestedTabBar(
               "3D",
               children: {
-                "Cuboid": buildCuboid(),
-                "Pyramid": buildPyramid(),
-                "Sphere": buildSphere(),
-                "Cylinder": buildCylinder(),
-                "Cone": buildCone(),
+                "Cuboid": BuildCuboid(),
+                "Pyramid": BuildPyramid(),
+                "Sphere": BuildSphere(),
+                "Cylinder": BuildCylinder(),
+                "Cone": BuildCone(),
               },
             )
           ]),
@@ -54,8 +54,8 @@ class ShapesCalculatorPage extends StatelessWidget {
   }
 }
 
-class buildRectangle extends StatelessWidget {
-  const buildRectangle({super.key});
+class BuildRectangle extends StatelessWidget {
+  const BuildRectangle({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +82,8 @@ class buildRectangle extends StatelessWidget {
   }
 }
 
-class buildTriangle extends StatelessWidget {
-  const buildTriangle({super.key});
+class BuildTriangle extends StatelessWidget {
+  const BuildTriangle({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -110,8 +110,8 @@ class buildTriangle extends StatelessWidget {
   }
 }
 
-class buildCircle extends StatelessWidget {
-  const buildCircle({super.key});
+class BuildCircle extends StatelessWidget {
+  const BuildCircle({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -135,8 +135,8 @@ class buildCircle extends StatelessWidget {
   }
 }
 
-class buildTrapezium extends StatelessWidget {
-  const buildTrapezium({super.key});
+class BuildTrapezium extends StatelessWidget {
+  const BuildTrapezium({super.key});
   @override
   Widget build(BuildContext context) {
     return GeometricalShapeTab(
@@ -167,8 +167,8 @@ class buildTrapezium extends StatelessWidget {
   }
 }
 
-class buildParallelogram extends StatelessWidget {
-  const buildParallelogram({super.key});
+class BuildParallelogram extends StatelessWidget {
+  const BuildParallelogram({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -201,8 +201,8 @@ class buildParallelogram extends StatelessWidget {
   }
 }
 
-class buildCuboid extends StatelessWidget {
-  const buildCuboid({super.key});
+class BuildCuboid extends StatelessWidget {
+  const BuildCuboid({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -262,8 +262,8 @@ class buildCuboid extends StatelessWidget {
   }
 }
 
-class buildPyramid extends StatelessWidget {
-  const buildPyramid({super.key});
+class BuildPyramid extends StatelessWidget {
+  const BuildPyramid({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -324,8 +324,8 @@ class buildPyramid extends StatelessWidget {
   }
 }
 
-class buildSphere extends StatelessWidget {
-  const buildSphere({super.key});
+class BuildSphere extends StatelessWidget {
+  const BuildSphere({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -368,8 +368,8 @@ class buildSphere extends StatelessWidget {
   }
 }
 
-class buildCylinder extends StatelessWidget {
-  const buildCylinder({super.key});
+class BuildCylinder extends StatelessWidget {
+  const BuildCylinder({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -418,8 +418,8 @@ class buildCylinder extends StatelessWidget {
   }
 }
 
-class buildCone extends StatelessWidget {
-  const buildCone({super.key});
+class BuildCone extends StatelessWidget {
+  const BuildCone({super.key});
 
   @override
   Widget build(BuildContext context) {

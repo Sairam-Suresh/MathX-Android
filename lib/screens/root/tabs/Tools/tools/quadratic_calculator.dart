@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
-import 'package:mathx_android/logic/tools/QuadraticSolverLogic.dart';
+import 'package:mathx_android/logic/tools/quadratic_solver_logic.dart';
 import 'package:mathx_android/widgets/fixedtextfieldlist.dart';
 
 class QuadraticCalculatorPage extends StatefulWidget {

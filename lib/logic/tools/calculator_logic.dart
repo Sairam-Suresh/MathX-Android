@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:math_parser/math_parser.dart';
 import 'package:mathx_android/constants.dart';
-import 'package:mathx_android/logic/CalculationsDatabaseHelper.dart';
+import 'package:mathx_android/logic/calculations_database_helper.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/inline_equation_sharing_view.dart';
 import 'package:sqflite/sqflite.dart';
 

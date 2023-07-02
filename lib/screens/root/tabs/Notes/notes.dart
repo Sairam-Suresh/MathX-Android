@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:mathx_android/constants.dart';
-import 'package:mathx_android/logic/NotesDatabaseHelper.dart';
-import 'package:mathx_android/logic/ShareNoteHelper.dart';
+import 'package:mathx_android/logic/notes_database_helper.dart';
+import 'package:mathx_android/logic/share_note_helper.dart';
 import 'package:mathx_android/widgets/notecard.dart';
 
 import 'noteeditor.dart';

@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:path_provider/path_provider.dart';
 
-// INFO: This function will be executed when the Notes database is also created, in NotesDatabaseHelper.dart
+// INFO: This function will be executed when the Notes database is also created, in notes_database_helper.dart
 // This is because the database will also be initialised only once when the app starts and is
 // a perfect opportunity to extract the cheatsheet resources
 

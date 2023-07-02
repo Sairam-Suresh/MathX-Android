@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mathx_android/logic/tools/CalculatorLogic.dart';
+import 'package:mathx_android/logic/tools/calculator_logic.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 extension WholeNumber on num {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:mathx_android/logic/tools/TrigonometryCalculatorLogic.dart';
+import 'package:mathx_android/logic/tools/trigonometry_calculator_logic.dart';
 import 'package:mathx_android/widgets/fixedtextfieldlist.dart';
 
 class TrigonometryCalculatorPage extends StatefulWidget {

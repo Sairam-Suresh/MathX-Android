@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:mathx_android/logic/CalculationsDatabaseHelper.dart';
-import 'package:mathx_android/logic/CheatsheetsDatabaseHelper.dart';
-import 'package:mathx_android/logic/CheatsheetsExtractionHelper.dart';
-import 'package:mathx_android/logic/NotesDatabaseHelper.dart';
+import 'package:mathx_android/logic/calculations_database_helper.dart';
+import 'package:mathx_android/logic/cheatsheets_database_helper.dart';
+import 'package:mathx_android/logic/cheatsheets_extraction_helper.dart';
+import 'package:mathx_android/logic/notes_database_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeScreen extends StatefulWidget {

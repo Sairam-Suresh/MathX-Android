@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mathx_android/constants.dart';
-import 'package:mathx_android/logic/tools/SetCalculatorLogic.dart';
+import 'package:mathx_android/logic/tools/set_calculator_logic.dart';
 import 'package:mathx_android/widgets/dynamictextfieldlist.dart';
 
 class SetCalculatorPage extends StatefulWidget {

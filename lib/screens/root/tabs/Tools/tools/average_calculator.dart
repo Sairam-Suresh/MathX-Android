@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:mathx_android/logic/tools/AverageLogic.dart';
+import 'package:mathx_android/logic/tools/average_logic.dart';
 import 'package:mathx_android/widgets/dynamictextfieldlist.dart';
 
 class AverageCalculatorPage extends StatefulWidget {
