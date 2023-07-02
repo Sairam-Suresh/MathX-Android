@@ -12,14 +12,14 @@ import 'package:mathx_android/screens/root/tabs/Tools/tools.dart';
 import 'package:mathx_android/screens/welcome/welcome.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class root extends StatefulWidget {
-  root({Key? key}) : super(key: key);
+class Root extends StatefulWidget {
+  const Root({Key? key}) : super(key: key);
 
   @override
-  State<root> createState() => _rootState();
+  State<Root> createState() => _RootState();
 }
 
-class _rootState extends State<root> {
+class _RootState extends State<Root> {
   List<Widget> tabs = [];
 
   int selectedTab = 0;
@@ -57,7 +57,6 @@ class _rootState extends State<root> {
         ToolsPage(
           hideTopAndBottom: (toHideBottomBar) {
             setState(() {
-              print("a");
               hideBottomBar = toHideBottomBar;
             });
           },
@@ -67,7 +66,6 @@ class _rootState extends State<root> {
     });
 
     _sub = appLinks.allUriLinkStream.listen((uri) {
-      print("uri: ${uri.toString()}");
       while (Navigator.canPop(context)) {
         Navigator.pop(context);
       }
@@ -95,7 +93,6 @@ class _rootState extends State<root> {
                         ToolsPage(
                           hideTopAndBottom: (tohideBottomBar) {
                             setState(() {
-                              print("a");
                               hideBottomBar = tohideBottomBar;
                             });
                           },
@@ -118,7 +115,6 @@ class _rootState extends State<root> {
         ToolsPage(
           hideTopAndBottom: (tohideBottomBar) {
             setState(() {
-              print("a");
               hideBottomBar = tohideBottomBar;
             });
           },

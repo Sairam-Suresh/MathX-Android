@@ -1,8 +1,8 @@
 import 'dart:math';
 
 class RandomiserData {
-  List<int> _history = [];
-  Map<int, int> _occurrences = {};
+  final List<int> _history = [];
+  final Map<int, int> _occurrences = {};
   bool _isReset = true;
 
   int generateNewNumber(int min, int max) {
@@ -21,7 +21,7 @@ class RandomiserData {
 
   Map<int, double> getOccurrences() {
     final totalCount = _history.length;
-    final occurrences = Map<int, double>();
+    final occurrences = <int, double>{};
 
     _occurrences.forEach((number, count) {
       final percentage = (count / totalCount) * 100;

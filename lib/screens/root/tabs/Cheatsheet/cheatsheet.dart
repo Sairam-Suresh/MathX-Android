@@ -271,7 +271,7 @@ class _CheatsheetPageState extends State<CheatsheetPage> {
 
   Widget showStarredItems() {
     return Scaffold(
-        appBar: AppBar(title: Text("Starred Cheatsheets")),
+        appBar: AppBar(title: const Text("Starred Cheatsheets")),
         // Using a stateful builder here so that i can force this to refresh
         body: StatefulBuilder(builder: (context, stateSetter) {
           List<CheatsheetDetails> filteredList = List.of(cheatsheetsData);

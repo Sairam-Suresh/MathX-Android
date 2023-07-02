@@ -78,7 +78,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             ),
                             FadeEffect(
                               begin: 0.0,
-                              duration: const Duration(milliseconds: 1000),
+                              duration: Duration(milliseconds: 1000),
                             )
                           ],
                           child: const Text(

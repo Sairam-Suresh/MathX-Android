@@ -51,7 +51,7 @@ class _RandomiserPageState extends State<RandomiserPage> {
                     newValue = null;
                   });
                 },
-                icon: Icon(Icons.restart_alt))
+                icon: const Icon(Icons.restart_alt))
           ],
           bottom: TabBar(
             tabs: const [

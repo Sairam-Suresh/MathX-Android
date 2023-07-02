@@ -4,7 +4,7 @@ import 'package:mathx_android/widgets/custommarkdownbody.dart';
 class TextWithEquations extends StatelessWidget {
   final String text;
 
-  TextWithEquations({required this.text});
+  const TextWithEquations({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {

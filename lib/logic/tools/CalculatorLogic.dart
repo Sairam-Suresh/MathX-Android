@@ -68,7 +68,6 @@ class Calculator {
       history.add(calculation);
       return ans;
     } catch (e) {
-      print('Error: $e');
       return double.nan;
     }
   }

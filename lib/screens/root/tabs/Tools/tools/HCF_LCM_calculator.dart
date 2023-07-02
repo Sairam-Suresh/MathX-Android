@@ -42,7 +42,7 @@ class _HCFLCMPageState extends State<HCFLCMPage> {
                       numberOfFields += 1;
                     });
                   },
-                  icon: Icon(Icons.add))
+                  icon: const Icon(Icons.add))
             ],
             bottom: TabBar(
               tabs: const [

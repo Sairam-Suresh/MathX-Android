@@ -572,8 +572,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
       } else {
         gotError = true;
       }
-
-      print(gotError);
     }
   }
 

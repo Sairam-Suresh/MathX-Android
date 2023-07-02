@@ -79,8 +79,8 @@ class UnitConverterPage extends StatefulWidget {
 
 class _UnitConverterPageState extends State<UnitConverterPage> {
   ConversionType _currentConversionType = ConversionType.length;
-  TextEditingController _inputController = TextEditingController();
-  TextEditingController _outputController = TextEditingController();
+  final TextEditingController _inputController = TextEditingController();
+  final TextEditingController _outputController = TextEditingController();
   double _inputValue = 0.0;
   double _outputValue = 0.0;
   String inputType = "centimeters";
@@ -245,7 +245,6 @@ class _UnitConverterPageState extends State<UnitConverterPage> {
         ),
       ),
     );
-    ;
   }
 }
 

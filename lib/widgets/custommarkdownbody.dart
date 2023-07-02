@@ -3,13 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:markdown_widget/markdown_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-Future<void> _launchUrl(Uri url) async {
-  if (!await launchUrl(url)) {
-    throw Exception('Could not launch $url');
-  }
-}
 
 MarkdownWidget buildMarkdownBody(
     String text, bool isDarkMode, bool? renderEquations) {
@@ -109,11 +102,11 @@ class LatexNode extends SpanNode {
     final latex = Math.tex(
       content,
       mathStyle: MathStyle.text,
-      textStyle: style.copyWith(color: true ? Colors.white : Colors.black),
+      textStyle: style,
       textScaleFactor: 1,
       onErrorFallback: (error) {
         return Text(
-          '$textContent',
+          textContent,
           style: style.copyWith(color: Colors.red),
         );
       },
@@ -123,8 +116,8 @@ class LatexNode extends SpanNode {
         child: !isInline
             ? Container(
                 width: double.infinity,
-                child: Center(child: latex),
                 margin: const EdgeInsets.symmetric(vertical: 16),
+                child: Center(child: latex),
               )
             : latex);
   }

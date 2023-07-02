@@ -22,6 +22,6 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         themeMode: ThemeMode.system,
-        home: root());
+        home: const Root());
   }
 }

@@ -6,17 +6,17 @@ import 'package:mathx_android/widgets/custommarkdownbody.dart';
 import 'package:mathx_android/widgets/textwithequations.dart';
 
 class NoteEditorPage extends StatefulWidget {
-  NoteEditorPage({
+  const NoteEditorPage({
     Key? key,
     required this.note,
-    this.isinEditMode,
+    this.isInEditMode,
     required this.onChange,
     required this.onDelete,
     required this.onShare,
   }) : super(key: key);
 
   final Note note;
-  final bool? isinEditMode;
+  final bool? isInEditMode;
   final void Function(Note note) onChange;
   final void Function(Note note) onDelete;
   final void Function(Note note) onShare;
@@ -43,7 +43,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
     super.initState();
     contentFocusNode.requestFocus();
     setState(() {
-      isEditMode = widget.isinEditMode ?? false;
+      isEditMode = widget.isInEditMode ?? false;
 
       newTitle = widget.note.name;
       newContent = widget.note.content;

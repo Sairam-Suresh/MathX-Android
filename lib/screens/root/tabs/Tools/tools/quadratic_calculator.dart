@@ -65,7 +65,7 @@ class _QuadraticCalculatorPageState extends State<QuadraticCalculatorPage> {
                                     ))),
                           ),
                           FixedTextFieldList(
-                              entries: ["a", "b", "c"],
+                              entries: const ["a", "b", "c"],
                               onChange: (newValues, isValid) {
                                 setState(() {
                                   isFormValid = isValid;

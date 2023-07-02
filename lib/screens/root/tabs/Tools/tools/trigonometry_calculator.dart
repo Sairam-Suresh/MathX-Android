@@ -5,6 +5,8 @@ import 'package:mathx_android/logic/tools/TrigonometryCalculatorLogic.dart';
 import 'package:mathx_android/widgets/fixedtextfieldlist.dart';
 
 class TrigonometryCalculatorPage extends StatefulWidget {
+  const TrigonometryCalculatorPage({super.key});
+
   @override
   _TrigonometryCalculatorPageState createState() =>
       _TrigonometryCalculatorPageState();
@@ -63,7 +65,7 @@ class _TrigonometryCalculatorPageState
             ),
           ),
           FixedTextFieldList(
-              entries: [
+              entries: const [
                 "Side A (Opposite)",
                 "Side B (Adjacent)",
                 "Side C (Hypotenuse)"
@@ -83,14 +85,14 @@ class _TrigonometryCalculatorPageState
   }
 
   Widget buildResult() {
-    int _noOfFieldsFilled = 0;
+    int noOfFieldsFilled = 0;
     bool moreThan2FieldsFilled = false;
 
     for (String? i in values) {
-      _noOfFieldsFilled += (i == "" || i == null) ? 0 : 1;
+      noOfFieldsFilled += (i == "" || i == null) ? 0 : 1;
     }
 
-    if (_noOfFieldsFilled >= 2) {
+    if (noOfFieldsFilled >= 2) {
       moreThan2FieldsFilled = true;
     } else {
       moreThan2FieldsFilled = false;

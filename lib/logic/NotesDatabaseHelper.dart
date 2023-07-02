@@ -61,7 +61,7 @@ Welcome to the **markdown tutorial**! This note is an *example* of how you can i
 
 Note: Markdown text is disabled when Math Rendering is enabled
 
-Feel free to click the \"Edit\" button in the top right hand corner to look at the markdown text
+Feel free to click the "Edit" button in the bottom right hand corner to look at the markdown text
 
 ## Examples
 ### Quotes
@@ -131,7 +131,7 @@ Who doesn't like tables?
 
 # Important
 - If markdown does not appear or does not appear as expected, try adding a new line before/after the block markdown
-- If you need to type special characters, remember to add a backslash \" \\ \" in front of it.
+- If you need to type special characters, remember to add a backslash " \\ " in front of it.
 
 ## Example:
 \\`code\\` instead of `code`

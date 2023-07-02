@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:mathx_android/constants.dart';
 
 class NoteCard extends StatelessWidget {
-  NoteCard({Key? key, required this.note}) : super(key: key);
+  const NoteCard({Key? key, required this.note}) : super(key: key);
 
-  late final Note note;
+  final Note note;
 
   @override
   Widget build(BuildContext context) {

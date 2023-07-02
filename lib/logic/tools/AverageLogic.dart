@@ -43,7 +43,7 @@ double calculateStandardDeviation(List<num> numbers) {
 
   double mean = calculateMean(numbers);
   double variance = numbers
-          .map((num) => pow(num - mean, 2))
+          .map((number) => pow(number - mean, 2))
           .reduce((value, element) => value + element) /
       numbers.length;
 

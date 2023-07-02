@@ -6,6 +6,8 @@ import 'package:mathx_android/logic/tools/SetCalculatorLogic.dart';
 import 'package:mathx_android/widgets/dynamictextfieldlist.dart';
 
 class SetCalculatorPage extends StatefulWidget {
+  const SetCalculatorPage({super.key});
+
   @override
   _SetCalculatorPageState createState() => _SetCalculatorPageState();
 }

@@ -74,7 +74,7 @@ class _NotesPageState extends State<NotesPage> {
             Navigator.push(context, MaterialPageRoute(builder: (context1) {
               return NoteEditorPage(
                 note: listOfNotes.last,
-                isinEditMode: true,
+                isInEditMode: true,
                 onChange: (note) {
                   onChangeHandler(listOfNotes.length - 1, note);
                 },

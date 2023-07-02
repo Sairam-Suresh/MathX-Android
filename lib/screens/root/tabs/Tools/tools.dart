@@ -95,7 +95,7 @@ class _ToolsPageState extends State<ToolsPage> {
                       } else if (val == "Set Calculator") {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return SetCalculatorPage();
+                          return const SetCalculatorPage();
                         }));
                       } else if (val == "Shapes Calculator") {
                         Navigator.push(context,
@@ -105,7 +105,7 @@ class _ToolsPageState extends State<ToolsPage> {
                       } else if (val == "Trigonometry Calculator") {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return TrigonometryCalculatorPage();
+                          return const TrigonometryCalculatorPage();
                         }));
                       } else if (val == "Binary Calculator") {
                         Navigator.push(context,
