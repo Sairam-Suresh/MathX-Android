@@ -45,7 +45,7 @@ class NotesDatabaseHelper {
           Note(
                   name: "LaTeX Example Note",
                   content:
-                      "Welcome to MathX! This note is an example of how you can integrate LaTeX into your math notes :) \n\nFor example, here's the quadratic equation: \n \\[x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}\\] \n\nLaTeX allows us to do all sorts of cool things with math, ranging from simple things like \\[x^2\\] to more advanced mathematical formulas.\n\nFeel free to click the \"Edit\" button in the top right hand corner to look at the LaTeX code, or you could click on the blue \"?\" button in edit mode to learn more about LaTeX.",
+                      "Welcome to MathX! This note is an example of how you can integrate LaTeX into your math notes :) \n\nFor example, here's the quadratic equation: \n \$x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}\$ \n\nLaTeX allows us to do all sorts of cool things with math, ranging from simple things like \$x^2\$ to more advanced mathematical formulas.\n\nFeel free to click the \"Edit\" button in the top right hand corner to look at the LaTeX code, or you could click on the blue \"?\" button in edit mode to learn more about LaTeX.",
                   date: DateTime.now(),
                   renderMath: true)
               .toMap(),
@@ -57,36 +57,51 @@ class NotesDatabaseHelper {
           Note(
                   name: "Markdown Tutorial Note",
                   content: """# Introduction
-Welcome to the **markdown tutorial**! This note is an *example* of how you can integrate the ~markup~ markdown function into your math notes :)
+Welcome to the **markdown tutorial**! This note is an *example* of how you can integrate the ~~markup~~ markdown function into your math notes :)
+
 Note: Markdown text is disabled when Math Rendering is enabled
-Feel free to click the "Edit" button in the top right hand corner to look at the markdown text
+
+Feel free to click the \"Edit\" button in the top right hand corner to look at the markdown text
+
 ## Examples
 ### Quotes
+
 You can quote text with a ">".
+
 > This is a very inspirational quote
+
 – MathX Team
+
+
 ### Code
 #### Inline code
 If you ever need to type `code`, you can always use backticks (\\`) to enter `inline codes!`
+
 #### Block code
 ```
 And block code too!
 Block codes are also horizontally scrollable.
 ```
+
 ### Links
 [Links](https://example.com) work as well!
+
 ### Lists
 #### Bullet and numbered lists
 If you ever need to list down anything, you can bullet or number them!
+
 Example list 1:
+
 1. Numbered item
 2. Numbered item
 
 Example list 2:
+
 - Bullet item
 - Bullet item
 
 Example list 3:
+
 * Bullet item
 * Bullet item
 
@@ -99,24 +114,30 @@ Mixed list:
 
 #### Checklists
 If bulleted and numbered lists aren't enough, checklists are available too!
+
 **Homework:**
+
 - [x] Math Workbook
-- [x] ~Slashed Item~
+- [x] ~~Slashed Item~~
 - [ ] SLS
 
 ### Tables
 Who doesn't like tables?
-header 1 | header 2
----|---
-row 1 col 1 | row 1 col 2
-row 2 col 1 | row 2 col 2
+
+| Left Alignment | Center Alignment | Right Alignment |
+|:-|:-:|-:|
+| Text | Text | Text |
+
 
 # Important
 - If markdown does not appear or does not appear as expected, try adding a new line before/after the block markdown
-- If you need to type special characters, remember to add a backslash " \\ " in front of it.
+- If you need to type special characters, remember to add a backslash \" \\ \" in front of it.
+
 ## Example:
 \\`code\\` instead of `code`
+
 \\### Text
+
 instead of:
 ### Text""",
                   date: DateTime.now(),
