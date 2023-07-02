@@ -15,11 +15,9 @@ class CalculatorPage extends StatefulWidget {
       {super.key,
       this.deepLinkParsed,
       required this.hidingTopAndBottom,
-      required this.hideTopAndBottom,
       this.icons});
 
   final bool hidingTopAndBottom;
-  final void Function(bool hide) hideTopAndBottom;
   final List<String>? deepLinkParsed;
   final List<Widget>? icons;
 

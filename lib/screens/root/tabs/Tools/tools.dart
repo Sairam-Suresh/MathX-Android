@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/average_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/binary_calculator.dart';
 import 'package:mathx_android/screens/root/tabs/Tools/tools/calculator/calculator.dart';
@@ -45,17 +46,22 @@ class _ToolsPageState extends State<ToolsPage> {
           child: CalculatorPage(
               deepLinkParsed: widget.deepLinkParsed,
               hidingTopAndBottom: hideTopAndBottom,
-              hideTopAndBottom: (hide) {
-                setState(() {
-                  hideTopAndBottom = hide;
-                });
-                widget.hideTopAndBottom(hide);
-              },
               icons: [
                 IconButton(
                     onPressed: () {
                       setState(() {
                         hideTopAndBottom = !hideTopAndBottom;
+                        if (hideTopAndBottom) {
+                          SystemChrome.setEnabledSystemUIMode(
+                              SystemUiMode.immersive,
+                              overlays: []);
+                        } else {
+                          SystemChrome.setEnabledSystemUIMode(
+                              SystemUiMode.manual,
+                              overlays:
+                                  SystemUiOverlay.values); // to re-show bars
+                        }
+
                         widget.hideTopAndBottom(hideTopAndBottom);
                       });
                     },
