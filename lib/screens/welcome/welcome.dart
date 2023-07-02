@@ -21,11 +21,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-            gradient: RadialGradient(
-                colors: [Color.fromARGB(255, 169, 100, 255), Colors.white],
-                stops: [0.3, 1],
-                center: Alignment.topCenter,
-                radius: 2)),
+            gradient: LinearGradient(colors: [
+          Color.fromARGB(255, 179, 96, 234),
+          Color.fromARGB(255, 94, 92, 222)
+        ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Center(
