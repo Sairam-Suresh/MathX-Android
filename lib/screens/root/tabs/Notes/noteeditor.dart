@@ -226,8 +226,10 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                   !isEditMode
                       ? renderMath
                           ? TextWithEquations(text: newContent)
-                          : buildMarkdownBody(newContent,
-                              Theme.of(context).brightness == Brightness.dark)
+                          : buildMarkdownBody(
+                              newContent,
+                              Theme.of(context).brightness == Brightness.dark,
+                              renderMath)
                       : Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: TextField(
