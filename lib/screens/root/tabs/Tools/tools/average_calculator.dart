@@ -79,7 +79,7 @@ class _AverageCalculatorPageState extends State<AverageCalculatorPage> {
   Widget buildResults() {
     return Card(
       child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.25,
+          height: isFormValid ? MediaQuery.of(context).size.height * 0.25 : MediaQuery.of(context).size.height * 0.3,
           width: MediaQuery.of(context).size.width,
           child: Padding(
               padding: const EdgeInsets.only(
