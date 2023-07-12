@@ -117,7 +117,9 @@ class _PythagorasTheoremCalculatorPageState
                           ? values.first!
                           : calculateSide(
                                   num.parse(values[2]!), num.parse(values[1]!))
-                              .toString(),
+                              .toString() == "NaN" ? "Error" : calculateSide(
+                          num.parse(values[2]!), num.parse(values[1]!))
+                          .toString(),
                       style: const TextStyle(fontSize: 20),
                     )
                   : const Text("--"),
@@ -130,7 +132,9 @@ class _PythagorasTheoremCalculatorPageState
                           ? values[1]!
                           : calculateSide(
                                   num.parse(values[2]!), num.parse(values[0]!))
-                              .toString(),
+                              .toString() == "NaN" ? "Error" : calculateSide(
+                          num.parse(values[2]!), num.parse(values[0]!))
+                          .toString(),
                       style: const TextStyle(fontSize: 20),
                     )
                   : const Text("--"),
@@ -143,7 +147,9 @@ class _PythagorasTheoremCalculatorPageState
                           ? values.last!
                           : calculateHypotenuse(
                                   num.parse(values[0]!), num.parse(values[1]!))
-                              .toString(),
+                              .toString() == "NaN" ? "Error" : calculateHypotenuse(
+                          num.parse(values[0]!), num.parse(values[1]!))
+                          .toString(),
                       style: const TextStyle(fontSize: 20),
                     )
                   : const Text("--"),

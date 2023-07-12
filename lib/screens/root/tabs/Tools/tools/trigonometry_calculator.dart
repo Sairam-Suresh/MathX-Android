@@ -112,7 +112,7 @@ class _TrigonometryCalculatorPageState
             isFormValid && moreThan2FieldsFilled
                 ? Center(
                     child: Math.tex(
-                        "x° = ${result[TrigonometryResultKey.equation]} = ${result[TrigonometryResultKey.answer]}",
+                        "x° = ${result[TrigonometryResultKey.equation]} = ${result[TrigonometryResultKey.answer].toString() == "NaN" ? "Error" : result[TrigonometryResultKey.answer].toString()}",
                         textStyle: TextStyle(
                             fontSize: Theme.of(context)
                                 .textTheme
