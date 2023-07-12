@@ -27,17 +27,7 @@ class ToolsPage extends StatefulWidget {
 }
 
 class _ToolsPageState extends State<ToolsPage> {
-  bool hideTopAndBottom = true;
-
-  @override
-  void initState() {
-    super.initState();
-    SchedulerBinding.instance.endOfFrame.then((_) {
-      // Use this to make sure we only hide it once the widget tree is already built to prevent calling setState during a rebuild
-      widget.hideTopAndBottom(hideTopAndBottom);
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
-    });
-  }
+  bool hideTopAndBottom = false;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +65,7 @@ class _ToolsPageState extends State<ToolsPage> {
                 PopupMenuButton<String>(
                     icon: const Icon(
                       Icons.more_vert,
+                      color: Colors.white,
                     ),
                     iconSize: 20,
                     padding: EdgeInsets.zero,
