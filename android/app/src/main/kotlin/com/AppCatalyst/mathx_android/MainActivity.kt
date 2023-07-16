@@ -1,4 +1,4 @@
-package com.AppCatalyst.mathx_android
+package org.sstinc.mathx
 
 import io.flutter.embedding.android.FlutterActivity
 
