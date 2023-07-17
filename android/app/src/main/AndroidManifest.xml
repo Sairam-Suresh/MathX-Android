@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.AppCatalyst.mathx_android">
+    package="org.sstinc.mathx">
     <uses-permission android:name="android.permission.VIBRATE"/>
    <application
         android:label="MathX"
