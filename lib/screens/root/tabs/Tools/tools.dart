@@ -91,7 +91,7 @@ class ToolsPage extends StatefulWidget {
 class _ToolsPageState extends State<ToolsPage> {
   bool hideTopAndBottom = false;
   ToolType filterSelection = ToolType.none;
-  
+
   final allTools = [
     ToolInfo(
       name: "Average Calculator",
@@ -161,7 +161,7 @@ class _ToolsPageState extends State<ToolsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Calculators"),
+        title: const Text("Tools"),
         actions: [
           PopupMenuButton<ToolType>(
             onSelected: (ToolType result) {
@@ -192,8 +192,7 @@ class _ToolsPageState extends State<ToolsPage> {
               ),
             ],
           ),
-
-          ],
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(4.0),
@@ -201,7 +200,12 @@ class _ToolsPageState extends State<ToolsPage> {
           crossAxisCount: 2, // Set the number of columns here
           crossAxisSpacing: 6.0,
           mainAxisSpacing: 6.0,
-          children: filterSelection == ToolType.none ? allTools.map((data) => ToolCard(cardData: data)).toList() : allTools.where((tool) => tool.filterType == filterSelection).map((data) => ToolCard(cardData: data)).toList(),
+          children: filterSelection == ToolType.none
+              ? allTools.map((data) => ToolCard(cardData: data)).toList()
+              : allTools
+                  .where((tool) => tool.filterType == filterSelection)
+                  .map((data) => ToolCard(cardData: data))
+                  .toList(),
         ),
       ),
 

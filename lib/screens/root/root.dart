@@ -153,7 +153,7 @@ class _RootState extends State<Root> {
                 const NavigationDestination(
                     icon: Icon(Icons.book), label: "Cheatsheet"),
                 NavigationDestination(
-                    icon: Icon(MdiIcons.calculator), label: "Calculators")
+                    icon: Icon(Icons.construction), label: "Tools")
               ],
               selectedIndex: selectedTab,
               onDestinationSelected: (index) {
