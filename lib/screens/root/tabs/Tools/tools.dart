@@ -166,7 +166,7 @@ class _ToolsPageState extends State<ToolsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Calculators"),
+        title: const Text("Tools"),
         actions: [
           PopupMenuButton<ToolType>(
             onSelected: (ToolType result) {
